@@ -1,5 +1,5 @@
 # KFAFH-IS-Validation-System-Frontend
-# Laboratory Equipment Validation System
+ Laboratory Equipment Validation System
 
 ## Overview
 
