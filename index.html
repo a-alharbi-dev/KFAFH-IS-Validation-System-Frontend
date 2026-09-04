@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>IS Validation | Sign In</title>
+
+    <!-- Same fonts used in the green template -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=Tajawal:wght@300;400;500;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+
+<body>
+
+    <!-- =========================
+         HEADER
+    ========================== -->
+
+    <header class="app-header">
+
+        <div class="header-top">
+            <div class="container header-top-inner">
+
+                <span>
+                    King Fahd Armed Forces Hospital
+                </span>
+
+                <span>
+                    Medical Laboratory Department
+                </span>
+
+            </div>
+        </div>
+
+
+        <div class="container header-main-inner">
+
+            <div class="brand">
+
+                <div class="brand-mark">
+                    KFAFH
+                </div>
+
+                <div>
+                    <h1 class="brand-title">
+                        Information System Validation
+                    </h1>
+
+                    <p class="brand-subtitle">
+                        Medical Laboratory · Jeddah
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- =========================
+         MAIN CONTENT
+    ========================== -->
+
+    <main class="auth-page">
+
+        <div class="auth-wrapper">
+
+
+            <!-- Welcome Section -->
+
+            <section class="welcome-section">
+
+                <div class="welcome-icon">
+                    ✓
+                </div>
+
+                <span class="welcome-badge">
+                    IS Validation Portal
+                </span>
+
+                <h2>
+                    Welcome to the
+                    <span>Validation Workspace</span>
+                </h2>
+
+                <p>
+                    Sign in using your official hospital account to access
+                    the Information System Validation workspace.
+                </p>
+
+
+                <div class="feature-list">
+
+                    <div class="feature">
+
+                        <div class="feature-icon">
+                            ✓
+                        </div>
+
+                        <div>
+                            <strong>Secure Access</strong>
+
+                            <small>
+                                Access is limited to authorized laboratory staff.
+                            </small>
+                        </div>
+
+                    </div>
+
+
+                    <div class="feature">
+
+                        <div class="feature-icon">
+                            ✓
+                        </div>
+
+                        <div>
+                            <strong>Validation Workspace</strong>
+
+                            <small>
+                                Manage and review Information System validation activities.
+                            </small>
+                        </div>
+
+                    </div>
+
+
+                    <div class="feature">
+
+                        <div class="feature-icon">
+                            ✓
+                        </div>
+
+                        <div>
+                            <strong>Medical Laboratory</strong>
+
+                            <small>
+                                King Fahd Armed Forces Hospital · Jeddah
+                            </small>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- Login Card -->
+
+            <section class="auth-card">
+
+                <div class="card-header">
+
+                    <div class="card-header-icon">
+                        ↪
+                    </div>
+
+                    <div>
+                        <h2>Sign In</h2>
+
+                        <p>
+                            Enter your account details to continue.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <form id="loginForm">
+
+
+                    <!-- Email -->
+
+                    <div class="form-group">
+
+                        <label class="label" for="email">
+                            Official Email
+                            <span class="required">*</span>
+                        </label>
+
+                        <input
+                            class="input"
+                            type="email"
+                            id="email"
+                            name="email"
+                            placeholder="name@hospital.sa"
+                            autocomplete="email"
+                            required
+                        >
+
+                    </div>
+
+
+
+                    <!-- Password -->
+
+                    <div class="form-group">
+
+                        <div class="password-label">
+
+                            <label class="label" for="password">
+                                Password
+                                <span class="required">*</span>
+                            </label>
+
+                            <a
+                                class="forgot-link"
+                                href="forgot-password.html"
+                            >
+                                Forgot password?
+                            </a>
+
+                        </div>
+
+
+                        <div class="password-wrapper">
+
+                            <input
+                                class="input password-input"
+                                type="password"
+                                id="password"
+                                name="password"
+                                placeholder="Enter your password"
+                                autocomplete="current-password"
+                                required
+                            >
+
+                            <button
+                                type="button"
+                                class="show-password"
+                                id="showPassword"
+                            >
+                                Show
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- Remember Me -->
+
+                    <label class="remember-row">
+
+                        <input type="checkbox">
+
+                        <span>
+                            Remember me on this device
+                        </span>
+
+                    </label>
+
+
+
+                    <!-- Sign In -->
+
+                    <button
+                        type="submit"
+                        class="btn btn-primary sign-in-btn"
+                    >
+                        Sign In
+                    </button>
+
+
+                </form>
+
+
+
+                <!-- Divider -->
+
+                <div class="divider">
+
+                    <span></span>
+
+                    <p>New to IS Validation?</p>
+
+                    <span></span>
+
+                </div>
+
+
+
+                <!-- Register -->
+
+                <a
+                    href="register.html"
+                    class="btn btn-secondary register-btn"
+                >
+                    Create New Account
+                </a>
+
+
+
+                <div class="security-note">
+
+                    <div class="security-icon">
+                        ✓
+                    </div>
+
+                    <p>
+                        This portal is for authorized personnel only.
+                        Please keep your account credentials confidential.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+        </div>
+
+    </main>
+
+
+
+    <!-- =========================
+         FOOTER
+    ========================== -->
+
+    <footer>
+
+        <div class="container footer-content">
+
+            <p>
+                © King Fahd Armed Forces Hospital
+            </p>
+
+            <p>
+                Information System Validation
+            </p>
+
+        </div>
+
+    </footer>
+
+
+
+    <script>
+
+        const passwordInput =
+            document.getElementById("password");
+
+        const showPassword =
+            document.getElementById("showPassword");
+
+
+        showPassword.addEventListener("click", function () {
+
+            if (passwordInput.type === "password") {
+
+                passwordInput.type = "text";
+
+                showPassword.textContent = "Hide";
+
+            } else {
+
+                passwordInput.type = "password";
+
+                showPassword.textContent = "Show";
+
+            }
+
+        });
+
+
+
+        document
+            .getElementById("loginForm")
+            .addEventListener("submit", function (event) {
+
+                event.preventDefault();
+
+                const email =
+                    document.getElementById("email").value.trim();
+
+                const password =
+                    document.getElementById("password").value;
+
+
+                if (!email || !password) {
+
+                    alert(
+                        "Please enter your official email and password."
+                    );
+
+                    return;
+
+                }
+
+
+               localStorage.setItem(
+    "loggedInUserName",
+    email.split("@")[0]
+);
+
+localStorage.setItem(
+    "loggedInUserJobTitle",
+    "Laboratory Staff"
+);
+
+window.location.href = "home.html";
+
+            });
+
+    </script>
+
+
+</body>
+
+</html>

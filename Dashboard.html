@@ -1,0 +1,1434 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>IS Validation | Dashboard</title>
+
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+          rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="Dashboard.css">
+
+          
+    <link rel="stylesheet"
+          href="style.css">
+
+</head>
+
+<body class="dashboard-body">
+
+    <!-- =========================
+         DASHBOARD NAVBAR
+    ========================== -->
+
+    <header class="dashboard-navbar">
+
+        <div class="container dashboard-nav-inner">
+
+            <!-- BRAND -->
+
+            <div class="dashboard-brand">
+
+                <div class="dashboard-logo">
+                    KFAFH
+                </div>
+
+                <div class="dashboard-brand-text">
+
+                    <strong>
+                        IS Validation
+                    </strong>
+
+                    <small>
+                        Medical Laboratory
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <!-- NAVIGATION -->
+
+            <nav class="dashboard-navigation">
+
+                <a
+                    href="home.html"
+                    class="dashboard-nav-link "
+                >
+                    Home
+                </a>
+
+<a class="dashboard-nav-link active" href="Dashboard.html">
+                Dashboard 
+            </a>
+               
+
+            </nav>
+
+
+            <!-- USER -->
+
+            <div class="dashboard-user">
+
+                <div class="dashboard-user-info">
+
+                    <strong id="navbarUserName">
+                        User
+                    </strong>
+
+                    <small id="navbarJobTitle">
+                        Laboratory Staff
+                    </small>
+
+                </div>
+
+
+                <div
+                    class="dashboard-avatar"
+                    id="userAvatar"
+                >
+                    U
+                </div>
+
+
+                <button
+                    type="button"
+                    class="logout-button"
+                    id="logoutButton"
+                >
+                    Logout
+                </button>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+
+
+
+
+    <!-- ===========================
+            MAIN CONTENT
+    ============================ -->
+
+    <main class="main-content">
+
+        <div class="page-header">
+
+            <div>
+
+                <h1>
+
+                    Validation Dashboard
+
+                </h1>
+
+                <p>
+
+                    Monitor validation requests, approvals, queue and draft forms.
+
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ==========================================
+                    DASHBOARD CARDS
+        ========================================== -->
+
+        <section class="dashboard-cards-panel">
+
+            <div class="dashboard-cards">
+
+            <div class="dashboard-card total-card">
+
+                <div class="card-content">
+
+                    <div>
+
+                        <span>
+
+                            Total Validation Forms
+
+                        </span>
+
+                        <h2>
+
+                            142
+
+                        </h2>
+
+                        <small>
+
+                            Total submitted validations
+
+                        </small>
+
+                    </div>
+
+
+
+                </div>
+
+            </div>
+
+
+
+            <div class="dashboard-card approved-card">
+
+                <div class="card-content">
+
+                    <div>
+
+                        <span>
+
+                            Approved
+
+                        </span>
+
+                        <h2>
+
+                            96
+
+                        </h2>
+
+                        <small>
+
+                            Approved by reviewers
+
+                        </small>
+
+                    </div>
+
+
+
+                </div>
+
+            </div>
+
+
+
+            <div class="dashboard-card queue-card">
+
+                <div class="card-content">
+
+                    <div>
+
+                        <span>
+
+                            Validation Queue
+
+                        </span>
+
+                        <h2>
+
+                            31
+
+                        </h2>
+
+                        <small>
+
+                            Waiting for approval
+
+                        </small>
+
+                    </div>
+
+
+
+                </div>
+
+            </div>
+
+
+
+            <div class="dashboard-card draft-card">
+
+                <div class="card-content">
+
+                    <div>
+
+                        <span>
+
+                            Saved Drafts
+
+                        </span>
+
+                        <h2>
+
+                            18
+
+                        </h2>
+
+                        <small>
+
+                            Not submitted
+
+                        </small>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+
+            <div class="dashboard-card rejected-card">
+
+                <div class="card-content">
+
+                    <div>
+
+                        <span>
+
+                            Rejected
+
+                        </span>
+
+                        <h2>
+
+                            15
+
+                        </h2>
+
+                        <small>
+
+                            Returned for modification
+
+                        </small>
+
+                    </div>
+
+
+
+                </div>
+
+            </div>
+
+            </div>
+
+        </section>
+
+        <!-- ==========================================
+                    TABLE SECTION
+        ========================================== -->
+
+        <section class="dashboard-table-section">
+
+            <div class="section-header">
+                
+<div class="dashboard-filters">
+
+    <div class="search-box">
+
+        <input
+            type="text"
+            id="searchValidation"
+            placeholder="Search by Validation ID, Laboratory, Reviewer..."
+        >
+
+    </div>
+
+    <div class="filter-box">
+
+        <select id="statusFilter">
+
+            <option value="">All Status</option>
+
+            <option>Approved</option>
+
+            <option>Validation Queue</option>
+
+            <option>Draft</option>
+
+            <option>Rejected</option>
+
+        </select>
+
+    </div>
+
+    <div class="filter-box">
+
+        <select id="typeFilter">
+
+            <option value="">All Validation Types</option>
+
+            <option>With Calculation</option>
+
+            <option>Without Calculation</option>
+
+            <option>Auto Verification - Phase 1</option>
+
+            <option>Auto Verification - Phase 2</option>
+
+            <option>Information System Evaluation and Validation Record </option>
+
+
+        </select>
+
+    </div>
+
+</div>
+
+
+
+
+
+            
+            </div>
+
+            <div class="table-responsive">
+
+                <table class="dashboard-table">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>Validation ID</th>
+
+                            <th>Department</th>
+
+                            <th>Machine Name</th>
+
+                            <th>Serial No</th>
+
+                            <th>Validation Type</th>
+
+                            <th>Status</th>
+
+                            <th>Reviewer</th>
+
+                            <th>Date</th>
+
+                            <th>Actions</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+                                                <tr>
+
+                            <td>
+
+                                VAL-001
+
+                            </td>
+
+                            <td>
+
+                                Hematology
+
+                            </td>
+
+                            <td>
+
+                                Sysmex XN-1000
+
+                            </td>
+
+                            <td>
+
+                                SN-45871
+
+                            </td>
+
+                            <td>
+
+                                With Calculation
+
+                            </td>
+
+                            <td>
+
+                                <span class="status-badge approved">
+
+                                    Approved
+
+                                </span>
+
+                            </td>
+
+                            <td>
+
+                                Laboratory Director
+
+                            </td>
+
+                            <td>
+
+                                01 Aug 2026
+
+                            </td>
+
+                            <td>
+
+                                <button class="btn-icon">
+
+                                    View
+
+                                </button>
+
+                                <button class="btn-icon">
+
+                                    Edit
+
+                                </button>
+
+                            </td>
+
+                        </tr>
+
+
+
+                        <tr>
+
+                            <td>
+
+                                VAL-002
+
+                            </td>
+
+                            <td>
+
+                                Clinical Chemistry
+
+                            </td>
+
+                            <td>
+
+                                Cobas 6000
+
+                            </td>
+
+                            <td>
+
+                                SN-32841
+
+                            </td>
+
+                            <td>
+
+                                Without Calculation
+
+                            </td>
+
+                            <td>
+
+                                <span class="status-badge queue">
+
+                                    Validation Queue
+
+                                </span>
+
+                            </td>
+
+                            <td>
+
+                                Section Head
+
+                            </td>
+
+                            <td>
+
+                                03 Aug 2026
+
+                            </td>
+
+                            <td>
+
+                                <button class="btn-icon">
+
+                                    View
+
+                                </button>
+
+                                <button class="btn-icon">
+
+                                    Edit
+
+                                </button>
+
+                            </td>
+
+                        </tr>
+
+
+
+                        <tr>
+
+                            <td>
+
+                                VAL-003
+
+                            </td>
+
+                            <td>
+
+                                Microbiology
+
+                            </td>
+
+                            <td>
+
+                                VITEK 2
+
+                            </td>
+
+                            <td>
+
+                                SN-77492
+
+                            </td>
+
+                            <td>
+
+                                Auto Verification - Phase 1
+
+                            </td>
+
+                            <td>
+
+                                <span class="status-badge draft">
+
+                                    Draft
+
+                                </span>
+
+                            </td>
+
+                            <td>
+
+                                Quality Coordinator
+
+                            </td>
+
+                            <td>
+
+                                05 Aug 2026
+
+                            </td>
+
+                            <td>
+
+                                <button class="btn-icon">
+
+                                    View
+
+                                </button>
+
+                                <button class="btn-icon">
+
+                                    Edit
+
+                                </button>
+
+                            </td>
+
+                        </tr>
+
+
+
+                        <tr>
+
+                            <td>
+
+                                VAL-004
+
+                            </td>
+
+                            <td>
+
+                                Blood Bank
+
+                            </td>
+
+                            <td>
+
+                                Ortho Vision
+
+                            </td>
+
+                            <td>
+
+                                SN-19823
+
+                            </td>
+
+                            <td>
+
+                                Auto Verification - Phase 2
+
+                            </td>
+
+                            <td>
+
+                                <span class="status-badge approved">
+
+                                    Approved
+
+                                </span>
+
+                            </td>
+
+                            <td>
+
+                                Laboratory Director
+
+                            </td>
+
+                            <td>
+
+                                07 Aug 2026
+
+                            </td>
+
+                            <td>
+
+                                <button class="btn-icon">
+
+                                    View
+
+                                </button>
+
+                                <button class="btn-icon">
+
+                                    Edit
+
+                                </button>
+
+                            </td>
+
+                        </tr>
+
+
+
+                        <tr>
+
+                            <td>
+
+                                VAL-005
+
+                            </td>
+
+                            <td>
+
+                                Immunology
+
+                            </td>
+
+                            <td>
+
+                                Architect i2000SR
+
+                            </td>
+
+                            <td>
+
+                                SN-44591
+
+                            </td>
+
+                            <td>
+
+                                With Calculation
+
+                            </td>
+
+                            <td>
+
+                                <span class="status-badge rejected">
+
+                                    Rejected
+
+                                </span>
+
+                            </td>
+
+                            <td>
+
+                                Validation Committee
+
+                            </td>
+
+                            <td>
+
+                                08 Aug 2026
+
+                            </td>
+
+                            <td>
+
+                                <button class="btn-icon">
+
+                                    View
+
+                                </button>
+
+                                <button class="btn-icon">
+
+                                    Edit
+
+                                </button>
+
+                            </td>
+
+                        </tr>
+
+
+
+                        <tr>
+
+                            <td>
+
+                                VAL-006
+
+                            </td>
+
+                            <td>
+
+                                Molecular Biology
+
+                            </td>
+
+                            <td>
+
+                                GeneXpert
+
+                            </td>
+
+                            <td>
+
+                                SN-73164
+
+                            </td>
+
+                            <td>
+
+                                Without Calculation
+
+                            </td>
+
+                            <td>
+
+                                <span class="status-badge approved">
+
+                                    Approved
+
+                                </span>
+
+                            </td>
+
+                            <td>
+
+                                Laboratory Director
+
+                            </td>
+
+                            <td>
+
+                                09 Aug 2026
+
+                            </td>
+
+                            <td>
+
+                                <button class="btn-icon">
+
+                                    View
+
+                                </button>
+
+                                <button class="btn-icon">
+
+                                    Edit
+
+                                </button>
+
+                            </td>
+
+                        </tr>
+                                                <tr>
+
+                            <td>
+
+                                VAL-007
+
+                            </td>
+
+                            <td>
+
+                                POCT
+
+                            </td>
+
+                            <td>
+
+                                ABL90 FLEX
+
+                            </td>
+
+                            <td>
+
+                                SN-98234
+
+                            </td>
+
+                            <td>
+
+                                Auto Verification - Phase 1
+
+                            </td>
+
+                            <td>
+
+                                <span class="status-badge queue">
+
+                                    Validation Queue
+
+                                </span>
+
+                            </td>
+
+                            <td>
+
+                                Section Head
+
+                            </td>
+
+                            <td>
+
+                                10 Aug 2026
+
+                            </td>
+
+                            <td>
+
+                                <button class="btn-icon">
+
+                                    View
+
+                                </button>
+
+                                <button class="btn-icon">
+
+                                    Edit
+
+                                </button>
+
+                            </td>
+
+                        </tr>
+
+
+
+
+
+                        <tr>
+
+                            <td>
+
+                                VAL-008
+
+                            </td>
+
+                            <td>
+
+                                Histology
+
+                            </td>
+
+                            <td>
+
+                                Leica ST5020
+
+                            </td>
+
+                            <td>
+
+                                SN-56128
+
+                            </td>
+
+                            <td>
+
+                                Auto Verification - Phase 2
+
+                            </td>
+
+                            <td>
+
+                                <span class="status-badge approved">
+
+                                    Approved
+
+                                </span>
+
+                            </td>
+
+                            <td>
+
+                                Laboratory Director
+
+                            </td>
+
+                            <td>
+
+                                11 Aug 2026
+
+                            </td>
+
+                            <td>
+
+                                <button class="btn-icon">
+
+                                    View
+
+                                </button>
+
+                                <button class="btn-icon">
+
+                                    Edit
+
+                                </button>
+
+                            </td>
+
+                        </tr>
+
+
+
+
+
+                        <tr>
+
+                            <td>
+
+                                VAL-009
+
+                            </td>
+
+                            <td>
+
+                                Reference Lab
+
+                            </td>
+
+                            <td>
+
+                                Abbott Alinity c
+
+                            </td>
+
+                            <td>
+
+                                SN-41725
+
+                            </td>
+
+                            <td>
+
+                                With Calculation
+
+                            </td>
+
+                            <td>
+
+                                <span class="status-badge draft">
+
+                                    Draft
+
+                                </span>
+
+                            </td>
+
+                            <td>
+
+                                Validation Committee
+
+                            </td>
+
+                            <td>
+
+                                12 Aug 2026
+
+                            </td>
+
+                            <td>
+
+                                <button class="btn-icon">
+
+                                    View
+
+                                </button>
+
+                                <button class="btn-icon">
+
+                                    Edit
+
+                                </button>
+
+                            </td>
+
+                        </tr>
+
+
+
+
+
+                        <tr>
+
+                            <td>
+
+                                VAL-010
+
+                            </td>
+
+                            <td>
+
+                                Tissue Typing
+
+                            </td>
+
+                            <td>
+
+                                Luminex LABScan
+
+                            </td>
+
+                            <td>
+
+                                SN-88261
+
+                            </td>
+
+                            <td>
+
+                                Without Calculation
+
+                            </td>
+
+                            <td>
+
+                                <span class="status-badge approved">
+
+                                    Approved
+
+                                </span>
+
+                            </td>
+
+                            <td>
+
+                                Laboratory Director
+
+                            </td>
+
+                            <td>
+
+                                13 Aug 2026
+
+                            </td>
+
+                            <td>
+
+                                <button class="btn-icon">
+
+                                    View
+
+                                </button>
+
+                                <button class="btn-icon">
+
+                                    Edit
+
+                                </button>
+
+                            </td>
+
+                        </tr>
+
+
+
+
+
+                        <tr>
+
+                            <td>
+
+                                VAL-011
+
+                            </td>
+
+                            <td>
+
+                                ED-STAT-LAB
+
+                            </td>
+
+                            <td>
+
+                                GEM Premier 5000
+
+                            </td>
+
+                            <td>
+
+                                SN-33290
+
+                            </td>
+
+                            <td>
+
+                                Auto Verification - Phase 2
+
+                            </td>
+
+                            <td>
+
+                                <span class="status-badge rejected">
+
+                                    Rejected
+
+                                </span>
+
+                            </td>
+
+                            <td>
+
+                                Validation Committee
+
+                            </td>
+
+                            <td>
+
+                                14 Aug 2026
+
+                            </td>
+
+                            <td>
+
+                                <button class="btn-icon">
+
+                                    View
+
+                                </button>
+
+                                <button class="btn-icon">
+
+                                    Edit
+
+                                </button>
+
+                            </td>
+
+                        </tr>
+
+
+
+
+
+                        <tr>
+
+                            <td>
+
+                                VAL-012
+
+                            </td>
+
+                            <td>
+
+                                Mycobacteriology
+
+                            </td>
+
+                            <td>
+
+                                BACTEC MGIT 960
+
+                            </td>
+
+                            <td>
+
+                                SN-60114
+
+                            </td>
+
+                            <td>
+
+                                With Calculation
+
+                            </td>
+
+                            <td>
+
+                                <span class="status-badge queue">
+
+                                    Validation Queue
+
+                                </span>
+
+                            </td>
+
+                            <td>
+
+                                Section Head
+
+                            </td>
+
+                            <td>
+
+                                15 Aug 2026
+
+                            </td>
+
+                            <td>
+
+                                <button class="btn-icon">
+
+                                    View
+
+                                </button>
+
+                                <button class="btn-icon">
+
+                                    Edit
+
+                                </button>
+
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+            <div class="table-footer">
+
+                <div class="table-footer-left">
+
+                    Showing 1–12 of 142 Validation Forms
+
+                </div>
+
+                <div class="table-pagination">
+
+                    <button class="pagination-btn">
+
+                        Previous
+
+                    </button>
+
+                    <button class="pagination-btn active">
+
+                        1
+
+                    </button>
+
+                    <button class="pagination-btn">
+
+                        2
+
+                    </button>
+
+                    <button class="pagination-btn">
+
+                        3
+
+                    </button>
+
+                    <button class="pagination-btn">
+
+                        4
+
+                    </button>
+
+                    <button class="pagination-btn">
+
+                        Next
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+
+    <!-- =========================
+         FOOTER
+    ========================== -->
+
+    <footer class="dashboard-footer">
+
+        <div class="container dashboard-footer-inner">
+
+            <p>
+                © King Fahd Armed Forces Hospital
+            </p>
+
+            <p>
+                Information System Validation
+            </p>
+
+        </div>
+
+    </footer>
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const menuButton = document.querySelector(".menu-toggle");
+    const sidebar = document.querySelector(".sidebar");
+
+    if(menuButton){
+
+        menuButton.addEventListener("click",function(){
+
+            sidebar.classList.toggle("collapsed");
+
+        });
+
+    }
+
+});
+
+</script>
+
+</body>
+
+</html>

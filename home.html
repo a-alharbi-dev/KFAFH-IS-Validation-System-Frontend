@@ -1,0 +1,1293 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>IS Validation | Home</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=Tajawal:wght@300;400;500;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <link rel="stylesheet" href="style.css">
+
+<style>
+.home-saved-drafts-section{
+    margin-top:32px;
+    padding:24px;
+    background:#fff;
+    border:1px solid rgba(18,70,52,.12);
+    border-radius:16px;
+    box-shadow:0 8px 24px rgba(18,70,52,.06);
+}
+.home-saved-drafts-heading{
+    display:flex;
+    align-items:flex-end;
+    justify-content:space-between;
+    gap:16px;
+    margin-bottom:16px;
+}
+.home-saved-drafts-heading h2{
+    margin:0;
+    color:#123f32;
+    font-size:22px;
+}
+.home-saved-drafts-heading p{
+    margin:4px 0 0;
+    color:#7a827e;
+    font-size:13px;
+}
+.home-saved-drafts-list{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+}
+.home-draft-card{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:18px;
+    padding:14px 16px;
+    border:1px solid #e3e8e5;
+    border-radius:10px;
+    background:#fff;
+}
+.home-draft-info{
+    min-width:0;
+}
+.home-draft-title{
+    margin:0 0 4px;
+    color:#183f34;
+    font-size:14px;
+    font-weight:700;
+}
+.home-draft-meta{
+    margin:0;
+    color:#8a918e;
+    font-size:12px;
+}
+.home-draft-status{
+    display:inline-block;
+    margin-right:10px;
+    padding:4px 9px;
+    border-radius:999px;
+    background:#f2efe4;
+    color:#7b6929;
+    font-size:11px;
+    font-weight:700;
+}
+.home-draft-continue{
+    flex:0 0 auto;
+    border:0;
+    border-radius:7px;
+    padding:9px 15px;
+    background:#123f5a;
+    color:#fff;
+    font:inherit;
+    font-size:12px;
+    font-weight:700;
+    cursor:pointer;
+}
+.home-draft-delete{
+    flex:0 0 auto;
+    border:1px solid #d9b8b8;
+    border-radius:7px;
+    padding:9px 15px;
+    background:#fff;
+    color:#9b2c2c;
+    font:inherit;
+    font-size:12px;
+    font-weight:700;
+    cursor:pointer;
+}
+.home-draft-delete:hover{
+    background:#fff5f5;
+    border-color:#c98f8f;
+}
+.home-drafts-empty{
+    padding:20px;
+    border:1px dashed #d8dfdb;
+    border-radius:10px;
+    text-align:center;
+    color:#8a918e;
+    font-size:13px;
+}
+@media (max-width:700px){
+    .home-draft-card{
+        align-items:flex-start;
+        flex-direction:column;
+    }
+}
+</style>
+
+
+<style id="home-validation-queue-style">
+.home-validation-queue-section{
+    margin-top:32px;
+    padding:24px;
+    background:#fff;
+    border:1px solid rgba(18,70,52,.12);
+    border-radius:16px;
+    box-shadow:0 8px 24px rgba(18,70,52,.06);
+}
+.home-validation-queue-heading{
+    display:flex;
+    align-items:flex-end;
+    justify-content:space-between;
+    gap:16px;
+    margin-bottom:16px;
+}
+.home-validation-queue-heading h2{
+    margin:0;
+    color:#123f32;
+    font-size:22px;
+}
+.home-validation-queue-heading p{
+    margin:4px 0 0;
+    color:#7a827e;
+    font-size:13px;
+}
+.home-validation-queue-list{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+}
+.home-validation-queue-card{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:18px;
+    padding:14px 16px;
+    border:1px solid #e3e8e5;
+    border-radius:10px;
+    background:#fff;
+}
+.home-validation-queue-info{
+    min-width:0;
+}
+.home-validation-queue-title{
+    margin:0 0 4px;
+    color:#183f34;
+    font-size:14px;
+    font-weight:700;
+}
+.home-validation-queue-meta{
+    margin:0;
+    color:#8a918e;
+    font-size:12px;
+}
+.home-validation-queue-actions{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    flex:0 0 auto;
+}
+.home-validation-queue-status{
+    display:inline-block;
+    padding:4px 9px;
+    border-radius:999px;
+    background:#edf6f2;
+    color:#175a46;
+    font-size:11px;
+    font-weight:700;
+}
+.home-validation-queue-progress{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    min-width:44px;
+    padding:4px 9px;
+    border-radius:999px;
+    background:#edf6f2;
+    color:#175a46;
+    border:1px solid #d5e8df;
+    font-size:11px;
+    font-weight:800;
+}
+.home-validation-queue-open{
+    border:0;
+    border-radius:7px;
+    padding:9px 15px;
+    background:#175a46 !important;
+    color:#fff !important;
+    font:inherit;
+    font-size:12px;
+    font-weight:700;
+    cursor:pointer;
+}
+.home-validation-queue-open:hover{
+    background:#124737 !important;
+}
+.home-validation-queue-empty{
+    padding:20px;
+    border:1px dashed #d8dfdb;
+    border-radius:10px;
+    text-align:center;
+    color:#8a918e;
+    font-size:13px;
+}
+@media (max-width:700px){
+    .home-validation-queue-card{
+        align-items:flex-start;
+        flex-direction:column;
+    }
+}
+</style>
+
+
+<style id="home-draft-approval-progress-style">
+.home-draft-actions{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    flex:0 0 auto;
+}
+.home-draft-status{
+    margin-right:0 !important;
+}
+.home-draft-approval-progress{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    min-width:44px;
+    padding:4px 9px;
+    border-radius:999px;
+    background:#edf6f2;
+    color:#175a46;
+    border:1px solid #d5e8df;
+    font-size:11px;
+    font-weight:800;
+}
+@media (max-width:700px){
+    .home-draft-actions{
+        width:100%;
+        flex-wrap:wrap;
+    }
+}
+</style>
+
+</head>
+
+
+<body class="dashboard-body">
+
+    <!-- =========================
+         DASHBOARD NAVBAR
+    ========================== -->
+
+    <header class="dashboard-navbar">
+
+        <div class="container dashboard-nav-inner">
+
+            <!-- BRAND -->
+
+            <div class="dashboard-brand">
+
+                <div class="dashboard-logo">
+                    KFAFH
+                </div>
+
+                <div class="dashboard-brand-text">
+
+                    <strong>
+                        IS Validation
+                    </strong>
+
+                    <small>
+                        Medical Laboratory
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <!-- NAVIGATION -->
+
+            <nav class="dashboard-navigation">
+
+                <a
+                    href="home.html"
+                    class="dashboard-nav-link active"
+                >
+                    Home
+                    </a>
+
+<a class="dashboard-nav-link " href="Dashboard.html">
+                Dashboard 
+            </a>
+
+
+
+               
+
+            </nav>
+
+
+            <!-- USER -->
+
+            <div class="dashboard-user">
+
+                <div class="dashboard-user-info">
+
+                    <strong id="navbarUserName">
+                        User
+                    </strong>
+
+                    <small id="navbarJobTitle">
+                        Laboratory Staff
+                    </small>
+
+                </div>
+
+
+                <div
+                    class="dashboard-avatar"
+                    id="userAvatar"
+                >
+                    U
+                </div>
+
+
+                <button
+                    type="button"
+                    class="logout-button"
+                    id="logoutButton"
+                >
+                    Logout
+                </button>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+
+    <!-- =========================
+         MAIN
+    ========================== -->
+
+    <main class="dashboard-main">
+
+        <div class="container">
+
+
+            <!-- =========================
+                 WELCOME CARD
+            ========================== -->
+
+            <section class="dashboard-welcome-card">
+
+
+                <div class="welcome-content">
+
+                    <span class="dashboard-badge">
+                        IS Validation Workspace
+                    </span>
+
+
+                    <h1>
+                        Welcome,
+                        <span id="welcomeUserName">
+                            User
+                        </span>
+                    </h1>
+
+
+                    <p>
+                        Welcome to the Information System Validation workspace.
+                        Create and manage laboratory information-system
+                        validation records from your dashboard.
+                    </p>
+
+
+                    <div class="welcome-details">
+
+                        <span>
+                            King Fahd Armed Forces Hospital
+                        </span>
+
+                        <span class="detail-dot"></span>
+
+                        <span>
+                            Medical Laboratory
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- CREATE BUTTON -->
+
+                <div class="welcome-action">
+
+                    <button
+                        type="button"
+                        class="create-validation-button"
+                        id="createValidationButton"
+                    >
+
+                        <span class="create-plus">
+                            +
+                        </span>
+
+                        Create Validation Form
+
+                    </button>
+
+                </div>
+
+
+            </section>
+
+
+
+            <!-- =========================
+                 EMPTY CONTENT
+                 WE WILL ADD FORMS LATER
+            ========================== -->
+
+           <!-- =========================
+     STATISTICS OVERVIEW
+========================== -->
+
+<section class="statistics-section">
+
+    <div class="statistics-heading">
+        <div>
+            <h2>Validation Overview</h2>
+            <p>
+                Summary of information system validation records.
+            </p>
+        </div>
+    </div>
+
+
+    <div class="statistics-grid">
+
+        <!-- OVERALL PASS RATE -->
+
+        <article class="stat-card pass-rate-card">
+
+            <div class="stat-card-title">
+                <span>Overall Pass Rate</span>
+                <small>Met vs Not Met</small>
+            </div>
+
+            <div class="pass-rate-content">
+
+                <div class="progress-circle">
+                    <div class="progress-circle-inner">
+
+                        <strong id="passRate">
+                            0%
+                        </strong>
+
+                        <span>
+                            MET
+                        </span>
+
+                    </div>
+                </div>
+
+
+                <div class="pass-stat-list">
+
+                    <div class="pass-stat-row">
+
+                        <div class="stat-label">
+                            <span class="stat-dot met-dot"></span>
+                            Met
+                        </div>
+
+                        <strong id="metCount">
+                            0
+                        </strong>
+
+                    </div>
+
+
+                    <div class="pass-stat-row">
+
+                        <div class="stat-label">
+                            <span class="stat-dot partial-dot"></span>
+                            Partial
+                        </div>
+
+                        <strong id="partialCount">
+                            0
+                        </strong>
+
+                    </div>
+
+
+                    <div class="pass-stat-row">
+
+                        <div class="stat-label">
+                            <span class="stat-dot notmet-dot"></span>
+                            Not Met
+                        </div>
+
+                        <strong id="notMetCount">
+                            0
+                        </strong>
+
+                    </div>
+
+
+                    <div class="pass-stat-total">
+
+                        <span>
+                            Total Evaluations
+                        </span>
+
+                        <strong id="totalEvaluations">
+                            0
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </article>
+
+
+
+        <!-- STATUS PIPELINE -->
+
+        <article class="stat-card">
+
+            <div class="stat-card-title">
+                <span>Status Pipeline</span>
+                <small>Validation workflow</small>
+            </div>
+
+
+            <div class="pipeline-list">
+
+                <div class="pipeline-item">
+
+
+
+                    <div>
+                        <span>Draft</span>
+                        <strong id="draftCount">0</strong>
+                    </div>
+
+                </div>
+
+
+                <div class="pipeline-item">
+
+
+                    <div>
+                        <span>In Review</span>
+                        <strong id="reviewCount">0</strong>
+                    </div>
+
+                </div>
+
+
+                <div class="pipeline-item">
+
+  
+
+                    <div>
+                        <span>Approved / Archived</span>
+                        <strong id="approvedCount">0</strong>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </article>
+
+
+
+        <!-- RECORDS BY LAB SECTION -->
+
+        <article class="stat-card">
+
+            <div class="stat-card-title">
+                <span>Records by Laboratory Section</span>
+                <small>Validation distribution</small>
+            </div>
+
+
+            <div class="section-stat">
+
+                <div class="section-stat-top">
+
+                    <span id="laboratorySection">
+                        No records yet
+                    </span>
+
+                    <strong id="sectionCount">
+                        0
+                    </strong>
+
+                </div>
+
+
+                <div class="stat-progress">
+
+                    <div
+                        class="stat-progress-fill"
+                        id="sectionProgress"
+                        style="width: 0%;"
+                    ></div>
+
+                </div>
+
+            </div>
+
+        </article>
+
+
+
+        <!-- TEST METHOD -->
+
+        <article class="stat-card">
+
+            <div class="stat-card-title">
+                <span>Case Scenarios by Test Method</span>
+                <small>Testing overview</small>
+            </div>
+
+
+            <div class="section-stat">
+
+                <div class="section-stat-top">
+
+                    <span id="testMethod">
+                        No test methods yet
+                    </span>
+
+                    <strong id="testMethodCount">
+                        0
+                    </strong>
+
+                </div>
+
+
+                <div class="stat-progress">
+
+                    <div
+                        class="stat-progress-fill"
+                        id="testMethodProgress"
+                        style="width: 0%;"
+                    ></div>
+
+                </div>
+
+            </div>
+
+        </article>
+
+    </div>
+
+</section>
+
+
+
+
+
+        </div>
+
+    </main>
+
+
+
+    <!-- =========================
+         FOOTER
+    ========================== -->
+
+    <footer class="dashboard-footer">
+
+        <div class="container dashboard-footer-inner">
+
+            <p>
+                © King Fahd Armed Forces Hospital
+            </p>
+
+            <p>
+                Information System Validation
+            </p>
+
+        </div>
+
+    </footer>
+
+
+
+    <!-- =========================
+         JAVASCRIPT
+    ========================== -->
+
+    <script>
+
+        /*
+        ==========================================
+        USER INFORMATION
+        ==========================================
+
+        Later, when we connect a real database,
+        this information will come from the
+        logged-in user's account.
+
+        For now we read it from localStorage.
+        */
+
+
+        const savedName =
+            localStorage.getItem("loggedInUserName");
+
+
+        const savedJobTitle =
+            localStorage.getItem("loggedInUserJobTitle");
+
+
+        const userName =
+            savedName || "User";
+
+
+        const jobTitle =
+            savedJobTitle || "Laboratory Staff";
+
+
+
+        // Welcome name
+
+        document.getElementById(
+            "welcomeUserName"
+        ).textContent = userName;
+
+
+
+        // Navbar name
+
+        document.getElementById(
+            "navbarUserName"
+        ).textContent = userName;
+
+
+
+        // Job title
+
+        document.getElementById(
+            "navbarJobTitle"
+        ).textContent = jobTitle;
+
+
+
+        // First letter inside avatar
+
+        document.getElementById(
+            "userAvatar"
+        ).textContent =
+            userName.charAt(0).toUpperCase();
+
+
+
+        /*
+        ==========================================
+        CREATE VALIDATION
+        ==========================================
+        */
+
+        document.getElementById(
+    "createValidationButton"
+).addEventListener(
+    "click",
+    function () {
+
+        // Start a brand-new form, not a previously selected draft/record.
+        localStorage.removeItem("activeValidationDraft");
+        localStorage.removeItem("activeValidationRecord");
+
+        window.location.href =
+            "create-validation.html";
+
+    }
+);
+
+
+        /*
+        ==========================================
+        LOGOUT
+        ==========================================
+        */
+
+        document.getElementById(
+            "logoutButton"
+        ).addEventListener(
+            "click",
+            function () {
+
+                localStorage.removeItem(
+                    "loggedInUserName"
+                );
+
+                localStorage.removeItem(
+                    "loggedInUserJobTitle"
+                );
+
+
+                window.location.href =
+                    "index.html";
+
+            }
+        );
+
+    </script>
+
+
+
+<script>
+(function () {
+    const list = document.getElementById("homeSavedDraftsList");
+    const empty = document.getElementById("homeDraftsEmpty");
+    if (!list) return;
+
+    function safeParse(value) {
+        try { return JSON.parse(value); } catch (e) { return null; }
+    }
+
+    function collectDrafts() {
+        const preferredKeys = [
+            "validationDrafts",
+            "savedValidationDrafts",
+            "isValidationDrafts",
+            "drafts"
+        ];
+
+        let drafts = [];
+
+        preferredKeys.forEach(function (key) {
+            const data = safeParse(localStorage.getItem(key));
+            if (Array.isArray(data)) {
+                data.forEach(function (item, index) {
+                    if (item && typeof item === "object") {
+                        drafts.push({
+                            data: item,
+                            storageKey: key,
+                            index: index
+                        });
+                    }
+                });
+            } else if (data && typeof data === "object") {
+                drafts.push({
+                    data: data,
+                    storageKey: key,
+                    index: 0
+                });
+            }
+        });
+
+        return drafts;
+    }
+
+    function text(value, fallback) {
+        return value === undefined || value === null || value === ""
+            ? fallback
+            : String(value);
+    }
+
+    function renderDrafts() {
+        const drafts = collectDrafts();
+
+        list.innerHTML = "";
+
+        if (!drafts.length) {
+            list.innerHTML =
+                '<div class="home-drafts-empty">No saved drafts yet.</div>';
+            return;
+        }
+
+        drafts.forEach(function (entry) {
+            const d = entry.data;
+
+            const title =
+                d.validationTypeLabel ||
+                d.validationType ||
+                d.title ||
+                d.formTitle ||
+                d.validationTitle ||
+                d.type ||
+                "Validation Draft";
+
+            const section =
+                d.laboratorySection ||
+                d.labSection ||
+                d.department ||
+                "";
+
+            const saved =
+                d.lastSaved ||
+                d.savedAt ||
+                d.updatedAt ||
+                d.date ||
+                "";
+
+            const card = document.createElement("div");
+            card.className = "home-draft-card";
+
+            const info = document.createElement("div");
+            info.className = "home-draft-info";
+
+            const heading = document.createElement("p");
+            heading.className = "home-draft-title";
+            heading.textContent = text(title, "Validation Draft");
+
+            const meta = document.createElement("p");
+            meta.className = "home-draft-meta";
+            meta.textContent =
+                (section ? section + " · " : "") +
+                (saved ? "last saved " + saved : "Unfinished validation form");
+
+            info.appendChild(heading);
+            info.appendChild(meta);
+
+            const actions = document.createElement("div");
+            actions.className = "home-draft-actions";
+
+            const status = document.createElement("span");
+            status.className = "home-draft-status";
+            status.textContent = "Draft";
+
+            const button = document.createElement("button");
+            button.type = "button";
+            button.className = "home-draft-continue";
+            button.textContent = "Continue →";
+
+            button.addEventListener("click", function () {
+                localStorage.removeItem("activeValidationRecord");
+
+                localStorage.setItem(
+                    "activeValidationDraft",
+                    JSON.stringify({
+                        storageKey: entry.storageKey,
+                        index: entry.index,
+                        id: d.id || "",
+                        draft: d
+                    })
+                );
+
+                window.location.href = "create-validation.html?draft=" +
+                    encodeURIComponent(d.id || (entry.storageKey + "-" + entry.index));
+            });
+
+            const deleteButton = document.createElement("button");
+            deleteButton.type = "button";
+            deleteButton.className = "home-draft-delete";
+            deleteButton.textContent = "Delete";
+
+            deleteButton.addEventListener("click", function () {
+                const confirmed = confirm(
+                    "Are you sure you want to delete this draft? This action cannot be undone."
+                );
+
+                if (!confirmed) return;
+
+                const draftId = d.id || null;
+
+                // Remove from the collection that produced this card.
+                const stored = safeParse(localStorage.getItem(entry.storageKey));
+
+                if (Array.isArray(stored)) {
+                    const updated = draftId
+                        ? stored.filter(function (item) {
+                            return !item || item.id !== draftId;
+                        })
+                        : stored.filter(function (item, itemIndex) {
+                            return itemIndex !== entry.index;
+                        });
+
+                    localStorage.setItem(
+                        entry.storageKey,
+                        JSON.stringify(updated)
+                    );
+                } else if (stored && typeof stored === "object") {
+                    localStorage.removeItem(entry.storageKey);
+                }
+
+                // Also remove the matching Draft copy from validationRecords.
+                const records =
+                    safeParse(localStorage.getItem("validationRecords")) || [];
+
+                if (Array.isArray(records)) {
+                    const updatedRecords = records.filter(function (item) {
+                        if (!item) return false;
+
+                        if (draftId) {
+                            return item.id !== draftId;
+                        }
+
+                        return !(
+                            item.status === "Draft" &&
+                            item.savedAt === d.savedAt
+                        );
+                    });
+
+                    localStorage.setItem(
+                        "validationRecords",
+                        JSON.stringify(updatedRecords)
+                    );
+                }
+
+                // Clear active draft only if it is the one being deleted.
+                const active =
+                    safeParse(localStorage.getItem("activeValidationDraft"));
+
+                if (
+                    active &&
+                    (
+                        (draftId && (
+                            active.id === draftId ||
+                            (active.draft && active.draft.id === draftId)
+                        )) ||
+                        (!draftId &&
+                            active.storageKey === entry.storageKey &&
+                            active.index === entry.index)
+                    )
+                ) {
+                    localStorage.removeItem("activeValidationDraft");
+                }
+
+                renderDrafts();
+            });
+
+            actions.appendChild(status);
+            actions.appendChild(button);
+            actions.appendChild(deleteButton);
+
+            card.appendChild(info);
+            card.appendChild(actions);
+            list.appendChild(card);
+        });
+    }
+
+    renderDrafts();
+})();
+</script>
+
+
+<script>
+(function () {
+    const list = document.getElementById("homeValidationQueueList");
+    if (!list) return;
+
+    function safeParse(value) {
+        try { return JSON.parse(value); }
+        catch (e) { return null; }
+    }
+
+    function getPostedValidations() {
+        const records =
+            safeParse(localStorage.getItem("validationRecords")) || [];
+
+        if (!Array.isArray(records)) return [];
+
+        return records.filter(function (record) {
+            return record &&
+                record.status === "Posted for Validation";
+        });
+    }
+
+    function formatDate(value) {
+        if (!value) return "";
+        const date = new Date(value);
+        if (Number.isNaN(date.getTime())) return String(value);
+
+        return date.toLocaleString();
+    }
+
+    function renderValidationQueue() {
+        const records = getPostedValidations();
+        list.innerHTML = "";
+
+        if (!records.length) {
+            list.innerHTML =
+                '<div class="home-validation-queue-empty">' +
+                'No validations waiting for review.' +
+                '</div>';
+            return;
+        }
+
+        records.forEach(function (record, index) {
+            const card = document.createElement("div");
+            card.className = "home-validation-queue-card";
+
+            const info = document.createElement("div");
+            info.className = "home-validation-queue-info";
+
+            const title = document.createElement("p");
+            title.className = "home-validation-queue-title";
+            title.textContent =
+                record.title ||
+                record.validationType ||
+                "Validation Form";
+
+            const meta = document.createElement("p");
+            meta.className = "home-validation-queue-meta";
+
+            const department =
+                record.generalInformation &&
+                record.generalInformation.department
+                    ? record.generalInformation.department
+                    : "";
+
+            const machine =
+                record.generalInformation &&
+                record.generalInformation.machineName
+                    ? record.generalInformation.machineName
+                    : "";
+
+            const posted = formatDate(record.savedAt);
+
+            const parts = [];
+            if (department) parts.push(department);
+            if (machine) parts.push(machine);
+            if (posted) parts.push("Posted " + posted);
+
+            meta.textContent =
+                parts.length
+                    ? parts.join(" · ")
+                    : "Posted validation";
+
+            info.appendChild(title);
+            info.appendChild(meta);
+
+            const actions = document.createElement("div");
+            actions.className = "home-validation-queue-actions";
+
+            const status = document.createElement("span");
+            status.className = "home-validation-queue-status";
+            status.textContent = "Pending Validation";
+
+            const approvalProgress = document.createElement("span");
+            approvalProgress.className = "home-validation-queue-progress";
+
+            const totalApprovers =
+                record.expiryType === "No Expires"
+                    ? 6
+                    : (
+                        Number(
+                            record.totalApprovers ??
+                            record.approvalTotal ??
+                            (record.approvalProgress && record.approvalProgress.total)
+                        ) || 5
+                    );
+
+            let approvedApprovers =
+                Number(
+                    record.approvedApprovers ??
+                    record.approvedCount ??
+                    record.approvalsCompleted ??
+                    (record.approvalProgress && record.approvalProgress.approved)
+                );
+
+            if (!Number.isFinite(approvedApprovers)) {
+                const approvals =
+                    Array.isArray(record.approvals)
+                        ? record.approvals
+                        : Array.isArray(record.reviewers)
+                            ? record.reviewers
+                            : [];
+
+                approvedApprovers = approvals.filter(function (item) {
+                    if (!item || typeof item !== "object") return false;
+
+                    const value = String(
+                        item.status ||
+                        item.state ||
+                        item.decision ||
+                        ""
+                    ).toLowerCase();
+
+                    return value === "approved" ||
+                           value === "approve" ||
+                           item.approved === true;
+                }).length;
+            }
+
+            // Fallback for the currently reviewed validation.
+            if (!Number.isFinite(approvedApprovers) || approvedApprovers === 0) {
+                try {
+                    const progressKey =
+                        record.expiryType === "No Expires"
+                            ? "currentNoExpiresApprovalProgress"
+                            : "currentExpiresApprovalProgress";
+
+                    const currentProgress = JSON.parse(
+                        localStorage.getItem(progressKey) || "null"
+                    );
+
+                    if (
+                        currentProgress &&
+                        Number.isFinite(Number(currentProgress.approved)) &&
+                        (
+                            !currentProgress.recordId ||
+                            currentProgress.recordId === record.id
+                        )
+                    ) {
+                        approvedApprovers = Number(currentProgress.approved);
+                    }
+                } catch (e) {}
+            }
+
+            approvedApprovers = Math.max(
+                0,
+                Math.min(approvedApprovers || 0, totalApprovers)
+            );
+
+            approvalProgress.textContent =
+                approvedApprovers + "/" + totalApprovers;
+
+            const openButton = document.createElement("button");
+            openButton.type = "button";
+            openButton.className = "home-validation-queue-open";
+            openButton.textContent = "Open →";
+
+            openButton.addEventListener("click", function () {
+                localStorage.setItem(
+                    "activeValidationRecord",
+                    JSON.stringify(record)
+                );
+
+                window.location.href =
+                    record.continueUrl ||
+                    record.url ||
+                    "create-validation.html";
+            });
+
+            actions.appendChild(status);
+            actions.appendChild(approvalProgress);
+            actions.appendChild(openButton);
+
+            card.appendChild(info);
+            card.appendChild(actions);
+            list.appendChild(card);
+        });
+    }
+
+    renderValidationQueue();
+})();
+</script>
+
+</body>
+
+</html>

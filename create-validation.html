@@ -1,0 +1,5082 @@
+<!DOCTYPE html>
+
+<html dir="ltr" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>IS Validation | Create Validation</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&amp;family=Tajawal:wght@300;400;500;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="style.css" rel="stylesheet"/>
+<style>
+/* Create Validation: vertical step sidebar */
+.validation-workspace-layout {
+    display: grid;
+    grid-template-columns: 230px minmax(0, 1fr);
+    gap: 24px;
+    align-items: start;
+}
+
+.validation-steps-sidebar {
+    position: sticky;
+    top: 100px;
+}
+
+.validation-steps-vertical {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 0 !important;
+    padding: 18px !important;
+}
+
+.validation-steps-vertical .validation-step {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 8px;
+}
+
+.validation-steps-vertical .step-line {
+    width: 2px !important;
+    height: 34px !important;
+    min-width: 2px !important;
+    flex: none !important;
+    margin: 0 0 0 25px !important;
+}
+
+.validation-workspace-content {
+    min-width: 0;
+}
+
+@media (max-width: 900px) {
+    .validation-workspace-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .validation-steps-sidebar {
+        position: static;
+    }
+
+    .validation-steps-vertical {
+        flex-direction: row !important;
+        align-items: center !important;
+    }
+
+    .validation-steps-vertical .step-line {
+        width: auto !important;
+        height: 2px !important;
+        flex: 1 !important;
+        margin: 0 8px !important;
+    }
+}
+</style>
+<style>
+/* Expiry dropdown below Back to Home */
+.expiry-type-control {
+    margin-top: 14px;
+    margin-bottom: 18px;
+    width: 100%;
+    max-width: 260px;
+}
+
+.expiry-type-label {
+    display: block;
+    margin-bottom: 7px;
+    font-weight: 600;
+}
+
+.expiry-type-control select {
+    width: 100%;
+}
+</style>
+<style>
+.no-expiry-table-wrap {
+    width: 100%;
+    overflow-x: auto;
+    margin-bottom: 14px;
+}
+.no-expiry-table {
+    width: 100%;
+    min-width: 1450px;
+    border-collapse: collapse;
+}
+.no-expiry-table th,
+.no-expiry-table td {
+    border: 1px solid #d9ded9;
+    padding: 8px;
+    vertical-align: top;
+}
+.no-expiry-table th {
+    font-size: 12px;
+    white-space: nowrap;
+}
+.no-expiry-table input,
+.no-expiry-table select,
+.no-expiry-table textarea {
+    width: 100%;
+    box-sizing: border-box;
+    min-width: 120px;
+}
+.no-expiry-table textarea {
+    min-height: 58px;
+    resize: vertical;
+}
+.no-expiry-add-row {
+    margin-top: 8px;
+}
+</style>
+<style>
+.no-expiry-row-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.42);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    z-index: 9999;
+}
+.no-expiry-row-modal.show {
+    display: flex;
+}
+.no-expiry-row-modal-card {
+    width: min(900px, 96vw);
+    max-height: 90vh;
+    overflow-y: auto;
+    background: #fff;
+    border-radius: 14px;
+    padding: 24px;
+    box-shadow: 0 18px 50px rgba(0,0,0,.2);
+}
+.no-expiry-row-modal-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+.no-expiry-row-modal-header h2 {
+    margin: 0 0 5px;
+}
+.no-expiry-row-modal-header p {
+    margin: 0;
+}
+.no-expiry-modal-close {
+    border: 0;
+    background: transparent;
+    font-size: 30px;
+    cursor: pointer;
+    line-height: 1;
+}
+.no-expiry-row-form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0,1fr));
+    gap: 16px;
+}
+.no-expiry-row-modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 22px;
+}
+.no-expiry-table .table-action-buttons {
+    display: flex;
+    gap: 6px;
+}
+@media (max-width: 700px) {
+    .no-expiry-row-form-grid {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+<style>
+/* No Expires table — match the existing green validation theme */
+#noExpiresTable thead,
+.no-expires-table thead,
+#noExpiryTable thead,
+.no-expiry-table thead {
+    background: #1f5a46 !important;
+    color: #ffffff !important;
+}
+
+#noExpiresTable thead th,
+.no-expires-table thead th,
+#noExpiryTable thead th,
+.no-expiry-table thead th {
+    background: #1f5a46 !important;
+    color: #ffffff !important;
+    border-color: rgba(255,255,255,.18) !important;
+}
+
+#noExpiresTable,
+.no-expires-table,
+#noExpiryTable,
+.no-expiry-table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#noExpiresTable tbody td,
+.no-expires-table tbody td,
+#noExpiryTable tbody td,
+.no-expiry-table tbody td {
+    border-color: #d9e4df;
+}
+</style>
+<style>
+.no-expires-extra-content{margin-top:26px}
+.no-expires-summary{display:flex;align-items:center;gap:28px;padding:18px 0 25px}
+.no-expires-summary .summary-circle{width:105px;height:105px;border:12px solid #ebe8dc;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;flex:0 0 auto}
+.no-expires-summary .summary-circle strong{font-size:25px;line-height:1;color:#173f35}
+.no-expires-summary .summary-circle span{font-size:10px;margin-top:3px}
+.no-expires-summary .summary-stats{display:grid;grid-template-columns:1fr 1fr;column-gap:30px;flex:1}
+.no-expires-summary .summary-stats div{display:flex;justify-content:space-between;border-bottom:1px solid #e6e6e6;padding:8px 4px}
+.no-expires-summary .summary-stats strong{color:#1f5a46}
+.no-expires-extra-content .test-method-legend{border-top:1px solid #e5e0d5;border-bottom:1px solid #e5e0d5;padding:14px 4px;margin:0 0 14px}
+.no-expires-extra-content .test-method-legend summary{cursor:pointer;color:#183d35}
+.no-expires-extra-content .test-method-legend summary span{font-weight:400;color:#777;font-size:12px}
+.no-expires-bottom-fields .form-group{margin:12px 0}
+.no-expires-bottom-fields label{display:block;font-size:11px;font-weight:700;margin-bottom:6px;color:#5b645f}
+.no-expires-bottom-fields input{width:100%;min-height:38px;box-sizing:border-box}
+@media(max-width:700px){.no-expires-summary{align-items:flex-start}.no-expires-summary .summary-stats{grid-template-columns:1fr}}
+</style>
+<style>
+.no-expires-page-statistics{
+    display:flex;
+    align-items:center;
+    gap:30px;
+    margin:26px 0 20px;
+    padding:18px 4px;
+}
+.no-expires-page-circle{
+    width:110px;height:110px;min-width:110px;
+    border:12px solid #ece8dc;border-radius:50%;
+    display:flex;flex-direction:column;
+    align-items:center;justify-content:center;
+}
+.no-expires-page-circle strong{font-size:26px;color:#173f35;line-height:1}
+.no-expires-page-circle span{font-size:10px;margin-top:4px}
+.no-expires-page-stat-list{
+    flex:1;display:grid;grid-template-columns:1fr 1fr;column-gap:34px;
+}
+.no-expires-page-stat-list div{
+    display:flex;justify-content:space-between;
+    padding:9px 4px;border-bottom:1px solid #e3e3e3;
+}
+.no-expires-page-stat-list strong{color:#1f5a46}
+@media(max-width:700px){
+    .no-expires-page-statistics{align-items:flex-start}
+    .no-expires-page-stat-list{grid-template-columns:1fr}
+}
+</style>
+<style>
+.no-expiry-inline-rows{margin-top:22px;padding-top:18px;border-top:1px solid #e5e5e5}
+.no-expiry-inline-actions{margin-bottom:12px}
+.no-expiry-inline-table-wrap{width:100%;overflow-x:auto;border-radius:10px}
+.no-expiry-inline-table-wrap table{width:100%;min-width:1050px;border-collapse:collapse}
+.no-expiry-inline-table-wrap thead,.no-expiry-inline-table-wrap th{
+  background:#175a46 !important;color:#fff !important
+}
+</style>
+<style>
+/* No Expires page layout */
+#noExpiresPageStatistics{
+    background:#ffffff !important;
+    border:1px solid #e7e7e7;
+    border-radius:16px;
+    padding:22px 24px !important;
+    box-shadow:0 4px 14px rgba(0,0,0,.04);
+    width:100%;
+    box-sizing:border-box;
+    clear:both;
+}
+
+/* Keep the conclusion/action block below the statistics, never beside it */
+#noExpiresPageStatistics + #noExpiryBottomSection,
+.no-expiry-bottom-section{
+    width:100%;
+    display:block;
+    clear:both;
+    margin-top:16px;
+}
+
+/* Existing lower section after the modal: force full row below statistics */
+#noExpiryRowModal ~ section.validation-section{
+    width:100% !important;
+    max-width:none !important;
+    display:block !important;
+    clear:both !important;
+    margin:16px 0 0 !important;
+    box-sizing:border-box;
+}
+#noExpiryRowModal ~ section.validation-section .validation-section-body{
+    width:100% !important;
+}
+#noExpiryRowModal ~ section.validation-section .validation-form-grid{
+    display:grid !important;
+    grid-template-columns:1fr !important;
+    width:100% !important;
+}
+
+/* Prevent parent layouts from putting stats and lower fields side-by-side */
+#noExpiresPageStatistics,
+#noExpiryRowModal,
+#noExpiryRowModal ~ section.validation-section{
+    grid-column:1 / -1 !important;
+}
+</style>
+<style>
+.processing-record-card{
+  background:#fff;
+  border:1px solid #e4e8e5;
+  border-radius:16px;
+  overflow:hidden;
+  margin-top:18px;
+  width:100%;
+  box-sizing:border-box;
+  box-shadow:0 4px 14px rgba(0,0,0,.04);
+}
+.processing-record-header{
+  background:#175a46;
+  color:#fff;
+  padding:18px 20px;
+}
+.processing-record-header h3{margin:0 0 4px;font-size:18px}
+.processing-record-header p{margin:0;font-size:12px;opacity:.8}
+.processing-record-list{padding:8px 16px 14px}
+.processing-record-item{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:13px 2px;
+  border-bottom:1px solid #edf0ee;
+}
+.processing-record-item:last-child{border-bottom:0}
+.processing-status{
+  width:30px;height:30px;min-width:30px;
+  display:flex;align-items:center;justify-content:center;
+  border-radius:50%;
+  background:#edf5f1;
+  color:#175a46;
+  border:1px solid #cfe0d8;
+  font-weight:700;
+  font-size:12px;
+}
+.processing-record-item strong{display:block;font-size:13px;color:#27332e}
+.processing-record-item small{display:block;margin-top:3px;color:#7a837f;font-size:11px}
+.processing-record-item.manager{
+  background:#f7faf8;
+  margin:4px -8px -4px;
+  padding-left:10px;padding-right:10px;
+  border-radius:10px;
+}
+.processing-record-item.manager .processing-status{
+  background:#175a46;color:#fff;border-color:#175a46;
+}
+
+/* Put the card in the left step/sidebar column when that column exists. */
+.validation-sidebar .processing-record-card,
+.steps-sidebar .processing-record-card,
+.validation-steps .processing-record-card{
+  width:100%;
+}
+
+@media (max-width:900px){
+  .processing-record-card{margin-top:14px}
+}
+</style>
+<style>
+/* Fixed left approval sidebar - independent of Expires / No Expires */
+/* Only the Expires approval sidebar is fixed */
+#approvalFlowSidebar{
+  position:absolute;
+  left:24px;
+  top:430px;
+  width:270px;
+  background:#fff;
+  border:1px solid #e1e6e3;
+  border-radius:16px;
+  overflow:hidden;
+  box-shadow:0 5px 18px rgba(0,0,0,.06);
+  z-index:5;
+}
+
+/* No Expires sidebar follows the normal page flow */
+#noExpiryApprovalFlow{
+  position:static;
+  width:100%;
+  margin-top:20px;
+}
+
+.approval-flow-header{background:#175a46;color:#fff;padding:17px 18px}
+.approval-flow-header h3{margin:0 0 3px;font-size:17px}
+.approval-flow-header p{margin:0;font-size:11px;opacity:.82}
+.approval-flow-list{padding:8px 12px 14px}
+.approval-person{padding:12px 2px;border-bottom:1px solid #e9eeeb}
+.approval-person:last-child{border-bottom:0}
+.approval-person-top{display:flex;align-items:center;gap:9px;margin-bottom:8px}
+.approval-number{
+  width:27px;height:27px;min-width:27px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  background:#edf5f1;color:#175a46;border:1px solid #cfe0d8;
+  font-size:11px;font-weight:700;
+}
+.approval-person strong{font-size:12px;color:#26342e}
+.approval-person textarea{
+  display:block;width:100%;min-height:54px;resize:vertical;
+  box-sizing:border-box;border:1px solid #dce3df;border-radius:8px;
+  padding:8px;font:inherit;font-size:11px;background:#fff;margin-bottom:7px;
+}
+.approve-member-btn{
+  border:1px solid #9fc5b4;background:#f1f8f4;color:#175a46;
+  border-radius:7px;padding:6px 10px;font-size:11px;font-weight:700;cursor:pointer;
+}
+.approve-member-btn.approved{background:#175a46;color:#fff}
+.final-approver{background:#f8faf9;margin:4px -5px -4px;padding:12px 7px;border-radius:9px}
+.final-approver .approval-number{background:#175a46;color:#fff;border-color:#175a46}
+
+/* Give main form room so the sidebar is not in the middle of the content */
+.create-page .container{position:relative}
+@media (min-width:1050px){
+  #validationForm{margin-left:0px}
+}
+@media (max-width:1049px){
+    #approvalFlowSidebar{
+        position:static;
+        width:100%;
+        margin:16px 0;
+        top:auto !important;
+    }
+
+    #noExpiryApprovalFlow{
+        position:static;
+        width:100%;
+        margin:16px 0;
+    }
+}
+</style>
+<style>
+/* v2: Processing Record directly below the steps */
+#approvalFlowSidebar{
+    top:315px !important;
+}
+
+/* Approve / Reject buttons side by side */
+.approval-actions{
+    display:flex;
+    gap:8px;
+    align-items:center;
+}
+.reject-member-btn{
+    border:1px solid #d6aaa7;
+    background:#fff7f6;
+    color:#9b3d36;
+    border-radius:7px;
+    padding:6px 10px;
+    font-size:11px;
+    font-weight:700;
+    cursor:pointer;
+}
+.reject-member-btn.rejected{
+    background:#9b3d36;
+    border-color:#9b3d36;
+    color:#fff;
+}
+@media (max-width:1049px){
+    .approval-flow-sidebar{top:auto !important;}
+}
+</style>
+<style id="layout-repair-2026">
+@media (min-width:1050px){
+  main.create-page>.container{
+    display:grid!important;
+    grid-template-columns:285px minmax(0,1fr)!important;
+    grid-template-areas:"steps heading" "approval content"!important;
+    column-gap:28px!important;row-gap:16px!important;
+    align-items:start!important;max-width:1450px!important;
+    margin:0 auto!important;padding:0 24px!important;
+  }
+  main.create-page>.container>.create-page-heading{
+    grid-area:heading!important;width:100%!important;min-width:0!important;margin:0!important;
+  }
+  main.create-page>.container>#approvalFlowSidebar{
+    grid-area:approval!important;position:static!important;inset:auto!important;
+    width:285px!important;max-width:285px!important;margin:0!important;
+    transform:none!important;z-index:auto!important;max-height:680px!important;
+    overflow-y:auto!important;align-self:start!important;
+  }
+  main.create-page>.container>#validationForm{display:contents!important;}
+  #validationForm>.validation-workspace-layout{display:contents!important;}
+  #validationForm .validation-steps-sidebar{
+    grid-area:steps!important;position:static!important;inset:auto!important;
+    width:285px!important;max-width:285px!important;margin:0!important;transform:none!important;
+  }
+  #validationForm .validation-steps-vertical{width:100%!important;box-sizing:border-box!important;margin:0!important;}
+  #validationForm .validation-workspace-content,
+  #validationForm #noExpiresForm{
+    grid-area:content!important;width:100%!important;min-width:0!important;
+    max-width:none!important;margin:0!important;position:static!important;transform:none!important;
+  }
+  #expiresForm,#noExpiresForm,#expiresForm .validation-section,#noExpiresForm .validation-section,
+  #noExpiresPageStatistics,#noExpiryBottomSection{box-sizing:border-box!important;max-width:100%!important;}
+  .table-wrapper,.no-expiry-inline-table-wrap,.no-expiry-table-wrap{max-width:100%!important;overflow-x:auto!important;}
+}
+#approvalFlowSidebar .approval-actions{display:grid!important;grid-template-columns:1fr 1fr!important;gap:8px!important;}
+#approvalFlowSidebar .approval-actions button{width:100%!important;}
+#approvalFlowSidebar textarea{width:100%!important;box-sizing:border-box!important;}
+@media(max-width:1049px){
+  main.create-page>.container{display:block!important;}
+  main.create-page>.container>#approvalFlowSidebar,
+  #validationForm .validation-steps-sidebar,
+  #validationForm .validation-workspace-content,
+  #validationForm #noExpiresForm{
+    position:static!important;inset:auto!important;transform:none!important;
+    width:100%!important;max-width:none!important;margin:0 0 16px!important;
+  }
+  main.create-page>.container>#validationForm{display:block!important;width:100%!important;margin:0!important;}
+  #validationForm>.validation-workspace-layout{display:block!important;}
+}
+</style>
+<style id="final-validation-actions-style">
+.validation-form-actions{
+    display:flex;
+    justify-content:flex-end;
+    align-items:center;
+    gap:12px;
+    flex-wrap:wrap;
+}
+.validation-draft-button,
+.validation-submit-button{
+    min-width:160px;
+}
+</style>
+<style id="expires-sequential-approval-style">
+#approvalFlowSidebar .approval-state{
+    margin-left:auto;
+    padding:4px 7px;
+    border-radius:6px;
+    background:#f1eee4;
+    color:#766f5f;
+    font-size:10px;
+    font-weight:700;
+}
+#approvalFlowSidebar .approval-person.is-current{
+    background:#fbfdfc;
+}
+#approvalFlowSidebar .approval-person.is-approved .approval-state{
+    background:#e8f4ed;
+    color:#175a46;
+}
+#approvalFlowSidebar .approval-person.is-rejected .approval-state{
+    background:#fff0ef;
+    color:#9b3d36;
+}
+#approvalFlowSidebar button:disabled,
+#approvalFlowSidebar textarea:disabled{
+    opacity:.48;
+    cursor:not-allowed;
+}
+#approvalFlowSidebar .approval-person:not(.is-current):not(.is-approved):not(.is-rejected) textarea{
+    background:#f7f8f7;
+}
+</style>
+<style id="auto-verification-middleware-style">
+.auto-verification-middleware-field {
+    margin: 4px 0 22px;
+}
+.auto-verification-middleware-field .form-group {
+    margin: 0;
+}
+</style>
+<style id="user-request-final-layout-fixes">
+/* Final requested layout fixes */
+.validation-workspace-layout{display:block!important;}
+.validation-workspace-content,#expiresForm,#noExpiresForm{width:100%!important;max-width:none!important;margin:0!important;}
+
+@media (min-width:1050px){
+ main.create-page>.container{
+    display:block !important;
+}
+  main.create-page>.container>.create-page-heading{grid-area:heading!important;}
+  main.create-page>.container>#validationForm{grid-area:content!important;display:block!important;margin:0!important;width:100%!important;}
+  #approvalFlowSidebar,#noExpiryApprovalFlow{
+    grid-area:approval!important;position:static!important;inset:auto!important;
+    width:285px!important;max-width:285px!important;margin:0!important;
+    align-self:start!important;max-height:720px!important;overflow-y:auto!important;
+  }
+}
+@media(max-width:1049px){
+  #approvalFlowSidebar,#noExpiryApprovalFlow{position:static!important;width:100%!important;max-width:none!important;margin:0 0 16px!important;}
+}
+
+/* Every previous textarea is now a single-line text field. */
+input.input, input.approval-note{min-height:48px;box-sizing:border-box;}
+.approval-person input.approval-note{display:block;width:100%;margin-bottom:7px;border:1px solid #dce3df;border-radius:8px;padding:8px;font:inherit;font-size:11px;background:#fff;}
+.no-expiry-row-form-grid .validation-full-width,.modal-form-grid .modal-full-width{grid-column:1/-1;}
+</style>
+<style>
+.table-action-buttons{
+    display:flex;
+    gap:8px;
+    justify-content:center;
+}
+
+.table-edit-button{
+    padding:8px 16px;
+    background:#f2fff7;
+    color:#157347;
+    border:1px solid #b7e4c7;
+    border-radius:10px;
+    font-weight:600;
+    cursor:pointer;
+}
+
+.table-delete-button{
+    padding:8px 16px;
+    background:#fff5f5;
+    color:#c0392b;
+    border:1px solid #f5c2c7;
+    border-radius:10px;
+    font-weight:600;
+    cursor:pointer;
+}
+</style>
+
+</head>
+<body class="dashboard-body">
+<!-- =====================================================
+     NAVBAR
+===================================================== -->
+<header class="dashboard-navbar">
+<div class="container dashboard-nav-inner">
+<div class="dashboard-brand">
+<div class="dashboard-logo">
+                KFAFH
+            </div>
+<div class="dashboard-brand-text">
+<strong>
+                    IS Validation
+                </strong>
+<small>
+                    Medical Laboratory
+                </small>
+</div>
+</div>
+<nav class="dashboard-navigation">
+<a class="dashboard-nav-link" href="home.html">
+                Home
+            </a>
+
+            
+<a class="dashboard-nav-link " href="Dashboard.html">
+                Dashboard 
+            </a>
+
+
+</nav>
+<div class="dashboard-user">
+<div class="dashboard-user-info">
+<strong id="navbarUserName">
+                    User
+                </strong>
+<small id="navbarJobTitle">
+                    Laboratory Staff
+                </small>
+</div>
+<div class="dashboard-avatar" id="userAvatar">
+                U
+            </div>
+<button class="logout-button" id="logoutButton" type="button">
+                Logout
+            </button>
+</div>
+</div>
+</header>
+<!-- =====================================================
+     MAIN
+===================================================== -->
+<main class="create-page">
+<div class="container">
+<!-- =================================================
+             PAGE HEADING
+        ================================================== -->
+<div class="create-page-heading">
+
+<!-- EXPIRY TYPE -->
+<div class="expiry-type-control">
+<label class="expiry-type-label" for="expiryType">Expiry Type</label>
+<select class="input select-input" id="expiryType" name="expiryType" required="">
+<option disabled="" value="">Select expiry type</option>
+<option value="Expires">Expires 2 years </option>
+<option selected="" value="No Expires">No Expiry</option>
+</select>
+</div>
+</div>
+<!-- FIXED APPROVAL / PROCESSING SIDEBAR -->
+
+<form id="validationForm">
+<div class="validation-workspace-layout">
+
+<div class="validation-workspace-content" id="expiresForm">
+<!-- =================================================
+                 STEPS
+            ================================================== -->
+<!-- =================================================
+                 GENERAL INFORMATION
+            ================================================== -->
+<section class="validation-section">
+<div class="validation-section-header">
+<div class="validation-section-icon">
+                        01
+                    </div>
+<div>
+<h2>
+                            General Information
+                        </h2>
+<p>
+                            Information shared by all validation forms.
+                        </p>
+</div>
+</div>
+<div class="validation-section-body">
+<div class="validation-form-grid">
+<!-- DEPARTMENT -->
+<div class="form-group">
+<label class="label" for="department">
+                                Department
+
+                                <span class="required">
+                                    *
+                                </span>
+</label>
+<select class="input select-input" id="department" required="">
+<option disabled="" selected="" value="">
+                                    Select department
+                                </option>
+<option>Hematology</option>
+<option>
+                                    Clinical Chemistry
+                                </option>
+<option>
+                                    Microbiology
+                                </option>
+<option>
+                                    Immunology
+                                </option>
+<option>
+                                    Blood Bank
+                                </option>
+<option>
+                                    Molecular Biology
+                                </option>
+<option>
+                                    POCT
+                                </option>
+<option>
+                                    Parasitology
+                                </option>
+<option>
+                                    ED-STAT-LAB
+                                </option>
+<option>
+                                    Mycobacteriology
+                                </option>
+<option>
+                                    Tissue Typing
+                                </option>
+<option>
+                                    Histology
+                                </option>
+<option>
+                                    Reference Lab
+                                </option>
+</select>
+</div>
+<!-- DATE -->
+<div class="form-group">
+<label class="label" for="validationDate">
+                                Date
+
+                                <span class="required">
+                                    *
+                                </span>
+</label>
+<input class="input" id="validationDate" required="" type="date"/>
+</div>
+<!-- MACHINE -->
+<div class="form-group">
+<label class="label" for="machineName">
+                                Machine Name
+
+                                <span class="required">
+                                    *
+                                </span>
+</label>
+<input class="input" id="machineName" placeholder="Enter machine name" required="" type="text"/>
+</div>
+<!-- SERIAL NUMBER -->
+<div class="form-group">
+<label class="label" for="serialNumber">
+                                Serial No
+
+                                <span class="required">
+                                    *
+                                </span>
+</label>
+<input class="input" id="serialNumber" placeholder="Enter serial number" required="" type="text"/>
+</div>
+<!-- REASON -->
+<div class="form-group validation-full-width">
+<label class="label" for="reasonValidation">
+                                Reason for Validation
+
+                                <span class="required">
+                                    *
+                                </span>
+</label>
+<select class="input select-input" id="reasonValidation" required="">
+<option disabled="" selected="" value="">
+                                    Select reason for validation
+                                </option>
+<option>
+                                    Algorithm / Rule Modification
+                                </option>
+<option>
+                                    Data Restoration
+                                </option>
+<option>
+                                    Hardware Maintenance
+                                </option>
+<option>
+                                    Instrument Software Updates
+                                </option>
+<option>
+                                    Interface
+                                </option>
+<option>
+                                    Middleware Update
+                                </option>
+<option>
+                                    New Instrument
+                                </option>
+<option>
+                                    New LIS
+                                </option>
+<option>
+                                    New LIS Module
+                                </option>
+<option>
+                                    New Role
+                                </option>
+<option>
+                                    Periodic Validation
+                                </option>
+<option>
+                                    Power Outage
+                                </option>
+<option>
+                                    Revalidation
+                                </option>
+<option>
+                                    Server Crash
+                                </option>
+<option>
+                                    System Recovery / Downtime
+                                </option>
+</select>
+</div>
+</div>
+</div>
+</section>
+<!-- =================================================
+                 VALIDATION TYPE
+            ================================================== -->
+<section class="validation-section">
+<div class="validation-section-header">
+<div class="validation-section-icon">
+                        02
+                    </div>
+<div>
+<h2>
+                            Validation Type
+                        </h2>
+<p>
+                            Select the validation form you want to complete.
+                        </p>
+</div>
+</div>
+<div class="validation-section-body">
+<!-- TYPE SELECT -->
+<div class="validation-type-selector">
+<label class="label" for="validationType">
+                            Select Validation Type
+
+                            <span class="required">
+                                *
+                            </span>
+</label>
+<select class="input select-input" id="validationType" required="">
+<option disabled="" selected="" value="">
+                                Choose validation type
+                            </option>
+<option value="withCalculation">
+                              validation of results transmission integration  With Calculation
+                            </option>
+<option value="withoutCalculation">
+                                validation of results transmission integration  Without Calculation
+                            </option>
+<option value="autoPhase1">
+                               validation of results Auto-Verification - Phase 1
+                            </option>
+<option value="autoPhase2">
+                               validation of results Auto-Verification - Phase 2
+                            </option>
+</select>
+</div>
+<!-- =================================================
+                         DYNAMIC CONTENT
+                    ================================================== -->
+<div class="validation-dynamic-content" id="validationDynamicContent">
+<!-- EMPTY STATE -->
+<div class="validation-empty-state" id="validationEmptyState">
+<div class="empty-state-icon">
+                                +
+                            </div>
+<h3>
+                                Select a Validation Type
+                            </h3>
+<p>
+                                Select one of the four validation types.
+                                The required section will appear here.
+                            </p>
+</div>
+<!-- =================================================
+                             WITH CALCULATION
+                        ================================================== -->
+<div class="validation-type-content" id="withCalculationFields">
+<div class="dynamic-title">
+<h3>
+                                    With Calculation
+                                </h3>
+<p>
+                                    Add calculation validation rows.
+                                </p>
+</div>
+<!-- INTERFACE / GENERAL TYPE INFORMATION -->
+<div class="validation-form-grid">
+<div class="form-group">
+<label class="label" for="interfaceType">
+                                        Type of Interface
+                                        <span class="required">*</span>
+</label>
+<input class="input" id="interfaceType" name="interfaceType" placeholder="Enter interface type" type="text"/>
+</div>
+<div class="form-group">
+<label class="label" for="dataInterfaceThrough">
+                                        Data Interface Through
+                                        <span class="required">*</span>
+</label>
+<input class="input" id="dataInterfaceThrough" name="dataInterfaceThrough" placeholder="Enter data interface method" type="text"/>
+</div>
+<div class="form-group">
+<label class="label" for="dataFlow">
+                                        Data Flow
+                                        <span class="required">*</span>
+</label>
+<input class="input" id="dataFlow" name="dataFlow" placeholder="Enter data flow" type="text"/>
+</div>
+<div class="form-group">
+<label class="label" for="viewingTechnology">
+                                        Viewing Technology
+                                        <span class="required">*</span>
+</label>
+<input class="input" id="viewingTechnology" name="viewingTechnology" placeholder="Enter viewing technology" type="text"/>
+</div>
+<div class="form-group">
+<label class="label" for="identificationTransmission">
+                                        Identification Transmission
+                                        <span class="required">*</span>
+</label>
+<input class="input" id="identificationTransmission" name="identificationTransmission" placeholder="Enter identification transmission" type="text"/>
+</div>
+</div>
+<div class="validation-table-header">
+<div>
+<strong>
+                                        Validation Rows
+                                    </strong>
+<p>
+                                        Add each test as a separate row.
+                                    </p>
+</div>
+<button class="btn btn-secondary" id="addCalculationRowButton" type="button">
+                                    + Add Row
+                                </button>
+</div>
+<div class="table-wrapper">
+<table class="validation-table">
+<thead>
+<tr>
+<th>#</th>
+<th>Accession Number</th>
+<th>Test Name</th>
+<th>Formula / Calculation Definition</th>
+<th>Machine Result + Unit</th>
+<th>Manual Calculation</th>
+<th>Result in LIS + Unit</th>
+<th>Evaluation</th>
+<th>Tested By</th>
+<th>Remark</th>
+<th>Evidence</th>
+<th>Actions</th>
+</tr>
+</thead>
+<tbody id="calculationTableBody">
+<!--
+                                            Saved rows appear here
+                                        -->
+</tbody>
+</table>
+</div>
+<!-- EMPTY ROW MESSAGE -->
+<div class="rows-empty-message" id="calculationEmptyMessage">
+<strong>
+                                    No rows added yet
+                                </strong>
+<span>
+                                    Click “Add Row” to create the first
+                                    calculation validation row.
+                                </span>
+</div>
+</div>
+<!-- =================================================
+                             WITHOUT CALCULATION
+                        ================================================== -->
+<div class="validation-type-content" id="withoutCalculationFields">
+<div class="dynamic-title">
+<h3>
+                                    Without Calculation
+                                </h3>
+<p>
+                                    Validation rows without calculation.
+                                </p>
+</div>
+<!-- INTERFACE / GENERAL TYPE INFORMATION -->
+<div class="validation-form-grid">
+<div class="form-group">
+<label class="label" for="withoutInterfaceType">
+                                        Type of Interface
+                                        <span class="required">*</span>
+</label>
+<input class="input" id="withoutInterfaceType" name="withoutInterfaceType" placeholder="Enter interface type" type="text"/>
+</div>
+<div class="form-group">
+<label class="label" for="withoutDataInterfaceThrough">
+                                        Data Interface Through
+                                        <span class="required">*</span>
+</label>
+<input class="input" id="withoutDataInterfaceThrough" name="withoutDataInterfaceThrough" placeholder="Enter data interface method" type="text"/>
+</div>
+<div class="form-group">
+<label class="label" for="withoutDataFlow">
+                                        Data Flow
+                                        <span class="required">*</span>
+</label>
+<input class="input" id="withoutDataFlow" name="withoutDataFlow" placeholder="Enter data flow" type="text"/>
+</div>
+<div class="form-group">
+<label class="label" for="withoutViewingTechnology">
+                                        Viewing Technology
+                                        <span class="required">*</span>
+</label>
+<input class="input" id="withoutViewingTechnology" name="withoutViewingTechnology" placeholder="Enter viewing technology" type="text"/>
+</div>
+<div class="form-group">
+<label class="label" for="withoutIdentificationTransmission">
+                                        Identification Transmission
+                                        <span class="required">*</span>
+</label>
+<input class="input" id="withoutIdentificationTransmission" name="withoutIdentificationTransmission" placeholder="Enter identification transmission" type="text"/>
+</div>
+</div>
+<div class="validation-table-header">
+<div>
+<strong>Validation Rows</strong>
+<p>Add each test as a separate row.</p>
+</div>
+<button class="btn btn-secondary" id="addWithoutCalculationRowButton" type="button">
+        + Add Row
+    </button>
+</div>
+<div class="table-wrapper">
+<table class="validation-table">
+<thead>
+<tr>
+<th>#</th>
+<th>Accession Number</th>
+<th>Test Name</th>
+<th>Test Mnemonic</th>
+<th>Machine Result + Unit</th>
+<th>Result in LIS System + Unit</th>
+<th>Result in Middleware</th>
+<th>Patient Result Report + Unit</th>
+<th>Normal Range + Unit</th>
+<th>Tested By</th>
+<th>Remark</th>
+<th>Evaluation</th>
+<th>Evidence</th>
+<th>Actions</th>
+</tr>
+</thead>
+<tbody id="withoutCalculationTableBody">
+</tbody>
+</table>
+</div>
+<div class="rows-empty-message" id="withoutCalculationEmptyMessage">
+<strong>No rows added yet</strong>
+<span>Click "Add Row" to create the first row.</span>
+</div>
+</div>
+<!-- =================================================
+                             AUTO PHASE 1
+                        ================================================== -->
+<div class="validation-type-content" id="autoPhase1Fields">
+<div class="dynamic-title">
+<h3>
+                                    Auto-Verification - Phase 1
+                                </h3>
+<p>
+                                    Phase 1 auto-verification validation.
+                                </p>
+</div>
+<div class="validation-form-grid auto-verification-middleware-field">
+<div class="form-group validation-full-width">
+<label class="label" for="autoPhase1Middleware">
+                                        DATA AUTO-VERIFICATION THROUGH (MIDDLEWARE &amp; VERSION)
+                                        <span class="required">*</span>
+</label>
+<input class="input" id="autoPhase1Middleware" name="autoPhase1Middleware" placeholder="Enter middleware name and version" required="" type="text"/>
+</div>
+</div>
+<div class="validation-table-header">
+<div>
+<strong>Validation Rules</strong>
+<p>Add each auto-verification rule as a separate row.</p>
+</div>
+<button class="btn btn-secondary" id="addAutoPhase1RowButton" type="button">+ Add Row</button>
+</div>
+<div class="table-wrapper">
+<table class="validation-table">
+<thead>
+<tr>
+<th>#</th>
+<th>Rule (Algorithm)</th>
+<th>Simulated Challenge</th>
+<th>Expected Reaction</th>
+<th>System Responds</th>
+<th>Acceptance Criteria</th>
+<th>Tested By</th>
+<th>Evaluation</th>
+<th>Remark</th>
+<th>Evidence</th>
+
+<th>Actions</th>
+</tr>
+</thead>
+<tbody id="autoPhase1TableBody"></tbody>
+</table>
+</div>
+<div class="rows-empty-message" id="autoPhase1EmptyMessage">
+<strong>No rows added yet</strong>
+<span>Click “Add Row” to create the first rule.</span>
+</div>
+</div>
+<!-- =================================================
+                             AUTO PHASE 2
+                        ================================================== -->
+<div class="validation-type-content" id="autoPhase2Fields">
+<div class="dynamic-title">
+<h3>
+                                    Auto-Verification - Phase 2
+                                </h3>
+<p>
+                                    Phase 2 auto-verification validation.
+                                </p>
+</div>
+<div class="validation-form-grid auto-verification-middleware-field">
+<div class="form-group validation-full-width">
+<label class="label" for="autoPhase2Middleware">
+                                        DATA AUTO-VERIFICATION THROUGH (MIDDLEWARE &amp; VERSION)
+                                        <span class="required">*</span>
+</label>
+<input class="input" id="autoPhase2Middleware" name="autoPhase2Middleware" placeholder="Enter middleware name and version" required="" type="text"/>
+</div>
+</div>
+<div class="validation-table-header">
+<div>
+
+</div>
+<button class="btn btn-secondary" id="addAutoPhase2RowButton" type="button">+ Add Row</button>
+</div>
+<div class="table-wrapper">
+<table class="validation-table">
+<thead>
+<tr>
+<th>#</th>
+<th>Accession Number</th>
+<th>Test Name</th>
+<th>Result</th>
+<th>Flag</th>
+<th>Challenge Case</th>
+<th>Expected Reaction</th>
+<th>System Respond</th>
+<th>Tested By</th>
+<th>Evaluation</th>
+<th>Remark</th>
+<th>Evidence</th>
+
+<th>Actions</th>
+</tr>
+</thead>
+<tbody id="autoPhase2TableBody"></tbody>
+</table>
+</div>
+<div class="rows-empty-message" id="autoPhase2EmptyMessage">
+<strong>No rows added yet</strong>
+<span>Click “Add Row” to create the first test case.</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- =================================================
+                 CORRECTIVE ACTION / LIMITATIONS
+            ================================================== -->
+<section class="validation-section">
+<div class="validation-section-header">
+<div class="validation-section-icon">
+                        03
+                    </div>
+<div>
+<h2>
+                            Additional Information
+                        </h2>
+<p>
+                            Corrective action and validation limitations.
+                        </p>
+</div>
+</div>
+<div class="validation-section-body">
+<div class="form-group">
+<label class="label" for="correctiveAction">
+                            Action and Corrective Action for
+                            Not Accepted Result
+                        </label>
+<input class="input" id="correctiveAction" placeholder="Enter corrective action if required..." type="text"/>
+</div>
+<div class="form-group">
+<label class="label" for="limitations">
+                            Limitations
+                        </label>
+<input class="input" id="limitations" placeholder="Enter any validation limitations..." type="text"/>
+</div>
+</div>
+</section>
+<!-- =================================================
+                 FORM ACTIONS
+            ================================================== -->
+<div class="validation-form-actions">
+<a class="validation-cancel-button" href="home.html">
+                    Cancel
+                </a>
+<button class="validation-draft-button" id="saveDraftButton" type="button">
+                    Save as Draft
+                </button>
+<button class="btn btn-primary validation-submit-button" id="postValidationButton" type="button">
+                    Post for Validation
+                </button>
+</div>
+</div>
+
+
+
+
+
+<div class="no-expiry-form" id="noExpiresForm" style="display:none;">
+<section class="validation-section">
+<div class="validation-section-header no-expiry-header">
+<div class="validation-section-icon">01</div>
+<div>
+<h2>Information System Evaluation and Validation Record</h2>
+<p>No Expiry validation information</p>
+</div>
+
+ <button
+                                type="button"
+                                class="legend-light-button"
+                                id="legendLightButton"
+                                title="Test Method Legend"
+                                aria-label="Open Test Method Legend"
+                            >
+                                💡
+                            </button>
+
+</div>
+<div class="validation-section-body">
+<div class="validation-form-grid">
+<div class="form-group">
+<label class="label" for="noExpirySystemIdentity">Information System Identity</label>
+<input class="input" id="noExpirySystemIdentity" placeholder="Enter information system identity" type="text"/>
+</div>
+<div class="form-group">
+<label class="label" for="noExpiryModule">Module</label>
+<input class="input" id="noExpiryModule" placeholder="Enter module" type="text"/>
+</div>
+<div class="form-group">
+<label class="label" for="noExpiryAccessPoint">Access Point</label>
+<input class="input" id="noExpiryAccessPoint" placeholder="Enter access point" type="text"/>
+</div>
+<div class="form-group">
+<label class="label" for="noExpiryReportDate">Report Date</label>
+<input class="input" id="noExpiryReportDate" type="date"/>
+</div>
+<div class="form-group">
+<label class="label" for="noExpiryEvaluationProcess">Evaluation Process</label>
+<select class="input select-input" id="noExpiryEvaluationProcess">
+<option value="">— select —</option>
+<option>Initial Evaluation</option>
+<option>Periodic Evaluation</option>
+<option>Re-evaluation</option>
+</select>
+</div>
+<div class="form-group validation-full-width">
+<label class="label" for="noExpiryPurpose">Purpose</label>
+<select class="input select-input" id="noExpiryPurpose">
+<option value="">— select —</option>
+<option>Validation</option>
+<option>Evaluation</option>
+<option>Revalidation</option>
+</select>
+</div>
+<div class="form-group validation-full-width">
+<label class="label" for="noExpiryWorkPlan">Work Plan</label>
+<input class="input" id="noExpiryWorkPlan" placeholder="Enter work plan" type="text"/>
+</div>
+<div class="form-group">
+<label class="label" for="noExpiryLaboratorySection">Laboratory Section</label>
+<select class="input select-input" id="noExpiryLaboratorySection">
+<option value="">— select —</option>
+<option>Hematology</option>
+<option>Chemistry</option>
+<option>Microbiology</option>
+<option>Blood Bank</option>
+<option>Other</option>
+</select>
+</div>
+</div>
+</div>
+
+<div class="no-expiry-inline-rows">
+    
+<div class="validation-table-header">
+
+    <div>
+        <strong>Validation Rows</strong>
+        <p>Add each test as a separate row.</p>
+    </div>
+
+    <button class="btn btn-secondary" id="openNoExpiryRowModal" type="button">
+        + Add Row
+    </button>
+
+</div>
+
+<div class="no-expiry-inline-table-wrap">
+    <table class="no-expiry-table no-expires-table" id="noExpiryTable">
+<thead>
+<tr>
+<th>#</th>
+<th>Test Methods</th>
+<th>Case No#</th>
+<th>Process Steps</th>
+<th>Process Path Value</th>
+<th>Acceptance Criteria / Critical Points</th>
+<th>Date of Test</th>
+<th>System Response (Outcome)</th>
+<th>Evaluation</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody id="noExpiryTableBody"></tbody>
+</table></div>
+</div>
+</section>
+<!-- NO EXPIRES STATISTICS - MAIN PAGE ONLY -->
+<div class="no-expires-page-statistics" id="noExpiresPageStatistics">
+<div class="no-expires-page-circle">
+<strong id="pageMetPercent">0%</strong>
+<span>MET</span>
+</div>
+<div class="no-expires-page-stat-list">
+<div><span>Met case scenarios</span><strong id="pageMetCount">0</strong></div>
+<div><span>Partial met</span><strong id="pagePartialCount">0</strong></div>
+<div><span>Not met</span><strong id="pageNotMetCount">0</strong></div>
+<div><span>Total case scenarios</span><strong id="pageTotalCount">0</strong></div>
+</div>
+</div>
+<section class="validation-section no-expiry-bottom-section" id="noExpiryBottomSection">
+<div class="validation-section-body">
+<div class="validation-form-grid">
+<div class="form-group validation-full-width">
+<label class="label" for="noExpiryConclusion">Conclusion</label>
+<input class="input" id="noExpiryConclusion" type="text"/>
+</div>
+<div class="form-group validation-full-width">
+<label class="label" for="noExpiryUnexpected">Unexpected Outcomes and Action</label>
+<input class="input" id="noExpiryUnexpected" type="text"/>
+</div>
+<div class="form-group validation-full-width">
+<label class="label" for="noExpiryCorrective">Corrective Action</label>
+<input class="input" id="noExpiryCorrective" type="text"/>
+</div>
+<div class="form-group validation-full-width">
+<label class="label" for="noExpiryApproval">Final Approval for Implementation</label>
+<input class="input" id="noExpiryApproval" type="text"/>
+</div>
+</div>
+</div>
+</section>
+<!-- NO EXPIRES REVIEWER & APPROVAL CHAIN -->
+
+<!-- NO EXPIRES FORM ACTIONS -->
+<div class="validation-form-actions no-expiry-final-actions">
+<a class="validation-cancel-button" href="home.html">
+        Cancel
+    </a>
+<button class="validation-draft-button" id="noExpirySaveDraftButton" type="button">
+        Save as Draft
+    </button>
+<button class="btn btn-primary validation-submit-button" id="noExpiryPostValidationButton" type="button">
+        Post for Validation
+    </button>
+</div>
+<div aria-hidden="true" class="no-expiry-row-modal" id="noExpiryRowModal">
+<div class="no-expiry-row-modal-card">
+<div class="no-expiry-row-modal-header">
+<div>
+<h2 id="noExpiryRowModalTitle">Create Row</h2>
+<p>Enter the row information, then press Add Row.</p>
+</div>
+<button class="no-expiry-modal-close" id="closeNoExpiryRowModal" type="button">×</button>
+</div>
+<div class="no-expiry-row-form-grid">
+<div class="form-group">
+<label class="label" for="rowTestMethod">Test Methods</label>
+<select class="input select-input" id="rowTestMethod">
+<option value="">— select —</option>
+<option>Observation</option>
+<option>Inspection</option>
+<option>Testing</option>
+<option>Review</option>
+</select>
+</div>
+<div class="form-group">
+<label class="label" for="rowCaseNo">Case No#</label>
+<input class="input" id="rowCaseNo" placeholder="CASE-001" type="text"/>
+</div>
+<div class="form-group validation-full-width">
+<label class="label" for="rowProcessSteps">Process Steps</label>
+<input class="input" id="rowProcessSteps" placeholder="Active verb: Evaluate, Execute, Intercept, Trigger..." type="text"/>
+</div>
+<div class="form-group">
+<label class="label" for="rowProcessPath">Process Path Value</label>
+<input class="input" id="rowProcessPath" placeholder="Exact variable / data state" type="text"/>
+</div>
+<div class="form-group">
+<label class="label" for="rowAcceptance">Acceptance Criteria / Critical Points</label>
+<input class="input" id="rowAcceptance" type="text"/>
+</div>
+<div class="form-group">
+<label class="label" for="rowDateTest">Date of Test</label>
+<input class="input" id="rowDateTest" type="date"/>
+</div>
+<div class="form-group">
+<label class="label" for="rowSystemResponse">System Response (Outcome)</label>
+<input class="input" id="rowSystemResponse" type="text"/>
+</div>
+<div class="form-group">
+<label class="label" for="noExpiryRowEvaluation">Evaluation</label>
+<select class="input select-input" id="noExpiryRowEvaluation">
+<option value="">— select —</option>
+<option>Met</option>
+<option>Partially Met</option>
+<option>Not Met</option>
+</select>
+</div>
+</div>
+<div class="no-expiry-row-modal-actions">
+<button class="btn btn-secondary" id="cancelNoExpiryRow" type="button">Cancel</button>
+<button class="btn btn-primary" id="saveNoExpiryRow" type="button">Add Row</button>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</form></div>
+
+
+</main>
+<!-- =====================================================
+     WITH CALCULATION MODAL
+===================================================== -->
+<div class="row-modal" id="calculationModal" style="display:none;">
+<div class="row-modal-box">
+<!-- MODAL HEADER -->
+<div class="row-modal-header">
+<div>
+<span class="modal-small-label">
+                    WITH CALCULATION
+                </span>
+<h2 id="calculationModalTitle">
+                    Add Validation Row
+                </h2>
+</div>
+<button class="modal-close" id="closeCalculationModal" type="button">
+                ×
+            </button>
+</div>
+<!-- MODAL BODY -->
+<div class="row-modal-body">
+<div class="modal-form-grid">
+<!-- ACCESSION -->
+<div class="form-group">
+<label class="label" for="rowAccessionNumber">
+                        Accession Number
+
+                        <span class="required">
+                            *
+                        </span>
+</label>
+<input class="input" id="rowAccessionNumber" placeholder="Enter accession number" type="text"/>
+</div>
+<!-- TEST NAME -->
+<div class="form-group">
+<label class="label" for="rowTestName">
+                        Test Name
+
+                        <span class="required">
+                            *
+                        </span>
+</label>
+<input class="input" id="rowTestName" placeholder="Enter test name" type="text"/>
+</div>
+<!-- FORMULA -->
+<div class="form-group modal-full-width">
+<label class="label" for="rowFormula">
+                        Formula / Calculation Definition
+                    </label>
+<input class="input" id="rowFormula" placeholder="Enter formula or calculation definition" type="text"/>
+</div>
+<!-- MACHINE RESULT -->
+<div class="form-group">
+<label class="label" for="rowMachineResult">
+                        Machine Result + Unit
+
+                        <span class="required">
+                            *
+                        </span>
+</label>
+<input class="input" id="rowMachineResult" placeholder="Example: 40 U/L" type="text"/>
+</div>
+<!-- MANUAL CALCULATION -->
+<div class="form-group">
+<label class="label" for="rowManualCalculation">
+                        Manual Calculation
+                    </label>
+<input class="input" id="rowManualCalculation" placeholder="Enter manual calculation" type="text"/>
+</div>
+<!-- LIS RESULT -->
+<div class="form-group">
+<label class="label" for="rowLisResult">
+                        Result in LIS System + Unit
+
+                        <span class="required">
+                            *
+                        </span>
+</label>
+<input class="input" id="rowLisResult" placeholder="Enter LIS result and unit" type="text"/>
+</div>
+<!-- EVALUATION -->
+<div class="form-group">
+<label class="label" for="rowEvaluation">
+                        Evaluation
+
+                        <span class="required">
+                            *
+                        </span>
+</label>
+<select class="input select-input" id="rowEvaluation">
+<option selected="" value="">
+                            Select evaluation
+                        </option>
+<option value="Met">
+                            Met
+                        </option>
+<option value="Not Met">
+                            Not Met
+                        </option>
+</select>
+</div>
+<!-- TESTED BY -->
+<div class="form-group">
+<label class="label" for="rowTestedBy">
+                        Tested By
+                    </label>
+<input class="input" id="rowTestedBy" placeholder="Enter evaluator name" type="text"/>
+</div>
+<!-- REMARK -->
+<div class="form-group modal-full-width">
+<label class="label" for="rowRemark">
+                        Remark
+                    </label>
+<input class="input" id="rowRemark" placeholder="Enter any remarks" type="text"/>
+</div>
+<!-- EVIDENCE -->
+<div class="form-group modal-full-width">
+<label class="label" for="rowEvidence">
+                        Evidence
+                    </label>
+<input accept=".pdf,.png,.jpg,.jpeg" class="input" id="rowEvidence" type="file"/>
+<small class="field-help">
+                        PDF, PNG, JPG or JPEG.
+                    </small>
+</div>
+</div>
+</div>
+<!-- MODAL FOOTER -->
+<div class="row-modal-footer">
+<button class="modal-cancel" id="cancelCalculationModal" type="button">
+                Cancel
+            </button>
+<button class="modal-save" id="saveCalculationRow" type="button">
+                Save Row
+            </button>
+</div>
+</div>
+</div>
+<!-- =====================================================
+     WITHOUT CALCULATION MODAL
+===================================================== -->
+<div class="row-modal" id="withoutCalculationModal" style="display:none;">
+<div class="row-modal-box">
+<div class="row-modal-header">
+<div>
+<span class="modal-small-label">WITHOUT CALCULATION</span>
+<h2 id="withoutCalculationModalTitle">Add Validation Row</h2>
+</div>
+<button class="modal-close" id="closeWithoutCalculationModal" type="button">×</button>
+</div>
+<div class="row-modal-body">
+<div class="modal-form-grid">
+<div class="form-group">
+<label class="label" for="withoutRowAccessionNumber">
+                        Accession Number <span class="required">*</span>
+</label>
+<input class="input" id="withoutRowAccessionNumber" placeholder="Enter accession number" type="text"/>
+</div>
+<div class="form-group">
+<label class="label" for="withoutRowTestName">
+                        Test Name <span class="required">*</span>
+</label>
+<input class="input" id="withoutRowTestName" placeholder="Enter test name" type="text"/>
+</div>
+<div class="form-group">
+<label class="label" for="withoutRowTestMnemonic">
+                        Test Mnemonic <span class="required">*</span>
+</label>
+<input class="input" id="withoutRowTestMnemonic" placeholder="Enter test mnemonic" type="text"/>
+</div>
+<div class="form-group">
+<label class="label" for="withoutRowMachineResult">
+                        Machine Result + Unit <span class="required">*</span>
+</label>
+<input class="input" id="withoutRowMachineResult" placeholder="Example: 40 U/L" type="text"/>
+</div>
+<div class="form-group">
+<label class="label" for="withoutRowLisResult">
+                        Result in LIS System + Unit <span class="required">*</span>
+</label>
+<input class="input" id="withoutRowLisResult" placeholder="Enter LIS result and unit" type="text"/>
+</div>
+<div class="form-group">
+<label class="label" for="withoutRowMiddlewareResult">
+                        Result in Middleware <span class="required">*</span>
+</label>
+<input class="input" id="withoutRowMiddlewareResult" placeholder="Enter middleware result" type="text"/>
+</div>
+<div class="form-group">
+<label class="label" for="withoutRowPatientReport">
+                        Patient Result Report + Unit <span class="required">*</span>
+</label>
+<input class="input" id="withoutRowPatientReport" placeholder="Enter patient result report and unit" type="text"/>
+</div>
+<div class="form-group">
+<label class="label" for="withoutRowNormalRange">
+                        Normal Range + Unit <span class="required">*</span>
+</label>
+<input class="input" id="withoutRowNormalRange" placeholder="Enter normal range and unit" type="text"/>
+</div>
+<div class="form-group">
+<label class="label" for="withoutRowEvaluation">
+                        Evaluation <span class="required">*</span>
+</label>
+<select class="input select-input" id="withoutRowEvaluation">
+<option selected="" value="">Select evaluation</option>
+<option value="Met">Met</option>
+<option value="Not Met">Not Met</option>
+</select>
+</div>
+<div class="form-group">
+<label class="label" for="withoutRowTestedBy">Tested By</label>
+<input class="input" id="withoutRowTestedBy" placeholder="Enter evaluator name" type="text"/>
+</div>
+<div class="form-group modal-full-width">
+<label class="label" for="withoutRowRemark">Remark</label>
+<input class="input" id="withoutRowRemark" placeholder="Enter any remarks" type="text"/>
+</div>
+<div class="form-group modal-full-width">
+<label class="label" for="withoutRowEvidence">Evidence</label>
+<input accept=".pdf,.png,.jpg,.jpeg" class="input" id="withoutRowEvidence" type="file"/>
+<small class="field-help">PDF, PNG, JPG or JPEG.</small>
+</div>
+</div>
+</div>
+<div class="row-modal-footer">
+<button class="modal-cancel" id="cancelWithoutCalculationModal" type="button">Cancel</button>
+<button class="modal-save" id="saveWithoutCalculationRow" type="button">Save Row</button>
+</div>
+</div>
+</div>
+<!-- =====================================================
+     AUTO-VERIFICATION PHASE 1 MODAL
+===================================================== -->
+<div class="row-modal" id="autoPhase1Modal" style="display:none;">
+<div class="row-modal-box">
+<div class="row-modal-header">
+<div><span class="modal-small-label">AUTO-VERIFICATION - PHASE 1</span><h2 id="autoPhase1ModalTitle">Add Validation Rule</h2></div>
+<button class="modal-close" id="closeAutoPhase1Modal" type="button">×</button>
+</div>
+<div class="row-modal-body"><div class="modal-form-grid">
+<div class="form-group modal-full-width"><label class="label" for="phase1Rule">Rule (Algorithm) <span class="required">*</span></label><input class="input" id="phase1Rule" placeholder="Enter rule or algorithm" type="text"/></div>
+<div class="form-group"><label class="label" for="phase1Challenge">Simulated Challenge <span class="required">*</span></label><input class="input" id="phase1Challenge" placeholder="Enter simulated challenge" type="text"/></div>
+<div class="form-group"><label class="label" for="phase1Expected">Expected Reaction <span class="required">*</span></label><input class="input" id="phase1Expected" placeholder="Enter expected reaction" type="text"/></div>
+<div class="form-group"><label class="label" for="phase1SystemResponds">System Responds <span class="required">*</span></label><input class="input" id="phase1SystemResponds" placeholder="Enter actual system response" type="text"/></div>
+<div class="form-group"><label class="label" for="phase1Acceptance">Acceptance Criteria <span class="required">*</span></label><input class="input" id="phase1Acceptance" placeholder="Enter acceptance criteria" type="text"/></div>
+<div class="form-group"><label class="label" for="phase1TestedBy">Tested By</label><input class="input" id="phase1TestedBy" placeholder="Enter evaluator name" type="text"/></div>
+<div class="form-group"><label class="label" for="phase1Evaluation">Evaluation <span class="required">*</span></label><select class="input select-input" id="phase1Evaluation"><option value="">Select evaluation</option><option>Met</option><option>Partially Met</option><option>Not Met</option></select></div>
+<div class="form-group modal-full-width"><label class="label" for="phase1Remark">Remark</label><input class="input" id="phase1Remark" placeholder="Enter remarks" type="text"/></div>
+<div class="form-group"><label class="label" for="phase1Evidence">Evidence</label><input accept=".pdf,.png,.jpg,.jpeg" class="input" id="phase1Evidence" type="file"/><small class="field-help">PDF, PNG, JPG or JPEG.</small></div>
+
+</div></div>
+<div class="row-modal-footer"><button class="modal-cancel" id="cancelAutoPhase1Modal" type="button">Cancel</button><button class="modal-save" id="saveAutoPhase1Row" type="button">Save Row</button></div>
+</div>
+</div>
+<!-- =====================================================
+     AUTO-VERIFICATION PHASE 2 MODAL
+===================================================== -->
+<div class="row-modal" id="autoPhase2Modal" style="display:none;">
+<div class="row-modal-box">
+<div class="row-modal-header">
+<div><span class="modal-small-label">AUTO-VERIFICATION - PHASE 2</span><h2 id="autoPhase2ModalTitle">Add Validation Case</h2></div>
+<button class="modal-close" id="closeAutoPhase2Modal" type="button">×</button>
+</div>
+<div class="row-modal-body"><div class="modal-form-grid">
+<div class="form-group"><label class="label" for="phase2Accession">Accession Number <span class="required">*</span></label><input class="input" id="phase2Accession" placeholder="Enter accession number" type="text"/></div>
+<div class="form-group"><label class="label" for="phase2TestName">Test Name <span class="required">*</span></label><input class="input" id="phase2TestName" placeholder="Enter test name" type="text"/></div>
+<div class="form-group"><label class="label" for="phase2Result">Result <span class="required">*</span></label><input class="input" id="phase2Result" placeholder="Enter result" type="text"/></div>
+<div class="form-group"><label class="label" for="phase2Flag">Flag</label><input class="input" id="phase2Flag" placeholder="Enter flag" type="text"/></div>
+<div class="form-group"><label class="label" for="phase2Challenge">Challenge Case <span class="required">*</span></label><input class="input" id="phase2Challenge" placeholder="Enter challenge case" type="text"/></div>
+<div class="form-group"><label class="label" for="phase2Expected">Expected Reaction <span class="required">*</span></label><input class="input" id="phase2Expected" placeholder="Enter expected reaction" type="text"/></div>
+<div class="form-group"><label class="label" for="phase2SystemRespond">System Respond <span class="required">*</span></label><input class="input" id="phase2SystemRespond" placeholder="Enter actual system response" type="text"/></div>
+<div class="form-group"><label class="label" for="phase2TestedBy">Tested By</label><input class="input" id="phase2TestedBy" placeholder="Enter evaluator name" type="text"/></div>
+<div class="form-group"><label class="label" for="phase2Evaluation">Evaluation <span class="required">*</span></label><select class="input select-input" id="phase2Evaluation"><option value="">Select evaluation</option><option>Met</option><option>Partially Met</option><option>Not Met</option></select></div>
+<div class="form-group modal-full-width"><label class="label" for="phase2Remark">Remark</label><input class="input" id="phase2Remark" placeholder="Enter remarks" type="text"/></div>
+<div class="form-group"><label class="label" for="phase2Evidence">Evidence</label><input accept=".pdf,.png,.jpg,.jpeg" class="input" id="phase2Evidence" type="file"/><small class="field-help">PDF, PNG, JPG or JPEG.</small></div>
+
+</div></div>
+<div class="row-modal-footer"><button class="modal-cancel" id="cancelAutoPhase2Modal" type="button">Cancel</button><button class="modal-save" id="saveAutoPhase2Row" type="button">Save Row</button></div>
+</div>
+</div>
+
+
+<!-- =====================================================
+     TEST METHOD LEGEND POPUP
+===================================================== -->
+<div class="legend-popup-overlay" id="legendPopup">
+    <div class="legend-popup">
+
+        <div class="legend-popup-header">
+            <div>
+                <h3>💡 Test Method Legend</h3>
+                <p>Testing method definitions</p>
+            </div>
+
+            <button
+                type="button"
+                class="legend-popup-close"
+                id="closeLegendPopup"
+                aria-label="Close"
+            >
+                &times;
+            </button>
+        </div>
+
+        <div class="legend-popup-content">
+
+            <p>
+                <strong>Normal Testing:</strong>
+                Testing the functional and structural integrity of the system.
+                Demonstrating that the system performs as intended under normal
+                conditions. Input within-range data.
+            </p>
+
+            <p>
+                <strong>Invalid Case Testing:</strong>
+                Use invalid inputs to demonstrate system checks for input errors.
+            </p>
+
+            <p>
+                <strong>Special Case Testing:</strong>
+                Using input values that are most likely to cause program errors
+                or test how the system responds to unsuitable data. Using input
+                values of specific types of data or no data entry in a field will
+                help to test the system defaults.
+            </p>
+
+            <p>
+                <strong>Parallel Testing:</strong>
+                Testing the systems as a whole by running two systems in parallel
+                and comparing the outputs. Parallel testing is the most common
+                type of testing, but it cannot be relied upon as the sole criterion
+                for validating the system because it focuses on a narrow range
+                of values during normal test runs.
+            </p>
+
+            <p>
+                <strong>Boundary Testing:</strong>
+                Where there is a range of valid input, values should be tested
+                which are within the range of valid entries, at the limits of
+                the range of valid entries, and beyond the range of valid entries.
+            </p>
+
+            <p>
+                <strong>Stress Testing:</strong>
+                Where a system has a requirement to perform at a certain level,
+                test cases should be developed to challenge the system at and
+                beyond those levels.
+            </p>
+
+            <p>
+                <strong>Input Testing:</strong>
+                Testing of data input function should include valid values,
+                invalid values, null and zero values of an incorrect data type.
+            </p>
+
+            <p>
+                <strong>RTM:</strong>
+                Reference test number identity — the sample number generated
+                from the new system when using parallel testing.
+            </p>
+
+        </div>
+    </div>
+</div>
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+<footer class="dashboard-footer">
+<div class="container dashboard-footer-inner">
+<p>
+            © King Fahd Armed Forces Hospital
+        </p>
+<p>
+            Information System Validation
+        </p>
+</div>
+</footer>
+<!-- =====================================================
+     JAVASCRIPT
+===================================================== -->
+<script>
+
+
+/* =====================================================
+   USER INFORMATION
+===================================================== */
+
+const savedName =
+    localStorage.getItem(
+        "loggedInUserName"
+    );
+
+
+const savedJobTitle =
+    localStorage.getItem(
+        "loggedInUserJobTitle"
+    );
+
+
+const userName =
+    savedName || "User";
+
+
+const jobTitle =
+    savedJobTitle || "Laboratory Staff";
+
+
+document.getElementById(
+    "navbarUserName"
+).textContent = userName;
+
+
+document.getElementById(
+    "navbarJobTitle"
+).textContent = jobTitle;
+
+
+document.getElementById(
+    "userAvatar"
+).textContent =
+    userName.charAt(0).toUpperCase();
+
+
+
+/* =====================================================
+   LOGOUT
+===================================================== */
+
+document.getElementById(
+    "logoutButton"
+).addEventListener(
+    "click",
+    function () {
+
+        localStorage.removeItem(
+            "loggedInUserName"
+        );
+
+        localStorage.removeItem(
+            "loggedInUserJobTitle"
+        );
+
+        window.location.href =
+            "index.html";
+
+    }
+);
+
+
+
+/* =====================================================
+   VALIDATION TYPE
+===================================================== */
+
+const validationType =
+    document.getElementById(
+        "validationType"
+    );
+
+
+const emptyState =
+    document.getElementById(
+        "validationEmptyState"
+    );
+
+
+const typeContents =
+    document.querySelectorAll(
+        ".validation-type-content"
+    );
+
+
+function hideAllValidationTypes() {
+
+    typeContents.forEach(
+        function (section) {
+
+            section.classList.remove(
+                "show"
+            );
+
+        }
+    );
+
+}
+
+
+validationType.addEventListener(
+    "change",
+    function () {
+
+        hideAllValidationTypes();
+
+        emptyState.style.display =
+            "none";
+
+
+        const selectedSection =
+            document.getElementById(
+                this.value + "Fields"
+            );
+
+
+        if (selectedSection) {
+
+            selectedSection.classList.add(
+                "show"
+            );
+
+        }
+
+
+        document.getElementById(
+            "stepGeneral"
+        ).classList.add(
+            "completed"
+        );
+
+
+        document.getElementById(
+            "stepType"
+        ).classList.add(
+            "active"
+        );
+
+    }
+);
+
+
+
+/* =====================================================
+   WITH CALCULATION ROWS
+===================================================== */
+
+let calculationRows = [];
+
+let editingCalculationIndex = null;
+
+
+
+/* ELEMENTS */
+
+const calculationModal =
+    document.getElementById(
+        "calculationModal"
+    );
+
+
+const calculationTableBody =
+    document.getElementById(
+        "calculationTableBody"
+    );
+
+
+const calculationEmptyMessage =
+    document.getElementById(
+        "calculationEmptyMessage"
+    );
+
+
+const modalTitle =
+    document.getElementById(
+        "calculationModalTitle"
+    );
+
+
+
+/* =====================================================
+   OPEN MODAL
+===================================================== */
+
+document.getElementById(
+    "addCalculationRowButton"
+).addEventListener(
+    "click",
+    function () {
+
+        editingCalculationIndex =
+            null;
+
+        clearCalculationModal();
+
+        modalTitle.textContent =
+            "Add Validation Row";
+
+        calculationModal.classList.add("active");
+        calculationModal.classList.add("show");
+        calculationModal.style.display = "flex";
+
+        document.body.style.overflow = "hidden";
+
+    }
+);
+
+
+
+/* =====================================================
+   CLOSE MODAL
+===================================================== */
+
+function closeCalculationModal() {
+
+    calculationModal.classList.remove("active");
+    calculationModal.classList.remove("show");
+    calculationModal.style.display = "none";
+
+    document.body.style.overflow = "";
+
+}
+
+
+document.getElementById(
+    "closeCalculationModal"
+).addEventListener(
+    "click",
+    closeCalculationModal
+);
+
+
+document.getElementById(
+    "cancelCalculationModal"
+).addEventListener(
+    "click",
+    closeCalculationModal
+);
+
+
+
+/* CLICK OUTSIDE MODAL */
+
+calculationModal.addEventListener(
+    "click",
+    function (event) {
+
+        if (
+            event.target ===
+            calculationModal
+        ) {
+
+            closeCalculationModal();
+
+        }
+
+    }
+);
+
+
+
+/* =====================================================
+   CLEAR MODAL
+===================================================== */
+
+function clearCalculationModal() {
+
+    document.getElementById(
+        "rowAccessionNumber"
+    ).value = "";
+
+
+    document.getElementById(
+        "rowTestName"
+    ).value = "";
+
+
+    document.getElementById(
+        "rowFormula"
+    ).value = "";
+
+
+    document.getElementById(
+        "rowMachineResult"
+    ).value = "";
+
+
+    document.getElementById(
+        "rowManualCalculation"
+    ).value = "";
+
+
+    document.getElementById(
+        "rowLisResult"
+    ).value = "";
+
+
+    document.getElementById(
+        "rowEvaluation"
+    ).value = "";
+
+
+    document.getElementById(
+        "rowTestedBy"
+    ).value = "";
+
+
+    document.getElementById(
+        "rowRemark"
+    ).value = "";
+
+
+    document.getElementById(
+        "rowEvidence"
+    ).value = "";
+
+}
+
+
+
+/* =====================================================
+   SAVE ROW
+===================================================== */
+
+document.getElementById(
+    "saveCalculationRow"
+).addEventListener(
+    "click",
+    function () {
+
+
+        const accessionNumber =
+            document.getElementById(
+                "rowAccessionNumber"
+            ).value.trim();
+
+
+       const testName = 
+            document.getElementById(
+                "rowTestName"
+            ).value.trim();
+
+
+        const formula =
+            document.getElementById(
+                "rowFormula"
+            ).value.trim();
+
+
+        const machineResult =
+            document.getElementById(
+                "rowMachineResult"
+            ).value.trim();
+
+
+        const manualCalculation =
+            document.getElementById(
+                "rowManualCalculation"
+            ).value.trim();
+
+
+        const lisResult =
+            document.getElementById(
+                "rowLisResult"
+            ).value.trim();
+
+
+        const evaluation =
+            document.getElementById(
+                "rowEvaluation"
+            ).value;
+
+
+        const testedBy =
+            document.getElementById(
+                "rowTestedBy"
+            ).value.trim();
+
+
+        const remark =
+            document.getElementById(
+                "rowRemark"
+            ).value.trim();
+
+
+        const evidenceInput =
+            document.getElementById(
+                "rowEvidence"
+            );
+
+
+        const evidenceName =
+            evidenceInput.files.length > 0
+                ? evidenceInput.files[0].name
+                : "";
+
+
+        /* REQUIRED FIELDS */
+
+        if (!accessionNumber) {
+
+            alert(
+                "Please enter the Accession Number."
+            );
+
+            return;
+
+        }
+
+
+        if (!testName) {
+
+            alert(
+                "Please enter the Test Name."
+            );
+
+            return;
+
+        }
+
+
+        if (!machineResult) {
+
+            alert(
+                "Please enter the Machine Result."
+            );
+
+            return;
+
+        }
+
+
+        if (!lisResult) {
+
+            alert(
+                "Please enter the Result in LIS System."
+            );
+
+            return;
+
+        }
+
+
+        if (!evaluation) {
+
+            alert(
+                "Please select the Evaluation."
+            );
+
+            return;
+
+        }
+
+
+
+        const rowData = {
+
+            accessionNumber:
+                accessionNumber,
+
+            testName:
+                testName,
+
+            formula:
+                formula,
+
+            machineResult:
+                machineResult,
+
+            manualCalculation:
+                manualCalculation,
+
+            lisResult:
+                lisResult,
+
+            evaluation:
+                evaluation,
+
+            testedBy:
+                testedBy,
+
+            remark:
+                remark,
+
+            evidence:
+                evidenceName
+
+        };
+
+
+
+        /* ADD NEW */
+
+        if (
+            editingCalculationIndex ===
+            null
+        ) {
+
+            calculationRows.push(
+                rowData
+            );
+
+        }
+
+
+        /* EDIT EXISTING */
+
+        else {
+
+            calculationRows[
+                editingCalculationIndex
+            ] = rowData;
+
+        }
+
+
+        renderCalculationRows();
+        renderWithoutCalculationRows();
+
+        closeCalculationModal();
+
+    }
+);
+
+
+
+/* =====================================================
+   RENDER TABLE
+===================================================== */
+
+function renderCalculationRows() {
+
+    calculationTableBody.innerHTML =
+        "";
+
+
+    if (
+        calculationRows.length === 0
+    ) {
+
+        calculationEmptyMessage.style.display =
+            "flex";
+
+        return;
+
+    }
+
+
+    calculationEmptyMessage.style.display =
+        "none";
+
+
+    calculationRows.forEach(
+        function (row, index) {
+
+
+            const tableRow =
+                document.createElement(
+                    "tr"
+                );
+
+
+            tableRow.innerHTML = `
+
+                <td>
+                    ${index + 1}
+                </td>
+
+                <td>
+                    ${escapeHtml(
+                        row.accessionNumber
+                    )}
+                </td>
+
+                <td>
+                    ${escapeHtml(
+                        row.testName
+                    )}
+                </td>
+
+                <td>
+                    ${escapeHtml(
+                        row.formula || "-"
+                    )}
+                </td>
+
+                <td>
+                    ${escapeHtml(
+                        row.machineResult
+                    )}
+                </td>
+
+                <td>
+                    ${escapeHtml(
+                        row.manualCalculation || "-"
+                    )}
+                </td>
+
+                <td>
+                    ${escapeHtml(
+                        row.lisResult
+                    )}
+                </td>
+
+                <td>
+
+                    <span class="
+                        evaluation-badge
+                        ${
+                            row.evaluation === "Met"
+                            ? "evaluation-met"
+                            : "evaluation-not-met"
+                        }
+                    ">
+
+                        ${escapeHtml(
+                            row.evaluation
+                        )}
+
+                    </span>
+
+                </td>
+
+                <td>
+                    ${escapeHtml(row.testedBy || "-")}
+                </td>
+
+                <td>
+                    ${escapeHtml(row.remark || "-")}
+                </td>
+
+                <td>
+                    ${escapeHtml(row.evidence || "No attachment")}
+                </td>
+
+                <td>
+
+                    <div class="row-action-buttons">
+
+                        <button
+                            type="button"
+                            class="row-edit-button"
+                            onclick="
+                                editCalculationRow(
+                                    ${index}
+                                )
+                            "
+                        >
+                            Edit
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="row-delete-button"
+                            onclick="
+                                deleteCalculationRow(
+                                    ${index}
+                                )
+                            "
+                        >
+                            Delete
+                        </button>
+
+                    </div>
+
+                </td>
+
+            `;
+
+
+            calculationTableBody.appendChild(
+                tableRow
+            );
+
+        }
+    );
+
+}
+
+
+
+/* =====================================================
+   EDIT ROW
+===================================================== */
+
+function editCalculationRow(index) {
+
+    const row =
+        calculationRows[index];
+
+
+    editingCalculationIndex =
+        index;
+
+
+    document.getElementById(
+        "rowAccessionNumber"
+    ).value =
+        row.accessionNumber;
+
+
+    document.getElementById(
+        "rowTestName"
+    ).value =
+        row.testName;
+
+
+    document.getElementById(
+        "rowFormula"
+    ).value =
+        row.formula;
+
+
+    document.getElementById(
+        "rowMachineResult"
+    ).value =
+        row.machineResult;
+
+
+    document.getElementById(
+        "rowManualCalculation"
+    ).value =
+        row.manualCalculation;
+
+
+    document.getElementById(
+        "rowLisResult"
+    ).value =
+        row.lisResult;
+
+
+    document.getElementById(
+        "rowEvaluation"
+    ).value =
+        row.evaluation;
+
+
+    document.getElementById(
+        "rowTestedBy"
+    ).value =
+        row.testedBy;
+
+
+    document.getElementById(
+        "rowRemark"
+    ).value =
+        row.remark;
+
+
+    modalTitle.textContent =
+        "Edit Validation Row";
+
+
+    calculationModal.classList.add("active");
+    calculationModal.classList.add("show");
+    calculationModal.style.display = "flex";
+
+    document.body.style.overflow = "hidden";
+
+}
+
+
+
+/* =====================================================
+   DELETE ROW
+===================================================== */
+
+function deleteCalculationRow(index) {
+
+    const confirmed =
+        confirm(
+            "Are you sure you want to delete this row?"
+        );
+
+
+    if (!confirmed) {
+
+        return;
+
+    }
+
+
+    calculationRows.splice(
+        index,
+        1
+    );
+
+
+    renderCalculationRows();
+
+}
+
+
+
+/* =====================================================
+   ESCAPE HTML
+===================================================== */
+
+function escapeHtml(value) {
+
+    const div =
+        document.createElement(
+            "div"
+        );
+
+    div.textContent =
+        value || "";
+
+    return div.innerHTML;
+
+}
+
+
+
+/* =====================================================
+   ESC KEY CLOSES MODAL
+===================================================== */
+
+document.addEventListener(
+    "keydown",
+    function (event) {
+
+        if (
+            event.key === "Escape" &&
+            (
+                calculationModal.classList.contains("active") ||
+                calculationModal.classList.contains("show") ||
+                calculationModal.style.display === "flex"
+            )
+        ) {
+
+            closeCalculationModal();
+
+        }
+
+    }
+);
+
+
+
+/* =====================================================
+   WITHOUT CALCULATION ROWS
+===================================================== */
+
+let withoutCalculationRows = [];
+
+let editingWithoutCalculationIndex = null;
+
+
+/* ELEMENTS */
+
+const withoutCalculationModal =
+    document.getElementById(
+        "withoutCalculationModal"
+    );
+
+
+const withoutCalculationTableBody =
+    document.getElementById(
+        "withoutCalculationTableBody"
+    );
+
+
+const withoutCalculationEmptyMessage =
+    document.getElementById(
+        "withoutCalculationEmptyMessage"
+    );
+
+
+const withoutCalculationModalTitle =
+    document.getElementById(
+        "withoutCalculationModalTitle"
+    );
+
+
+/* =====================================================
+   OPEN MODAL
+===================================================== */
+
+document.getElementById(
+    "addWithoutCalculationRowButton"
+).addEventListener(
+    "click",
+    function () {
+
+        editingWithoutCalculationIndex = null;
+
+        clearWithoutCalculationModal();
+
+        withoutCalculationModalTitle.textContent =
+            "Add Validation Row";
+
+        withoutCalculationModal.classList.add("active");
+        withoutCalculationModal.classList.add("show");
+        withoutCalculationModal.style.display = "flex";
+
+        document.body.style.overflow = "hidden";
+
+    }
+);
+
+
+/* =====================================================
+   CLOSE MODAL
+===================================================== */
+
+function closeWithoutCalculationModal() {
+
+    withoutCalculationModal.classList.remove("active");
+    withoutCalculationModal.classList.remove("show");
+    withoutCalculationModal.style.display = "none";
+
+    document.body.style.overflow = "";
+
+}
+
+
+document.getElementById(
+    "closeWithoutCalculationModal"
+).addEventListener(
+    "click",
+    closeWithoutCalculationModal
+);
+
+
+document.getElementById(
+    "cancelWithoutCalculationModal"
+).addEventListener(
+    "click",
+    closeWithoutCalculationModal
+);
+
+
+/* CLICK OUTSIDE MODAL */
+
+withoutCalculationModal.addEventListener(
+    "click",
+    function (event) {
+
+        if (event.target === withoutCalculationModal) {
+
+            closeWithoutCalculationModal();
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   CLEAR MODAL
+===================================================== */
+
+function clearWithoutCalculationModal() {
+
+    const fieldIds = [
+        "withoutRowAccessionNumber",
+        "withoutRowTestName",
+        "withoutRowTestMnemonic",
+        "withoutRowMachineResult",
+        "withoutRowLisResult",
+        "withoutRowMiddlewareResult",
+        "withoutRowPatientReport",
+        "withoutRowNormalRange",
+        "withoutRowEvaluation",
+        "withoutRowTestedBy",
+        "withoutRowRemark",
+        "withoutRowEvidence"
+    ];
+
+    fieldIds.forEach(function (fieldId) {
+        const field = document.getElementById(fieldId);
+
+        if (field) {
+            field.value = "";
+        }
+    });
+}
+
+
+/* =====================================================
+   SAVE ROW
+===================================================== */
+
+document.getElementById(
+    "saveWithoutCalculationRow"
+).addEventListener(
+    "click",
+    function () {
+
+        const accessionNumber =
+            document.getElementById("withoutRowAccessionNumber").value.trim();
+
+        const testName =
+            document.getElementById("withoutRowTestName").value.trim();
+
+        const testMnemonic =
+            document.getElementById("withoutRowTestMnemonic").value.trim();
+
+        const machineResult =
+            document.getElementById("withoutRowMachineResult").value.trim();
+
+        const lisResult =
+            document.getElementById("withoutRowLisResult").value.trim();
+
+        const middlewareResult =
+            document.getElementById("withoutRowMiddlewareResult").value.trim();
+
+        const patientReport =
+            document.getElementById("withoutRowPatientReport").value.trim();
+
+        const normalRange =
+            document.getElementById("withoutRowNormalRange").value.trim();
+
+        const evaluation =
+            document.getElementById("withoutRowEvaluation").value;
+
+        const testedBy =
+            document.getElementById("withoutRowTestedBy").value.trim();
+
+        const remark =
+            document.getElementById("withoutRowRemark").value.trim();
+
+        const evidenceInput =
+            document.getElementById("withoutRowEvidence");
+
+        const evidenceName =
+            evidenceInput.files.length > 0
+                ? evidenceInput.files[0].name
+                : (
+                    editingWithoutCalculationIndex !== null
+                        ? withoutCalculationRows[editingWithoutCalculationIndex].evidence || ""
+                        : ""
+                );
+
+        if (!accessionNumber) {
+            alert("Please enter the Accession Number.");
+            return;
+        }
+
+        if (!testName) {
+            alert("Please enter the Test Name.");
+            return;
+        }
+
+        if (!testMnemonic) {
+            alert("Please enter the Test Mnemonic.");
+            return;
+        }
+
+        if (!machineResult) {
+            alert("Please enter the Machine Result.");
+            return;
+        }
+
+        if (!lisResult) {
+            alert("Please enter the Result in LIS System.");
+            return;
+        }
+
+        if (!middlewareResult) {
+            alert("Please enter the Result in Middleware.");
+            return;
+        }
+
+        if (!patientReport) {
+            alert("Please enter the Patient Result Report.");
+            return;
+        }
+
+        if (!normalRange) {
+            alert("Please enter the Normal Range.");
+            return;
+        }
+
+        if (!evaluation) {
+            alert("Please select the Evaluation.");
+            return;
+        }
+
+        const rowData = {
+            accessionNumber: accessionNumber,
+            testName: testName,
+            testMnemonic: testMnemonic,
+            machineResult: machineResult,
+            lisResult: lisResult,
+            middlewareResult: middlewareResult,
+            patientReport: patientReport,
+            normalRange: normalRange,
+            evaluation: evaluation,
+            testedBy: testedBy,
+            remark: remark,
+            evidence: evidenceName
+        };
+
+        if (editingWithoutCalculationIndex === null) {
+            withoutCalculationRows.push(rowData);
+        } else {
+            withoutCalculationRows[editingWithoutCalculationIndex] = rowData;
+        }
+
+        renderWithoutCalculationRows();
+        closeWithoutCalculationModal();
+    }
+);
+
+
+/* =====================================================
+   RENDER TABLE
+===================================================== */
+
+function renderWithoutCalculationRows() {
+
+    withoutCalculationTableBody.innerHTML = "";
+
+    if (withoutCalculationRows.length === 0) {
+
+        withoutCalculationEmptyMessage.style.display = "flex";
+
+        return;
+    }
+
+    withoutCalculationEmptyMessage.style.display = "none";
+
+    withoutCalculationRows.forEach(function (row, index) {
+
+        const tableRow = document.createElement("tr");
+
+        tableRow.innerHTML = `
+
+            <td>${index + 1}</td>
+
+            <td>${escapeHtml(row.accessionNumber)}</td>
+
+            <td>${escapeHtml(row.testName)}</td>
+
+            <td>${escapeHtml(row.testMnemonic || "-")}</td>
+
+            <td>${escapeHtml(row.machineResult)}</td>
+
+            <td>${escapeHtml(row.lisResult)}</td>
+
+            <td>${escapeHtml(row.middlewareResult || "-")}</td>
+
+            <td>${escapeHtml(row.patientReport || "-")}</td>
+
+            <td>${escapeHtml(row.normalRange || "-")}</td>
+
+            <td>${escapeHtml(row.testedBy || "-")}</td>
+
+            <td>${escapeHtml(row.remark || "-")}</td>
+
+            <td>
+                <span class="
+                    evaluation-badge
+                    ${
+                        row.evaluation === "Met"
+                            ? "evaluation-met"
+                            : "evaluation-not-met"
+                    }
+                ">
+                    ${escapeHtml(row.evaluation)}
+                </span>
+            </td>
+
+            <td>${escapeHtml(row.evidence || "No attachment")}</td>
+
+            <td>
+                <div class="row-action-buttons">
+
+                    <button
+                        type="button"
+                        class="row-edit-button"
+                        onclick="editWithoutCalculationRow(${index})"
+                    >
+                        Edit
+                    </button>
+
+                    <button
+                        type="button"
+                        class="row-delete-button"
+                        onclick="deleteWithoutCalculationRow(${index})"
+                    >
+                        Delete
+                    </button>
+
+                </div>
+            </td>
+        `;
+
+        withoutCalculationTableBody.appendChild(tableRow);
+    });
+}
+
+
+
+/* =====================================================
+   EDIT ROW
+===================================================== */
+
+function editWithoutCalculationRow(index) {
+
+    const row =
+        withoutCalculationRows[index];
+
+    editingWithoutCalculationIndex =
+        index;
+
+    document.getElementById(
+        "withoutRowAccessionNumber"
+    ).value =
+        row.accessionNumber || "";
+
+    document.getElementById(
+        "withoutRowTestName"
+    ).value =
+        row.testName || "";
+
+    document.getElementById(
+        "withoutRowTestMnemonic"
+    ).value =
+        row.testMnemonic || "";
+
+    document.getElementById(
+        "withoutRowMachineResult"
+    ).value =
+        row.machineResult || "";
+
+    document.getElementById(
+        "withoutRowLisResult"
+    ).value =
+        row.lisResult || "";
+
+    document.getElementById(
+        "withoutRowMiddlewareResult"
+    ).value =
+        row.middlewareResult || "";
+
+    document.getElementById(
+        "withoutRowPatientReport"
+    ).value =
+        row.patientReport || "";
+
+    document.getElementById(
+        "withoutRowNormalRange"
+    ).value =
+        row.normalRange || "";
+
+    document.getElementById(
+        "withoutRowEvaluation"
+    ).value =
+        row.evaluation || "";
+
+    document.getElementById(
+        "withoutRowTestedBy"
+    ).value =
+        row.testedBy || "";
+
+    document.getElementById(
+        "withoutRowRemark"
+    ).value =
+        row.remark || "";
+
+    withoutCalculationModalTitle.textContent =
+        "Edit Validation Row";
+
+    withoutCalculationModal.classList.add("active");
+    withoutCalculationModal.classList.add("show");
+    withoutCalculationModal.style.display = "flex";
+
+    document.body.style.overflow = "hidden";
+}
+
+/* =====================================================
+   DELETE ROW
+===================================================== */
+
+function deleteWithoutCalculationRow(index) {
+
+    const confirmed =
+        confirm(
+            "Are you sure you want to delete this row?"
+        );
+
+    if (!confirmed) {
+
+        return;
+
+    }
+
+withoutCalculationRows.splice(
+    index,
+    1
+);
+
+editingWithoutCalculationIndex = null;
+
+renderWithoutCalculationRows();
+
+}
+
+
+/* =====================================================
+   ESCAPE HTML
+===================================================== */
+
+function escapeHtml(value) {
+
+    const div =
+        document.createElement(
+            "div"
+        );
+
+    div.textContent =
+        value || "";
+
+    return div.innerHTML;
+
+}
+
+
+/* =====================================================
+   ESC KEY CLOSES MODAL
+===================================================== */
+
+document.addEventListener(
+    "keydown",
+    function (event) {
+
+        if (
+            event.key === "Escape" &&
+            (
+                withoutCalculationModal.classList.contains("active") ||
+                withoutCalculationModal.classList.contains("show") ||
+                withoutCalculationModal.style.display === "flex"
+            )
+        ) {
+
+            closeWithoutCalculationModal();
+
+        }
+
+    }
+);
+
+/* =====================================================
+   SAVE AS DRAFT
+===================================================== */
+
+function getFieldValue(id) {
+    const element = document.getElementById(id);
+    return element ? element.value : "";
+}
+
+function collectNoExpiryRows() {
+    return Array.from(
+        document.querySelectorAll("#noExpiryTableBody tr")
+    ).map(function (row) {
+        return {
+            testMethod: row.dataset.testMethod || "",
+            caseNo: row.dataset.caseNo || "",
+            processSteps: row.dataset.processSteps || "",
+            processPath: row.dataset.processPath || "",
+            acceptance: row.dataset.acceptance || "",
+            dateTest: row.dataset.dateTest || "",
+            systemResponse: row.dataset.systemResponse || "",
+            evaluation: row.dataset.evaluation || ""
+        };
+    });
+}
+
+function buildValidationRecord(status) {
+    const expiryTypeValue = getFieldValue("expiryType");
+    const isNoExpires = expiryTypeValue === "No Expires";
+
+    return {
+        id: "VAL-" + Date.now(),
+        status: status,
+        savedAt: new Date().toISOString(),
+        savedBy: userName,
+        jobTitle: jobTitle,
+        expiryType: expiryTypeValue,
+
+        // Approval progress used by Home.
+        // Expires has 5 approvers; No Expires has 6 approvers.
+        totalApprovers: isNoExpires ? 6 : 5,
+        approvedApprovers: isNoExpires
+            ? document.querySelectorAll("#noExpiryApprovalFlow .approval-person.is-approved").length
+            : document.querySelectorAll("#approvalFlowSidebar .approval-person.is-approved").length,
+        approvalProgress: {
+            approved: isNoExpires
+                ? document.querySelectorAll("#noExpiryApprovalFlow .approval-person.is-approved").length
+                : document.querySelectorAll("#approvalFlowSidebar .approval-person.is-approved").length,
+            total: isNoExpires ? 6 : 5
+        },
+
+        // Used by Home / Saved Drafts as a readable title.
+        title: isNoExpires
+            ? "Information System Evaluation and Validation Record"
+            : (getFieldValue("validationType") || "Validation Form"),
+
+        generalInformation: {
+            department: getFieldValue("department"),
+            validationDate: getFieldValue("validationDate"),
+            machineName: getFieldValue("machineName"),
+            serialNumber: getFieldValue("serialNumber"),
+            reasonValidation: getFieldValue("reasonValidation")
+        },
+
+        validationType: getFieldValue("validationType"),
+        validationTypeLabel: (function () {
+            const select = document.getElementById("validationType");
+            if (!select || select.selectedIndex < 0) return "";
+            return select.options[select.selectedIndex].textContent.trim();
+        })(),
+
+        expiresData: {
+            interfaceType: getFieldValue("interfaceType"),
+            dataInterfaceThrough: getFieldValue("dataInterfaceThrough"),
+            dataFlow: getFieldValue("dataFlow"),
+            viewingTechnology: getFieldValue("viewingTechnology"),
+            identificationTransmission: getFieldValue("identificationTransmission"),
+            correctiveAction: getFieldValue("correctiveAction"),
+            limitations: getFieldValue("limitations"),
+            calculationRows: calculationRows
+        },
+noExpiresData: {
+    systemIdentity: getFieldValue("noExpirySystemIdentity"),
+    module: getFieldValue("noExpiryModule"),
+    accessPoint: getFieldValue("noExpiryAccessPoint"),
+    reportDate: getFieldValue("noExpiryReportDate"),
+    evaluationProcess: getFieldValue("noExpiryEvaluationProcess"),
+    purpose: getFieldValue("noExpiryPurpose"),
+    workPlan: getFieldValue("noExpiryWorkPlan"),
+    laboratorySection: getFieldValue("noExpiryLaboratorySection"),
+    conclusion: getFieldValue("noExpiryConclusion"),
+    unexpectedOutcomes: getFieldValue("noExpiryUnexpected"),
+    correctiveAction: getFieldValue("noExpiryCorrective"),
+    finalApproval: getFieldValue("noExpiryApproval"),
+    rows: collectNoExpiryRows()
+},
+
+withoutCalculationData: {
+    interfaceType: getFieldValue("withoutInterfaceType"),
+    dataInterfaceThrough: getFieldValue("withoutDataInterfaceThrough"),
+    dataFlow: getFieldValue("withoutDataFlow"),
+    viewingTechnology: getFieldValue("withoutViewingTechnology"),
+    identificationTransmission: getFieldValue("withoutIdentificationTransmission"),
+    rows: withoutCalculationRows
+},
+
+autoPhase1Data: {
+    middlewareVersion: getFieldValue("autoPhase1Middleware"),
+    rows: autoPhase1Rows
+},
+autoPhase2Data: {
+    middlewareVersion: getFieldValue("autoPhase2Middleware"),
+    rows: autoPhase2Rows
+}
+
+    };
+}
+
+function saveRecordToLocalStorage(record) {
+    let activeDraft = null;
+    try {
+        activeDraft = JSON.parse(
+            localStorage.getItem("activeValidationDraft") || "null"
+        );
+    } catch (e) {}
+
+    const activeId =
+        window.__activeDraftId ||
+        (activeDraft && activeDraft.draft && activeDraft.draft.id) ||
+        (activeDraft && activeDraft.id) ||
+        null;
+
+    // When continuing an existing draft, preserve its id.
+    if (activeId) {
+        record.id = activeId;
+    }
+
+    let records = [];
+    try {
+        records = JSON.parse(
+            localStorage.getItem("validationRecords") || "[]"
+        );
+    } catch (e) {}
+    if (!Array.isArray(records)) records = [];
+
+    // Remove the previous copy of this draft/record before inserting the update.
+    if (record.id) {
+        records = records.filter(function (item) {
+            return !item || item.id !== record.id;
+        });
+    }
+
+    records.unshift(record);
+    localStorage.setItem("validationRecords", JSON.stringify(records));
+
+    let drafts = [];
+    try {
+        drafts = JSON.parse(
+            localStorage.getItem("validationDrafts") || "[]"
+        );
+    } catch (e) {}
+    if (!Array.isArray(drafts)) drafts = [];
+
+    if (record.id) {
+        drafts = drafts.filter(function (item) {
+            return !item || item.id !== record.id;
+        });
+    }
+
+    if (record.status === "Draft") {
+        drafts.unshift(record);
+
+        localStorage.setItem(
+            "activeValidationDraft",
+            JSON.stringify({
+                storageKey: "validationDrafts",
+                index: 0,
+                id: record.id,
+                draft: record
+            })
+        );
+        window.__activeDraftId = record.id;
+    } else {
+        // Posted records should no longer remain in Saved Drafts.
+        localStorage.removeItem("activeValidationDraft");
+        window.__activeDraftId = null;
+    }
+
+    localStorage.setItem("validationDrafts", JSON.stringify(drafts));
+}
+
+document.getElementById(
+    "saveDraftButton"
+).addEventListener(
+    "click",
+    function () {
+
+        const draft = buildValidationRecord("Draft");
+        saveRecordToLocalStorage(draft);
+
+        alert("Draft saved successfully.");
+
+        window.location.href = "home.html";
+    }
+);
+
+
+
+/* =====================================================
+   SAVE VALIDATION
+===================================================== */
+
+document.getElementById(
+    "validationForm"
+).addEventListener(
+    "submit",
+    function (event) {
+
+        event.preventDefault();
+
+        const currentExpiryType = getFieldValue("expiryType");
+        if (currentExpiryType === "No Expires") {
+            const requiredNoExpiry = [
+                "noExpirySystemIdentity", "noExpiryModule", "noExpiryAccessPoint",
+                "noExpiryReportDate", "noExpiryEvaluationProcess", "noExpiryPurpose",
+                "noExpiryWorkPlan", "noExpiryLaboratorySection"
+            ];
+            const missingNoExpiry = requiredNoExpiry.some(function (id) {
+                return !getFieldValue(id).trim();
+            });
+            if (missingNoExpiry) {
+                alert("Please complete all No Expires information.");
+                return;
+            }
+            if (collectNoExpiryRows().length === 0) {
+                alert("Please add at least one No Expires validation row.");
+                return;
+            }
+            const postedNoExpiryRecord = buildValidationRecord("Posted for Validation");
+            saveRecordToLocalStorage(postedNoExpiryRecord);
+            alert("Validation posted successfully.");
+            window.location.href = "home.html";
+            return;
+        }
+
+        if (!validationType.value) {
+
+            alert(
+                "Please select a validation type."
+            );
+
+            return;
+
+        }
+
+
+        if (validationType.value === "withCalculation") {
+
+            const interfaceType =
+                document.getElementById("interfaceType").value.trim();
+
+            const dataInterfaceThrough =
+                document.getElementById("dataInterfaceThrough").value.trim();
+
+            const dataFlow =
+                document.getElementById("dataFlow").value.trim();
+
+            const viewingTechnology =
+                document.getElementById("viewingTechnology").value.trim();
+
+            const identificationTransmission =
+                document.getElementById("identificationTransmission").value.trim();
+
+            if (
+                !interfaceType ||
+                !dataInterfaceThrough ||
+                !dataFlow ||
+                !viewingTechnology ||
+                !identificationTransmission
+            ) {
+
+                alert(
+                    "Please complete all interface information."
+                );
+
+                return;
+            }
+        }
+
+
+        if (validationType.value === "withoutCalculation") {
+
+            const interfaceType =
+                document.getElementById("withoutInterfaceType").value.trim();
+
+            const dataInterfaceThrough =
+                document.getElementById("withoutDataInterfaceThrough").value.trim();
+
+            const dataFlow =
+                document.getElementById("withoutDataFlow").value.trim();
+
+            const viewingTechnology =
+                document.getElementById("withoutViewingTechnology").value.trim();
+
+            const identificationTransmission =
+                document.getElementById("withoutIdentificationTransmission").value.trim();
+
+            if (
+                !interfaceType ||
+                !dataInterfaceThrough ||
+                !dataFlow ||
+                !viewingTechnology ||
+                !identificationTransmission
+            ) {
+
+                alert(
+                    "Please complete all interface information."
+                );
+
+                return;
+            }
+        }
+
+
+        if (
+            validationType.value ===
+            "withCalculation" &&
+            calculationRows.length === 0
+        ) {
+
+            alert(
+                "Please add at least one validation row."
+            );
+
+            return;
+
+        }
+
+
+if (
+    validationType.value === "withoutCalculation" &&
+    withoutCalculationRows.length === 0
+) {
+
+    alert(
+        "Please add at least one validation row."
+    );
+
+    return;
+
+}
+
+const postedRecord = buildValidationRecord("Posted for Validation");
+
+        saveRecordToLocalStorage(postedRecord);
+
+        alert(
+            "Validation posted successfully."
+        );
+
+        window.location.href = "home.html";
+
+    }
+);
+
+
+
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const legendLightButton =
+        document.getElementById("legendLightButton");
+
+    const legendPopup =
+        document.getElementById("legendPopup");
+
+    const closeLegendPopup =
+        document.getElementById("closeLegendPopup");
+
+    function openLegendPopup() {
+        if (!legendPopup) return;
+        legendPopup.classList.add("show");
+        document.body.style.overflow = "hidden";
+    }
+
+    function closeLegend() {
+        if (!legendPopup) return;
+        legendPopup.classList.remove("show");
+        document.body.style.overflow = "";
+    }
+
+    if (legendLightButton) {
+        legendLightButton.addEventListener(
+            "click",
+            openLegendPopup
+        );
+    }
+
+    if (closeLegendPopup) {
+        closeLegendPopup.addEventListener(
+            "click",
+            closeLegend
+        );
+    }
+
+    if (legendPopup) {
+        legendPopup.addEventListener(
+            "click",
+            function (event) {
+                if (event.target === legendPopup) {
+                    closeLegend();
+                }
+            }
+        );
+    }
+
+    document.addEventListener(
+        "keydown",
+        function (event) {
+            if (event.key === "Escape") {
+                closeLegend();
+            }
+        }
+    );
+
+});
+
+
+
+
+/* INITIAL TABLE */
+
+renderCalculationRows();
+
+
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const expiryType = document.getElementById("expiryType");
+    const expiresForm = document.getElementById("expiresForm");
+    const noExpiresForm = document.getElementById("noExpiresForm");
+
+    const modal = document.getElementById("noExpiryRowModal");
+    const openModalBtn = document.getElementById("openNoExpiryRowModal");
+    const closeModalBtn = document.getElementById("closeNoExpiryRowModal");
+    const cancelBtn = document.getElementById("cancelNoExpiryRow");
+    const saveBtn = document.getElementById("saveNoExpiryRow");
+    const tableBody = document.getElementById("noExpiryTableBody");
+    const modalTitle = document.getElementById("noExpiryRowModalTitle");
+
+    const fields = {
+        testMethod: document.getElementById("rowTestMethod"),
+        caseNo: document.getElementById("rowCaseNo"),
+        processSteps: document.getElementById("rowProcessSteps"),
+        processPath: document.getElementById("rowProcessPath"),
+        acceptance: document.getElementById("rowAcceptance"),
+        dateTest: document.getElementById("rowDateTest"),
+        systemResponse: document.getElementById("rowSystemResponse"),
+        evaluation: document.getElementById("noExpiryRowEvaluation")
+    };
+
+    let editingRow = null;
+
+    function switchExpiryForm() {
+        if (!expiryType || !expiresForm || !noExpiresForm) return;
+        const isNoExpires = expiryType.value === "No Expires";
+        expiresForm.style.display = isNoExpires ? "none" : "block";
+        noExpiresForm.style.display = isNoExpires ? "block" : "none";
+    }
+
+    function resetRowForm() {
+        Object.values(fields).forEach(field => {
+            if (field) field.value = "";
+        });
+        editingRow = null;
+        if (modalTitle) modalTitle.textContent = "Create Row";
+        if (saveBtn) saveBtn.textContent = "Add Row";
+        if (fields.caseNo && tableBody) {
+            fields.caseNo.value = `CASE-${String(tableBody.children.length + 1).padStart(3, "0")}`;
+        }
+    }
+
+    function openModal(row = null) {
+        resetRowForm();
+
+        if (row) {
+            editingRow = row;
+            modalTitle.textContent = "Edit Row";
+            saveBtn.textContent = "Update Row";
+
+            fields.testMethod.value = row.dataset.testMethod || "";
+            fields.caseNo.value = row.dataset.caseNo || "";
+            fields.processSteps.value = row.dataset.processSteps || "";
+            fields.processPath.value = row.dataset.processPath || "";
+            fields.acceptance.value = row.dataset.acceptance || "";
+            fields.dateTest.value = row.dataset.dateTest || "";
+            fields.systemResponse.value = row.dataset.systemResponse || "";
+            fields.evaluation.value = row.dataset.evaluation || "";
+        }
+
+        modal.classList.add("show");
+        modal.setAttribute("aria-hidden", "false");
+    }
+
+    function closeModal() {
+        modal.classList.remove("show");
+        modal.setAttribute("aria-hidden", "true");
+        editingRow = null;
+    }
+
+    function escapeHtml(value) {
+        return String(value || "")
+            .replaceAll("&", "&amp;")
+            .replaceAll("<", "&lt;")
+            .replaceAll(">", "&gt;")
+            .replaceAll('"', "&quot;")
+            .replaceAll("'", "&#039;");
+    }
+
+    function renderRow(row, number, data) {
+        row.dataset.testMethod = data.testMethod;
+        row.dataset.caseNo = data.caseNo;
+        row.dataset.processSteps = data.processSteps;
+        row.dataset.processPath = data.processPath;
+        row.dataset.acceptance = data.acceptance;
+        row.dataset.dateTest = data.dateTest;
+        row.dataset.systemResponse = data.systemResponse;
+        row.dataset.evaluation = data.evaluation;
+
+        row.innerHTML = `
+            <td class="row-number">${number}</td>
+            <td>${escapeHtml(data.testMethod)}</td>
+            <td>${escapeHtml(data.caseNo)}</td>
+            <td>${escapeHtml(data.processSteps)}</td>
+            <td>${escapeHtml(data.processPath)}</td>
+            <td>${escapeHtml(data.acceptance)}</td>
+            <td>${escapeHtml(data.dateTest)}</td>
+            <td>${escapeHtml(data.systemResponse)}</td>
+            <td>${escapeHtml(data.evaluation)}</td>
+            <td>
+                <div class="table-action-buttons">
+                    <button type="button" class="btn btn-secondary edit-no-expiry-row">Edit</button>
+                    <button type="button" class="btn btn-danger delete-no-expiry-row">Delete</button>
+                </div>
+            </td>
+        `;
+    }
+
+    function renumberRows() {
+        [...tableBody.querySelectorAll("tr")].forEach((row, index) => {
+            const numberCell = row.querySelector(".row-number");
+            if (numberCell) numberCell.textContent = index + 1;
+        });
+    }
+
+    function saveRow() {
+        const data = {
+            testMethod: fields.testMethod.value,
+            caseNo: fields.caseNo.value.trim(),
+            processSteps: fields.processSteps.value.trim(),
+            processPath: fields.processPath.value.trim(),
+            acceptance: fields.acceptance.value.trim(),
+            dateTest: fields.dateTest.value,
+            systemResponse: fields.systemResponse.value.trim(),
+            evaluation: fields.evaluation.value
+        };
+
+        if (editingRow) {
+            const number = [...tableBody.children].indexOf(editingRow) + 1;
+            renderRow(editingRow, number, data);
+        } else {
+            const row = document.createElement("tr");
+            renderRow(row, tableBody.children.length + 1, data);
+            tableBody.appendChild(row);
+        }
+
+        closeModal();
+    }
+
+    expiryType?.addEventListener("change", switchExpiryForm);
+    openModalBtn?.addEventListener("click", () => openModal());
+    closeModalBtn?.addEventListener("click", closeModal);
+    cancelBtn?.addEventListener("click", closeModal);
+    saveBtn?.addEventListener("click", saveRow);
+
+    modal?.addEventListener("click", function (event) {
+        if (event.target === modal) closeModal();
+    });
+
+    tableBody?.addEventListener("click", function (event) {
+        const row = event.target.closest("tr");
+        if (!row) return;
+
+        if (event.target.closest(".edit-no-expiry-row")) {
+            openModal(row);
+        }
+
+        if (event.target.closest(".delete-no-expiry-row")) {
+            row.remove();
+            renumberRows();
+        }
+    });
+
+    switchExpiryForm();
+});
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    function updatePageNoExpiresStats() {
+        const body = document.getElementById("noExpiryTableBody");
+        if (!body) return;
+
+        const rows = Array.from(body.querySelectorAll("tr"));
+        let met = 0, partial = 0, notMet = 0;
+
+        rows.forEach(function(row) {
+            let value = (row.dataset.evaluation || "").trim().toLowerCase();
+            if (!value) {
+                const cells = row.querySelectorAll("td");
+                if (cells.length > 1) {
+                    value = (cells[cells.length - 2].textContent || "").trim().toLowerCase();
+                }
+            }
+            if (value === "met") met++;
+            else if (value === "partially met" || value === "partial met") partial++;
+            else if (value === "not met") notMet++;
+        });
+
+        const total = rows.length;
+        const pct = total ? Math.round((met / total) * 100) : 0;
+
+        document.getElementById("pageMetPercent").textContent = pct + "%";
+        document.getElementById("pageMetCount").textContent = met;
+        document.getElementById("pagePartialCount").textContent = partial;
+        document.getElementById("pageNotMetCount").textContent = notMet;
+        document.getElementById("pageTotalCount").textContent = total;
+    }
+
+    const body = document.getElementById("noExpiryTableBody");
+    if (body) {
+        new MutationObserver(updatePageNoExpiresStats).observe(body, {
+            childList: true,
+            subtree: true,
+            characterData: true,
+            attributes: true
+        });
+    }
+
+    document.addEventListener("click", function(){ setTimeout(updatePageNoExpiresStats, 30); });
+    updatePageNoExpiresStats();
+});
+</script>
+<!-- Removed: forced "No Expires" selection on every page load. -->
+<script>
+document.addEventListener("click", function(e){
+  if (e.target.closest("#approvalFlowSidebar")) return;
+  const btn = e.target.closest(".approve-member-btn");
+  if (!btn) return;
+  btn.classList.toggle("approved");
+  btn.textContent = btn.classList.contains("approved") ? "✓ Approved" : "✓ Approve";
+});
+</script>
+<script>
+document.addEventListener("click", function(e){
+    if (e.target.closest("#approvalFlowSidebar")) return;
+    const rejectBtn = e.target.closest(".reject-member-btn");
+    if (rejectBtn){
+        const person = rejectBtn.closest(".approval-person");
+        const approveBtn = person ? person.querySelector(".approve-member-btn") : null;
+
+        rejectBtn.classList.toggle("rejected");
+        rejectBtn.textContent = rejectBtn.classList.contains("rejected") ? "✕ Rejected" : "✕ Reject";
+
+        if (rejectBtn.classList.contains("rejected") && approveBtn){
+            approveBtn.classList.remove("approved");
+            approveBtn.textContent = "✓ Approve";
+        }
+        return;
+    }
+
+    const approveBtn = e.target.closest(".approve-member-btn");
+    if (approveBtn){
+        const person = approveBtn.closest(".approval-person");
+        const reject = person ? person.querySelector(".reject-member-btn") : null;
+        if (approveBtn.classList.contains("approved") && reject){
+            reject.classList.remove("rejected");
+            reject.textContent = "✕ Reject";
+        }
+    }
+});
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const saveNoExpiryDraftButton =
+        document.getElementById("saveNoExpiryDraftButton");
+
+    const postNoExpiryValidationButton =
+        document.getElementById("postNoExpiryValidationButton");
+
+    if (saveNoExpiryDraftButton) {
+        saveNoExpiryDraftButton.addEventListener("click", function () {
+            const draft = buildValidationRecord("Draft");
+            saveRecordToLocalStorage(draft);
+            alert("Draft saved successfully.");
+            window.location.href = "home.html";
+        });
+    }
+
+    if (postNoExpiryValidationButton) {
+        postNoExpiryValidationButton.addEventListener("click", function () {
+            const postedRecord =
+                buildValidationRecord("Posted for Validation");
+            saveRecordToLocalStorage(postedRecord);
+            alert("Validation posted successfully.");
+            window.location.href = "home.html";
+        });
+    }
+});
+/* NO EXPIRES FINAL ACTIONS */
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const legendLightButton =
+        document.getElementById("legendLightButton");
+
+    const legendPopup =
+        document.getElementById("legendPopup");
+
+    const closeLegendPopup =
+        document.getElementById("closeLegendPopup");
+
+    function openLegendPopup() {
+        if (!legendPopup) return;
+        legendPopup.classList.add("show");
+        document.body.style.overflow = "hidden";
+    }
+
+    function closeLegend() {
+        if (!legendPopup) return;
+        legendPopup.classList.remove("show");
+        document.body.style.overflow = "";
+    }
+
+    if (legendLightButton) {
+        legendLightButton.addEventListener(
+            "click",
+            openLegendPopup
+        );
+    }
+
+    if (closeLegendPopup) {
+        closeLegendPopup.addEventListener(
+            "click",
+            closeLegend
+        );
+    }
+
+    if (legendPopup) {
+        legendPopup.addEventListener(
+            "click",
+            function (event) {
+                if (event.target === legendPopup) {
+                    closeLegend();
+                }
+            }
+        );
+    }
+
+    document.addEventListener(
+        "keydown",
+        function (event) {
+            if (event.key === "Escape") {
+                closeLegend();
+            }
+        }
+    );
+
+});
+</script>
+<script id="expires-sequential-approval-script">
+document.addEventListener("DOMContentLoaded", function () {
+    const expiryType = document.getElementById("expiryType");
+    const sidebar = document.getElementById("approvalFlowSidebar");
+    if (!sidebar) return;
+
+    const members = Array.from(sidebar.querySelectorAll(".approval-person"));
+
+    function setMemberLocked(member, locked) {
+        const approve = member.querySelector(".approve-member-btn");
+        const reject = member.querySelector(".reject-member-btn");
+        const note = member.querySelector("input");
+
+        if (approve) approve.disabled = locked;
+        if (reject) reject.disabled = locked;
+        if (note) note.disabled = locked;
+    }
+
+    function resetApprovalChain() {
+        members.forEach(function (member, index) {
+            member.classList.remove("is-current", "is-approved", "is-rejected");
+
+            const approve = member.querySelector(".approve-member-btn");
+            const reject = member.querySelector(".reject-member-btn");
+            const state = member.querySelector(".approval-state");
+
+            if (approve) {
+                approve.classList.remove("approved");
+                approve.textContent = "✓ Approve";
+            }
+
+            if (reject) {
+                reject.classList.remove("rejected");
+                reject.textContent = "✕ Reject";
+            }
+
+            if (state) {
+                state.textContent = index === 0 ? "Pending" : "Waiting";
+            }
+
+            setMemberLocked(member, index !== 0);
+        });
+
+        if (members[0]) members[0].classList.add("is-current");
+    }
+
+    function updateSidebarForExpiry() {
+        const isExpires = expiryType && expiryType.value === "Expires";
+        sidebar.style.display = isExpires ? "" : "none";
+    }
+
+    sidebar.addEventListener("click", function (event) {
+        const approveBtn = event.target.closest(".approve-member-btn");
+        const rejectBtn = event.target.closest(".reject-member-btn");
+
+        if (!approveBtn && !rejectBtn) return;
+
+        const member = event.target.closest(".approval-person");
+        if (!member) return;
+
+        const index = members.indexOf(member);
+        if (index < 0) return;
+
+        if (approveBtn) {
+            if (approveBtn.disabled || !member.classList.contains("is-current")) return;
+
+            member.classList.remove("is-current", "is-rejected");
+            member.classList.add("is-approved");
+
+            approveBtn.classList.add("approved");
+            approveBtn.textContent = "✓ Approved";
+
+            const reject = member.querySelector(".reject-member-btn");
+            if (reject) {
+                reject.classList.remove("rejected");
+                reject.textContent = "✕ Reject";
+            }
+
+            const state = member.querySelector(".approval-state");
+            if (state) state.textContent = "Approved";
+
+            setMemberLocked(member, true);
+
+            const next = members[index + 1];
+            if (next) {
+                next.classList.add("is-current");
+                const nextState = next.querySelector(".approval-state");
+                if (nextState) nextState.textContent = "Pending";
+                setMemberLocked(next, false);
+            }
+        }
+
+        if (rejectBtn) {
+            if (rejectBtn.disabled || !member.classList.contains("is-current")) return;
+
+            member.classList.remove("is-current", "is-approved");
+            member.classList.add("is-rejected");
+
+            rejectBtn.classList.add("rejected");
+            rejectBtn.textContent = "✕ Rejected";
+
+            const approve = member.querySelector(".approve-member-btn");
+            if (approve) {
+                approve.classList.remove("approved");
+                approve.textContent = "✓ Approve";
+            }
+
+            const state = member.querySelector(".approval-state");
+            if (state) state.textContent = "Rejected";
+
+            setMemberLocked(member, true);
+
+            for (let i = index + 1; i < members.length; i++) {
+                members[i].classList.remove("is-current", "is-approved", "is-rejected");
+                const laterState = members[i].querySelector(".approval-state");
+                if (laterState) laterState.textContent = "Waiting";
+                setMemberLocked(members[i], true);
+            }
+        }
+    });
+
+    if (expiryType) {
+        expiryType.addEventListener("change", updateSidebarForExpiry);
+    }
+
+    resetApprovalChain();
+    updateSidebarForExpiry();
+});
+</script>
+<script id="no-expiry-final-actions-script">
+document.addEventListener("DOMContentLoaded", function () {
+    const noExpiryDraft = document.getElementById("noExpirySaveDraftButton");
+    const noExpiryPost = document.getElementById("noExpiryPostValidationButton");
+    const existingDraft = document.getElementById("saveDraftButton");
+    const existingPost = document.getElementById("postValidationButton");
+
+    if (noExpiryDraft && existingDraft) {
+        noExpiryDraft.addEventListener("click", function () {
+            existingDraft.click();
+        });
+    }
+
+    function dispatchValidationSubmit() {
+        const form = document.getElementById("validationForm");
+        if (form) form.dispatchEvent(new Event("submit", { bubbles: true, cancelable: true }));
+    }
+
+    if (existingPost) {
+        existingPost.addEventListener("click", dispatchValidationSubmit);
+    }
+
+    if (noExpiryPost) {
+        noExpiryPost.addEventListener("click", dispatchValidationSubmit);
+    }
+});
+</script>
+<script id="approval-progress-storage-sync">
+document.addEventListener("DOMContentLoaded", function () {
+    const sidebar = document.getElementById("approvalFlowSidebar");
+    if (!sidebar) return;
+
+    function getApprovedCount() {
+        return sidebar.querySelectorAll(".approval-person.is-approved").length;
+    }
+
+    function updateMatchingRecordArray(storageKey, approvedCount) {
+        let items;
+        try {
+            items = JSON.parse(localStorage.getItem(storageKey) || "[]");
+        } catch (e) {
+            items = [];
+        }
+        if (!Array.isArray(items) || items.length === 0) return;
+
+        // The newest Expires record is the one currently being reviewed.
+        const index = items.findIndex(function (item) {
+            return item && item.expiryType === "Expires";
+        });
+
+        if (index === -1) return;
+
+        items[index].totalApprovers = 5;
+        items[index].approvedApprovers = approvedCount;
+        items[index].approvalProgress = {
+            approved: approvedCount,
+            total: 5
+        };
+
+        localStorage.setItem(storageKey, JSON.stringify(items));
+    }
+
+    function saveApprovalProgress() {
+        const approvedCount = getApprovedCount();
+
+        localStorage.setItem(
+            "currentExpiresApprovalProgress",
+            JSON.stringify({ approved: approvedCount, total: 5 })
+        );
+
+        updateMatchingRecordArray("validationRecords", approvedCount);
+        updateMatchingRecordArray("validationDrafts", approvedCount);
+    }
+
+    sidebar.addEventListener("click", function (event) {
+        if (
+            event.target.closest(".approve-member-btn") ||
+            event.target.closest(".reject-member-btn")
+        ) {
+            // Run after the existing approval handler has updated classes.
+            setTimeout(saveApprovalProgress, 0);
+        }
+    });
+
+    saveApprovalProgress();
+});
+</script>
+<script id="draft-resume-fix">
+/*
+=====================================================
+DRAFT RESUME FIX
+Restores the exact draft selected from Home.
+=====================================================
+*/
+(function () {
+    function safeParse(value) {
+        try { return JSON.parse(value); } catch (e) { return null; }
+    }
+
+    function setValue(id, value) {
+        const el = document.getElementById(id);
+        if (!el || value === undefined || value === null) return;
+        el.value = value;
+    }
+
+    function dispatchChange(el) {
+        if (!el) return;
+        el.dispatchEvent(new Event("change", { bubbles: true }));
+    }
+
+    function getSelectedDraft() {
+        const active = safeParse(localStorage.getItem("activeValidationDraft"));
+        if (!active) return null;
+
+        // Home stores the complete draft here.
+        if (active.draft && typeof active.draft === "object") {
+            return active.draft;
+        }
+
+        // Fallback: resolve it again from its storage collection.
+        if (active.storageKey) {
+            const stored = safeParse(localStorage.getItem(active.storageKey));
+            if (Array.isArray(stored)) {
+                if (active.id) {
+                    const byId = stored.find(function (item) {
+                        return item && item.id === active.id;
+                    });
+                    if (byId) return byId;
+                }
+                if (stored[active.index]) return stored[active.index];
+            } else if (stored && typeof stored === "object") {
+                return stored;
+            }
+        }
+
+        return null;
+    }
+
+    function restoreNoExpiryRows(rows) {
+        const tbody = document.getElementById("noExpiryTableBody");
+        if (!tbody) return;
+
+        tbody.innerHTML = "";
+
+        (Array.isArray(rows) ? rows : []).forEach(function (row, index) {
+            const tr = document.createElement("tr");
+
+            tr.dataset.testMethod = row.testMethod || "";
+            tr.dataset.caseNo = row.caseNo || "";
+            tr.dataset.processSteps = row.processSteps || "";
+            tr.dataset.processPath = row.processPath || "";
+            tr.dataset.acceptance = row.acceptance || "";
+            tr.dataset.dateTest = row.dateTest || "";
+            tr.dataset.systemResponse = row.systemResponse || "";
+            tr.dataset.evaluation = row.evaluation || "";
+
+            function td(value) {
+                const cell = document.createElement("td");
+                cell.textContent = value || "-";
+                return cell;
+            }
+
+            tr.appendChild(td(index + 1));
+            tr.appendChild(td(row.testMethod));
+            tr.appendChild(td(row.caseNo));
+            tr.appendChild(td(row.processSteps));
+            tr.appendChild(td(row.processPath));
+            tr.appendChild(td(row.acceptance));
+            tr.appendChild(td(row.dateTest));
+            tr.appendChild(td(row.systemResponse));
+            tr.appendChild(td(row.evaluation));
+
+            const actionCell = document.createElement("td");
+            actionCell.innerHTML =
+                '<div class="table-action-buttons">' +
+                '<button type="button" class="btn btn-secondary edit-no-expiry-row">Edit</button>' +
+                '<button type="button" class="btn btn-secondary delete-no-expiry-row">Delete</button>' +
+                '</div>';
+            tr.appendChild(actionCell);
+
+            tbody.appendChild(tr);
+        });
+
+        // Let existing page logic recalculate statistics / bind any delegated behavior.
+        tbody.dispatchEvent(new Event("change", { bubbles: true }));
+    }
+
+    function restoreDraft(draft) {
+        if (!draft) return;
+
+        const expiry = document.getElementById("expiryType");
+        if (expiry && draft.expiryType) {
+            expiry.value = draft.expiryType;
+            dispatchChange(expiry);
+        }
+
+        const general = draft.generalInformation || {};
+        setValue("department", general.department);
+        setValue("validationDate", general.validationDate);
+        setValue("machineName", general.machineName);
+        setValue("serialNumber", general.serialNumber);
+        setValue("reasonValidation", general.reasonValidation);
+
+        if (draft.validationType) {
+            const type = document.getElementById("validationType");
+            if (type) {
+                type.value = draft.validationType;
+                dispatchChange(type);
+            }
+        }
+
+        const expires = draft.expiresData || {};
+        setValue("interfaceType", expires.interfaceType);
+        setValue("dataInterfaceThrough", expires.dataInterfaceThrough);
+        setValue("dataFlow", expires.dataFlow);
+        setValue("viewingTechnology", expires.viewingTechnology);
+        setValue("identificationTransmission", expires.identificationTransmission);
+
+        const withoutCalculation = draft.withoutCalculationData || {};
+        setValue("withoutInterfaceType", withoutCalculation.interfaceType);
+        setValue("withoutDataInterfaceThrough", withoutCalculation.dataInterfaceThrough);
+        setValue("withoutDataFlow", withoutCalculation.dataFlow);
+        setValue("withoutViewingTechnology", withoutCalculation.viewingTechnology);
+        setValue("withoutIdentificationTransmission", withoutCalculation.identificationTransmission);
+
+        setValue("correctiveAction", expires.correctiveAction);
+        setValue("limitations", expires.limitations);
+
+        if (Array.isArray(expires.calculationRows)) {
+            calculationRows = expires.calculationRows.map(function (row) {
+                return Object.assign({}, row);
+            });
+            if (typeof renderCalculationRows === "function") {
+                renderCalculationRows();
+            }
+        }
+
+        const noExpires = draft.noExpiresData || {};
+        setValue("noExpirySystemIdentity", noExpires.systemIdentity);
+        setValue("noExpiryModule", noExpires.module);
+        setValue("noExpiryAccessPoint", noExpires.accessPoint);
+        setValue("noExpiryReportDate", noExpires.reportDate);
+        setValue("noExpiryEvaluationProcess", noExpires.evaluationProcess);
+        setValue("noExpiryPurpose", noExpires.purpose);
+        setValue("noExpiryWorkPlan", noExpires.workPlan);
+        setValue("noExpiryLaboratorySection", noExpires.laboratorySection);
+        setValue("noExpiryConclusion", noExpires.conclusion);
+        setValue("noExpiryUnexpected", noExpires.unexpectedOutcomes);
+        setValue("noExpiryCorrective", noExpires.correctiveAction);
+        setValue("noExpiryApproval", noExpires.finalApproval);
+
+restoreNoExpiryRows(noExpires.rows);
+
+if (draft.withoutCalculationData) {
+
+    withoutCalculationRows =
+        draft.withoutCalculationData.rows || [];
+
+    renderWithoutCalculationRows();
+
+}
+
+if (draft.autoPhase1Data) {
+    setValue("autoPhase1Middleware", draft.autoPhase1Data.middlewareVersion);
+    autoPhase1Rows = draft.autoPhase1Data.rows || [];
+    renderAutoPhase1Rows();
+}
+
+if (draft.autoPhase2Data) {
+    setValue("autoPhase2Middleware", draft.autoPhase2Data.middlewareVersion);
+    autoPhase2Rows = draft.autoPhase2Data.rows || [];
+    renderAutoPhase2Rows();
+}
+
+// Keep the selected draft id so a later save can update the same draft.
+window.__activeDraftId = draft.id || null;
+
+    }
+
+    window.addEventListener("DOMContentLoaded", function () {
+        const draft = getSelectedDraft();
+
+        if (draft) {
+            // Run after the page's existing DOMContentLoaded handlers.
+            setTimeout(function () {
+                restoreDraft(draft);
+            }, 0);
+        }
+    });
+})();
+</script>
+<script id="no-expires-sequential-approval-script">
+document.addEventListener("DOMContentLoaded", function () {
+    const sidebar = document.getElementById("noExpiryApprovalFlow");
+    const expiryType = document.getElementById("expiryType");
+    if (!sidebar) return;
+
+    const members = Array.from(sidebar.querySelectorAll(".approval-person"));
+
+    function safeParse(value, fallback) {
+        try { return JSON.parse(value); } catch (e) { return fallback; }
+    }
+
+    function setLocked(member, locked) {
+        const approve = member.querySelector(".approve-member-btn");
+        const reject = member.querySelector(".reject-member-btn");
+        const note = member.querySelector("input");
+        if (approve) approve.disabled = locked;
+        if (reject) reject.disabled = locked;
+        if (note) note.disabled = locked;
+    }
+
+    function resetChain() {
+        members.forEach(function (member, index) {
+            member.classList.remove("is-current", "is-approved", "is-rejected");
+
+            const approve = member.querySelector(".approve-member-btn");
+            const reject = member.querySelector(".reject-member-btn");
+            const state = member.querySelector(".approval-state");
+
+            if (approve) {
+                approve.classList.remove("approved");
+                approve.textContent = "✓ Approve";
+            }
+            if (reject) {
+                reject.classList.remove("rejected");
+                reject.textContent = "✕ Reject";
+            }
+            if (state) state.textContent = index === 0 ? "Pending" : "Waiting";
+
+            setLocked(member, index !== 0);
+        });
+
+        if (members[0]) members[0].classList.add("is-current");
+    }
+
+    function updateVisibility() {
+        sidebar.style.display =
+            expiryType && expiryType.value === "No Expires" ? "" : "none";
+    }
+
+    function approvedCount() {
+        return sidebar.querySelectorAll(".approval-person.is-approved").length;
+    }
+
+    function currentRecordId() {
+        const activeRecord = safeParse(
+            localStorage.getItem("activeValidationRecord"),
+            null
+        );
+        if (activeRecord && activeRecord.record && activeRecord.record.id) {
+            return activeRecord.record.id;
+        }
+
+        const activeDraft = safeParse(
+            localStorage.getItem("activeValidationDraft"),
+            null
+        );
+        if (activeDraft && activeDraft.draft && activeDraft.draft.id) {
+            return activeDraft.draft.id;
+        }
+
+        return window.__activeDraftId || null;
+    }
+
+    function updateStorageArray(storageKey, count) {
+        let items = safeParse(localStorage.getItem(storageKey), []);
+        if (!Array.isArray(items)) return;
+
+        const id = currentRecordId();
+        let index = -1;
+
+        if (id) {
+            index = items.findIndex(function (item) {
+                return item && item.id === id;
+            });
+        }
+
+        if (index === -1) {
+            index = items.findIndex(function (item) {
+                return item &&
+                    item.expiryType === "No Expires" &&
+                    item.status !== "Draft";
+            });
+        }
+
+        if (index === -1) return;
+
+        items[index].totalApprovers = 6;
+        items[index].approvedApprovers = count;
+        items[index].approvalProgress = {
+            approved: count,
+            total: 6
+        };
+
+        localStorage.setItem(storageKey, JSON.stringify(items));
+    }
+
+    function persistProgress() {
+        const count = approvedCount();
+
+        localStorage.setItem(
+            "currentNoExpiresApprovalProgress",
+            JSON.stringify({
+                approved: count,
+                total: 6,
+                recordId: currentRecordId()
+            })
+        );
+
+        updateStorageArray("validationRecords", count);
+        updateStorageArray("validationDrafts", count);
+    }
+
+    sidebar.addEventListener("click", function (event) {
+        const approveBtn = event.target.closest(".approve-member-btn");
+        const rejectBtn = event.target.closest(".reject-member-btn");
+        if (!approveBtn && !rejectBtn) return;
+
+        const member = event.target.closest(".approval-person");
+        if (!member) return;
+
+        const index = members.indexOf(member);
+        if (index < 0 || !member.classList.contains("is-current")) return;
+
+        if (approveBtn) {
+            if (approveBtn.disabled) return;
+
+            member.classList.remove("is-current", "is-rejected");
+            member.classList.add("is-approved");
+
+            approveBtn.classList.add("approved");
+            approveBtn.textContent = "✓ Approved";
+
+            const reject = member.querySelector(".reject-member-btn");
+            if (reject) {
+                reject.classList.remove("rejected");
+                reject.textContent = "✕ Reject";
+            }
+
+            const state = member.querySelector(".approval-state");
+            if (state) state.textContent = "Approved";
+
+            setLocked(member, true);
+
+            const next = members[index + 1];
+            if (next) {
+                next.classList.add("is-current");
+                const nextState = next.querySelector(".approval-state");
+                if (nextState) nextState.textContent = "Pending";
+                setLocked(next, false);
+            }
+        }
+
+        if (rejectBtn) {
+            if (rejectBtn.disabled) return;
+
+            member.classList.remove("is-current", "is-approved");
+            member.classList.add("is-rejected");
+
+            rejectBtn.classList.add("rejected");
+            rejectBtn.textContent = "✕ Rejected";
+
+            const approve = member.querySelector(".approve-member-btn");
+            if (approve) {
+                approve.classList.remove("approved");
+                approve.textContent = "✓ Approve";
+            }
+
+            const state = member.querySelector(".approval-state");
+            if (state) state.textContent = "Rejected";
+
+            setLocked(member, true);
+
+            for (let i = index + 1; i < members.length; i++) {
+                members[i].classList.remove(
+                    "is-current",
+                    "is-approved",
+                    "is-rejected"
+                );
+                const laterState =
+                    members[i].querySelector(".approval-state");
+                if (laterState) laterState.textContent = "Waiting";
+                setLocked(members[i], true);
+            }
+        }
+
+        setTimeout(persistProgress, 0);
+    });
+
+    if (expiryType) {
+        expiryType.addEventListener("change", updateVisibility);
+    }
+
+    resetChain();
+    updateVisibility();
+});
+</script>
+<script id="auto-verification-rows-script">
+let autoPhase1Rows = [];
+let autoPhase2Rows = [];
+let editingAutoPhase1Index = null;
+let editingAutoPhase2Index = null;
+
+function escapeAutoHtml(value) {
+    return String(value ?? "").replace(/[&<>'"]/g, function (ch) {
+        return {"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;",'"':"&quot;"}[ch];
+    });
+}
+function openAutoModal(modal) {
+    modal.classList.add("active", "show");
+    modal.style.display = "flex";
+    document.body.style.overflow = "hidden";
+}
+function closeAutoModal(modal) {
+    modal.classList.remove("active", "show");
+    modal.style.display = "none";
+    document.body.style.overflow = "";
+}
+function evidenceLabel(name) { return name ? escapeAutoHtml(name) : "—"; }
+function lisLabel(value) { return value === "Yes" ? "✓" : value === "No" ? "✕" : "—"; }
+
+function renderAutoPhase1Rows() {
+    const body = document.getElementById("autoPhase1TableBody");
+    const empty = document.getElementById("autoPhase1EmptyMessage");
+    if (!body) return;
+    body.innerHTML = autoPhase1Rows.map(function(row, i) {
+        return `<tr>
+          <td>${i + 1}</td><td>${escapeAutoHtml(row.rule)}</td><td>${escapeAutoHtml(row.challenge)}</td>
+          <td>${escapeAutoHtml(row.expected)}</td><td>${escapeAutoHtml(row.systemResponds)}</td>
+          <td>${escapeAutoHtml(row.acceptance)}</td><td>${escapeAutoHtml(row.testedBy)}</td>
+          <td>${escapeAutoHtml(row.evaluation)}</td><td>${escapeAutoHtml(row.remark)}</td>
+          <td>${evidenceLabel(row.evidenceName)}</td>
+          <td><div class="table-action-buttons"><button type="button" class="table-edit-button" onclick="editAutoPhase1Row(${i})">Edit</button><button type="button" class="table-delete-button" onclick="deleteAutoPhase1Row(${i})">Delete</button></div></td>
+        </tr>`;
+    }).join("");
+    if (empty) empty.style.display = autoPhase1Rows.length ? "none" : "flex";
+}
+function clearAutoPhase1Modal() {
+    ["phase1Rule","phase1Challenge","phase1Expected","phase1SystemResponds","phase1Acceptance","phase1TestedBy","phase1Remark"].forEach(id => document.getElementById(id).value = "");
+    document.getElementById("phase1Evaluation").value = "";
+    document.getElementById("phase1Evidence").value = "";
+}
+function editAutoPhase1Row(index) {
+    editingAutoPhase1Index = index; const r = autoPhase1Rows[index];
+    document.getElementById("autoPhase1ModalTitle").textContent = "Edit Validation Rule";
+    document.getElementById("phase1Rule").value = r.rule || "";
+    document.getElementById("phase1Challenge").value = r.challenge || "";
+    document.getElementById("phase1Expected").value = r.expected || "";
+    document.getElementById("phase1SystemResponds").value = r.systemResponds || "";
+    document.getElementById("phase1Acceptance").value = r.acceptance || "";
+    document.getElementById("phase1TestedBy").value = r.testedBy || "";
+    document.getElementById("phase1Evaluation").value = r.evaluation || "";
+    document.getElementById("phase1Remark").value = r.remark || "";
+    openAutoModal(document.getElementById("autoPhase1Modal"));
+}
+function deleteAutoPhase1Row(index) { if (confirm("Delete this Phase 1 row?")) { autoPhase1Rows.splice(index,1); renderAutoPhase1Rows(); } }
+
+function renderAutoPhase2Rows() {
+    const body = document.getElementById("autoPhase2TableBody");
+    const empty = document.getElementById("autoPhase2EmptyMessage");
+    if (!body) return;
+    body.innerHTML = autoPhase2Rows.map(function(row, i) {
+        return `<tr>
+          <td>${i + 1}</td><td>${escapeAutoHtml(row.accession)}</td><td>${escapeAutoHtml(row.testName)}</td>
+          <td>${escapeAutoHtml(row.result)}</td><td>${escapeAutoHtml(row.flag)}</td>
+          <td>${escapeAutoHtml(row.challenge)}</td><td>${escapeAutoHtml(row.expected)}</td>
+          <td>${escapeAutoHtml(row.systemRespond)}</td><td>${escapeAutoHtml(row.testedBy)}</td>
+          <td>${escapeAutoHtml(row.evaluation)}</td><td>${escapeAutoHtml(row.remark)}</td>
+          <td>${evidenceLabel(row.evidenceName)}</td>
+          <td><div class="table-action-buttons"><button type="button" class="table-edit-button" onclick="editAutoPhase2Row(${i})">Edit</button><button type="button" class="table-delete-button" onclick="deleteAutoPhase2Row(${i})">Delete</button></div></td>
+        </tr>`;
+    }).join("");
+    if (empty) empty.style.display = autoPhase2Rows.length ? "none" : "flex";
+}
+function clearAutoPhase2Modal() {
+    ["phase2Accession","phase2TestName","phase2Result","phase2Flag","phase2Challenge","phase2Expected","phase2SystemRespond","phase2TestedBy","phase2Remark"].forEach(id => document.getElementById(id).value = "");
+    document.getElementById("phase2Evaluation").value = "";
+    document.getElementById("phase2Evidence").value = "";
+}
+function editAutoPhase2Row(index) {
+    editingAutoPhase2Index = index; const r = autoPhase2Rows[index];
+    document.getElementById("autoPhase2ModalTitle").textContent = "Edit Validation Case";
+    ["accession","testName","result","flag","challenge","expected","systemRespond","testedBy","remark"].forEach(function(k){
+        const map={accession:"phase2Accession",testName:"phase2TestName",result:"phase2Result",flag:"phase2Flag",challenge:"phase2Challenge",expected:"phase2Expected",systemRespond:"phase2SystemRespond",testedBy:"phase2TestedBy",remark:"phase2Remark"};
+        document.getElementById(map[k]).value = r[k] || "";
+    });
+    document.getElementById("phase2Evaluation").value = r.evaluation || "";
+    openAutoModal(document.getElementById("autoPhase2Modal"));
+}
+function deleteAutoPhase2Row(index) { if (confirm("Delete this Phase 2 row?")) { autoPhase2Rows.splice(index,1); renderAutoPhase2Rows(); } }
+
+document.addEventListener("DOMContentLoaded", function () {
+    const p1Modal = document.getElementById("autoPhase1Modal");
+    const p2Modal = document.getElementById("autoPhase2Modal");
+    document.getElementById("addAutoPhase1RowButton").addEventListener("click", function(){ editingAutoPhase1Index=null; clearAutoPhase1Modal(); document.getElementById("autoPhase1ModalTitle").textContent="Add Validation Rule"; openAutoModal(p1Modal); });
+    document.getElementById("closeAutoPhase1Modal").addEventListener("click", ()=>closeAutoModal(p1Modal));
+    document.getElementById("cancelAutoPhase1Modal").addEventListener("click", ()=>closeAutoModal(p1Modal));
+    p1Modal.addEventListener("click", e=>{ if(e.target===p1Modal) closeAutoModal(p1Modal); });
+    document.getElementById("saveAutoPhase1Row").addEventListener("click", function(){
+        const row={rule:phase1Rule.value.trim(),challenge:phase1Challenge.value.trim(),expected:phase1Expected.value.trim(),systemResponds:phase1SystemResponds.value.trim(),acceptance:phase1Acceptance.value.trim(),testedBy:phase1TestedBy.value.trim(),evaluation:phase1Evaluation.value,remark:phase1Remark.value.trim(),evidenceName:phase1Evidence.files[0]?.name || (editingAutoPhase1Index!==null ? autoPhase1Rows[editingAutoPhase1Index].evidenceName : "")};
+        if(!row.rule||!row.challenge||!row.expected||!row.systemResponds||!row.acceptance||!row.evaluation){ alert("Please complete all required Phase 1 fields."); return; }
+        if(editingAutoPhase1Index===null) autoPhase1Rows.push(row); else autoPhase1Rows[editingAutoPhase1Index]=row;
+        renderAutoPhase1Rows(); closeAutoModal(p1Modal);
+    });
+
+    document.getElementById("addAutoPhase2RowButton").addEventListener("click", function(){ editingAutoPhase2Index=null; clearAutoPhase2Modal(); document.getElementById("autoPhase2ModalTitle").textContent="Add Validation Case"; openAutoModal(p2Modal); });
+    document.getElementById("closeAutoPhase2Modal").addEventListener("click", ()=>closeAutoModal(p2Modal));
+    document.getElementById("cancelAutoPhase2Modal").addEventListener("click", ()=>closeAutoModal(p2Modal));
+    p2Modal.addEventListener("click", e=>{ if(e.target===p2Modal) closeAutoModal(p2Modal); });
+    document.getElementById("saveAutoPhase2Row").addEventListener("click", function(){
+        const row={accession:phase2Accession.value.trim(),testName:phase2TestName.value.trim(),result:phase2Result.value.trim(),flag:phase2Flag.value.trim(),challenge:phase2Challenge.value.trim(),expected:phase2Expected.value.trim(),systemRespond:phase2SystemRespond.value.trim(),testedBy:phase2TestedBy.value.trim(),evaluation:phase2Evaluation.value,remark:phase2Remark.value.trim(),evidenceName:phase2Evidence.files[0]?.name || (editingAutoPhase2Index!==null ? autoPhase2Rows[editingAutoPhase2Index].evidenceName : "")};
+        if(!row.accession||!row.testName||!row.result||!row.challenge||!row.expected||!row.systemRespond||!row.evaluation){ alert("Please complete all required Phase 2 fields."); return; }
+        if(editingAutoPhase2Index===null) autoPhase2Rows.push(row); else autoPhase2Rows[editingAutoPhase2Index]=row;
+        renderAutoPhase2Rows(); closeAutoModal(p2Modal);
+    });
+    renderAutoPhase1Rows(); renderAutoPhase2Rows();
+});
+</script>
+
+<script id="final-expiry-sidebar-toggle">
+document.addEventListener("DOMContentLoaded", function () {
+    const container = document.querySelector("main.create-page > .container");
+    const form = document.getElementById("validationForm");
+    const expirySelect = document.getElementById("expiryType");
+    const expiresApproval = document.getElementById("approvalFlowSidebar");
+    const noExpiresApproval = document.getElementById("noExpiryApprovalFlow");
+
+    if (container && form && noExpiresApproval) {
+        container.insertBefore(noExpiresApproval, form);
+    }
+
+    function syncApprovalSidebar() {
+        const noExpires = expirySelect && expirySelect.value === "No Expires";
+        if (expiresApproval) expiresApproval.style.display = noExpires ? "none" : "block";
+        if (noExpiresApproval) noExpiresApproval.style.display = noExpires ? "block" : "none";
+    }
+
+    if (expirySelect) expirySelect.addEventListener("change", syncApprovalSidebar);
+    syncApprovalSidebar();
+});
+</script>
+
+
+<style id="no-expires-background-fix">
+body.dashboard-body{
+  background:#eef7f2 !important;
+}
+
+#noExpiresForm{
+  background:inherit !important;
+  border:none !important;
+  border-radius:0 !important;
+  box-shadow:none !important;
+  padding:18px 0 !important;
+  box-sizing:border-box;
+}
+
+/* احتفظ بنفس كروت Expires */
+#noExpiresForm .validation-section{
+  background:#ffffff !important;
+  border-radius:20px !important;
+  border:none !important;
+  box-shadow:0 10px 30px rgba(0,0,0,.06) !important;
+  overflow:hidden;
+  margin-bottom:24px;
+}
+
+#noExpiresPageStatistics{
+  background:#ffffff !important;
+  border-radius:20px !important;
+  border:none !important;
+  box-shadow:0 10px 30px rgba(0,0,0,.06) !important;
+}
+
+#noExpiryBottomSection{
+  background:#ffffff !important;
+  border-radius:20px !important;
+  border:none !important;
+  box-shadow:0 10px 30px rgba(0,0,0,.06) !important;
+}
+</style>
+<script id="record-data-persistence-and-approval-guard">
+document.addEventListener("DOMContentLoaded", function () {
+    function parse(key, fallback) {
+        try { return JSON.parse(localStorage.getItem(key) || "null") ?? fallback; }
+        catch (e) { return fallback; }
+    }
+    function resolveStoredReference(value) {
+        if (!value) return null;
+
+        // The Home/Open button may save the complete record directly.
+        if (value.record) return value.record;
+        if (value.draft) return value.draft;
+        if (value.validation) return value.validation;
+        if (value.data && (value.data.id || value.data.expiryType || value.data.generalInformation)) {
+            return value.data;
+        }
+
+        // It may instead save only a storage key, index, or record id.
+        const storageKey = value.storageKey || value.key;
+        const index = Number.isInteger(value.index) ? value.index : Number(value.index);
+        const wantedId = value.id || value.recordId || value.validationId;
+
+        if (storageKey) {
+            const stored = parse(storageKey, []);
+            if (Array.isArray(stored)) {
+                if (wantedId) {
+                    const byId = stored.find(item => item && String(item.id) === String(wantedId));
+                    if (byId) return byId;
+                }
+                if (Number.isInteger(index) && index >= 0 && stored[index]) return stored[index];
+            } else if (stored && typeof stored === "object") {
+                return stored.record || stored.draft || stored;
+            }
+        }
+
+        if (wantedId) {
+            for (const key of ["validationRecords", "validationDrafts"]) {
+                const list = parse(key, []);
+                if (!Array.isArray(list)) continue;
+                const found = list.find(item => item && String(item.id) === String(wantedId));
+                if (found) return found;
+            }
+        }
+
+        // A direct record normally contains one or more of these properties.
+        if (value.id || value.expiryType || value.generalInformation || value.noExpiresData || value.expiresData) {
+            return value;
+        }
+        return null;
+    }
+
+    function activePayload() {
+        // First read the record selected by the Open button.
+        const possibleKeys = [
+            "activeValidationRecord",
+            "selectedValidationRecord",
+            "currentValidationRecord",
+            "openValidationRecord",
+            "activeValidationDraft"
+        ];
+        for (const key of possibleKeys) {
+            const resolved = resolveStoredReference(parse(key, null));
+            if (resolved) return resolved;
+        }
+
+        // Also support links such as create-validation.html?id=... or ?recordId=...
+        const params = new URLSearchParams(window.location.search);
+        const wantedId = params.get("id") || params.get("recordId") || params.get("validationId");
+        if (wantedId) {
+            for (const key of ["validationRecords", "validationDrafts"]) {
+                const list = parse(key, []);
+                if (!Array.isArray(list)) continue;
+                const found = list.find(item => item && String(item.id) === String(wantedId));
+                if (found) return found;
+            }
+        }
+        return null;
+    }
+    function setValue(id, value) {
+        const el = document.getElementById(id);
+        if (el && value !== undefined && value !== null) el.value = value;
+    }
+    function dispatchChange(id) {
+        const el = document.getElementById(id);
+        if (el) el.dispatchEvent(new Event("change", { bubbles:true }));
+    }
+    function restoreNoExpiryRows(rows) {
+        const body = document.getElementById("noExpiryTableBody");
+        if (!body || !Array.isArray(rows)) return;
+        body.innerHTML = "";
+        const esc = v => String(v || "").replace(/[&<>\"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',"'":'&#039;'}[c]));
+        rows.forEach(function (data, i) {
+            const row = document.createElement("tr");
+            Object.keys(data).forEach(k => row.dataset[k] = data[k] || "");
+            row.innerHTML = `<td class="row-number">${i+1}</td>
+              <td>${esc(data.testMethod)}</td><td>${esc(data.caseNo)}</td>
+              <td>${esc(data.processSteps)}</td><td>${esc(data.processPath)}</td>
+              <td>${esc(data.acceptance)}</td><td>${esc(data.dateTest)}</td>
+              <td>${esc(data.systemResponse)}</td><td>${esc(data.evaluation)}</td>
+              <td><div class="table-action-buttons"><button type="button" class="btn btn-secondary edit-no-expiry-row">Edit</button><button type="button" class="btn btn-danger delete-no-expiry-row">Delete</button></div></td>`;
+            body.appendChild(row);
+        });
+    }
+    function restoreRecord(record) {
+        if (!record) return;
+        setValue("expiryType", record.expiryType || "Expires");
+        dispatchChange("expiryType");
+
+        const g = record.generalInformation || record.general || record.generalData || {};
+        setValue("department", g.department || record.department || record.departmentName || "");
+        setValue("validationDate", g.validationDate || g.date || record.validationDate || record.date || "");
+        setValue("machineName", g.machineName || record.machineName || record.machine || "");
+        setValue("serialNumber", g.serialNumber || g.serialNo || record.serialNumber || record.serialNo || "");
+        setValue("reasonValidation", g.reasonValidation || g.reason || record.reasonValidation || record.reason || "");
+
+        setValue("validationType", record.validationType);
+        dispatchChange("validationType");
+
+        const e = record.expiresData || {};
+        ["interfaceType","dataInterfaceThrough","dataFlow","viewingTechnology","identificationTransmission","correctiveAction","limitations"].forEach(id => setValue(id,e[id]));
+        if (Array.isArray(e.calculationRows) && typeof calculationRows !== "undefined") {
+            calculationRows.splice(0, calculationRows.length, ...e.calculationRows);
+            if (typeof renderCalculationRows === "function") renderCalculationRows();
+        }
+
+        const w = record.withoutCalculationData || {};
+        setValue("withoutInterfaceType",w.interfaceType); setValue("withoutDataInterfaceThrough",w.dataInterfaceThrough);
+        setValue("withoutDataFlow",w.dataFlow); setValue("withoutViewingTechnology",w.viewingTechnology);
+        setValue("withoutIdentificationTransmission",w.identificationTransmission);
+        if (Array.isArray(w.rows) && typeof withoutCalculationRows !== "undefined") {
+            withoutCalculationRows.splice(0, withoutCalculationRows.length, ...w.rows);
+            if (typeof renderWithoutCalculationRows === "function") renderWithoutCalculationRows();
+        }
+
+        const n = record.noExpiresData || {};
+        setValue("noExpirySystemIdentity",n.systemIdentity); setValue("noExpiryModule",n.module);
+        setValue("noExpiryAccessPoint",n.accessPoint); setValue("noExpiryReportDate",n.reportDate);
+        setValue("noExpiryEvaluationProcess",n.evaluationProcess); setValue("noExpiryPurpose",n.purpose);
+        setValue("noExpiryWorkPlan",n.workPlan); setValue("noExpiryLaboratorySection",n.laboratorySection);
+        setValue("noExpiryConclusion",n.conclusion); setValue("noExpiryUnexpected",n.unexpectedOutcomes);
+        setValue("noExpiryCorrective",n.correctiveAction); setValue("noExpiryApproval",n.finalApproval);
+        restoreNoExpiryRows(n.rows || []);
+
+        const p1 = record.autoPhase1Data || {};
+        setValue("autoPhase1Middleware",p1.middlewareVersion);
+        if (Array.isArray(p1.rows) && typeof autoPhase1Rows !== "undefined") {
+            autoPhase1Rows.splice(0, autoPhase1Rows.length, ...p1.rows);
+            if (typeof renderAutoPhase1Rows === "function") renderAutoPhase1Rows();
+        }
+        const p2 = record.autoPhase2Data || {};
+        setValue("autoPhase2Middleware",p2.middlewareVersion);
+        if (Array.isArray(p2.rows) && typeof autoPhase2Rows !== "undefined") {
+            autoPhase2Rows.splice(0, autoPhase2Rows.length, ...p2.rows);
+            if (typeof renderAutoPhase2Rows === "function") renderAutoPhase2Rows();
+        }
+        window.__activeDraftId = record.id || window.__activeDraftId;
+    }
+
+    function hasValue(id) { const el=document.getElementById(id); return !!(el && String(el.value||"").trim()); }
+
+    // Approval is a review action. Do not reject a previously posted record just
+    // because an older version did not save every field under the newest schema.
+    // Only block approval when no opened/saved validation record can be resolved.
+    function openedRecordAvailable() {
+        const record = window.__openedValidationRecord || activePayload();
+        if (!record) return false;
+        return !!(
+            record.id || record.expiryType || record.validationType ||
+            record.generalInformation || record.general || record.generalData ||
+            record.expiresData || record.withoutCalculationData ||
+            record.noExpiresData || record.autoPhase1Data || record.autoPhase2Data
+        );
+    }
+
+    function persistCurrentForm() {
+        if (typeof buildValidationRecord !== "function") return;
+        const old = activePayload();
+        const record = buildValidationRecord(old?.status || "Posted for Validation");
+        if (old?.id) record.id = old.id;
+        ["validationRecords","validationDrafts"].forEach(function(key){
+            const arr=parse(key,[]); if(!Array.isArray(arr)) return;
+            const i=arr.findIndex(x=>x && x.id===record.id);
+            if(i>=0){ arr[i]={...arr[i],...record}; localStorage.setItem(key,JSON.stringify(arr)); }
+        });
+        const ar=parse("activeValidationRecord",null);
+        if(ar && record.id){ ar.record=record; localStorage.setItem("activeValidationRecord",JSON.stringify(ar)); }
+        const ad=parse("activeValidationDraft",null);
+        if(ad && record.id){ ad.draft=record; localStorage.setItem("activeValidationDraft",JSON.stringify(ad)); }
+    }
+
+    // Restore after all page scripts and row arrays are ready. Retry briefly because
+    // some browsers/pages set the active record immediately before navigation.
+    function restoreOpenedValidation(attempt) {
+        const record = activePayload();
+        if (record) {
+            restoreRecord(record);
+            window.__openedValidationRecord = record;
+            return;
+        }
+        if (attempt < 5) setTimeout(function () { restoreOpenedValidation(attempt + 1); }, 120);
+    }
+    setTimeout(function(){ restoreOpenedValidation(0); }, 100);
+
+    document.addEventListener("click", function(e){
+        const btn=e.target.closest(".approve-member-btn,.reject-member-btn");
+        if(!btn) return;
+        if(!openedRecordAvailable()){
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            alert("No saved validation record is open. Return to Validation Q and open the record again.");
+            return;
+        }
+        persistCurrentForm();
+    }, true);
+
+    // Preserve edits while the user is reviewing the record.
+    document.addEventListener("change", function(){ setTimeout(persistCurrentForm,0); });
+});
+</script>
+
+</body>
+</html>

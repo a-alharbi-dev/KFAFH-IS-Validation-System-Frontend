@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>IS Validation | Create Account</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=Tajawal:wght@300;400;500;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <header class="app-header">
+
+        <div class="header-top">
+            <div class="container header-top-inner">
+
+                <span>King Fahd Armed Forces Hospital</span>
+                <span>Medical Laboratory Department</span>
+
+            </div>
+        </div>
+
+        <div class="container header-main-inner">
+
+            <div class="brand">
+
+                <div class="brand-mark">
+                    KFAFH
+                </div>
+
+                <div>
+                    <h1 class="brand-title">
+                        Information System Validation
+                    </h1>
+
+                    <p class="brand-subtitle">
+                        Medical Laboratory · Jeddah
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- MAIN -->
+    <main class="register-page">
+
+        <div class="register-container">
+
+            <!-- PAGE HEADING -->
+            <div class="register-heading">
+
+                <span class="welcome-badge">
+                    IS Validation Portal
+                </span>
+
+                <h1>Create Your Account</h1>
+
+                <p>
+                    Register using your official hospital information
+                    to access the validation workspace.
+                </p>
+
+            </div>
+
+
+            <!-- REGISTER CARD -->
+            <section class="register-card">
+
+                <div class="card-header">
+
+                    <div class="card-header-icon">
+                        +
+                    </div>
+
+                    <div>
+                        <h2>Account Information</h2>
+
+                        <p>
+                            Please enter your information exactly as registered
+                            with the hospital.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <form id="registerForm">
+
+                    <div class="form-grid">
+
+
+                        <!-- FULL NAME -->
+                        <div class="form-group">
+
+                            <label class="label" for="fullName">
+                                Full Name
+                                <span class="required">*</span>
+                            </label>
+
+                            <input
+                                class="input"
+                                type="text"
+                                id="fullName"
+                                placeholder="Enter your full name"
+                                required
+                            >
+
+                        </div>
+
+
+                        <!-- EMPLOYEE NUMBER -->
+                        <div class="form-group">
+
+                            <label class="label" for="employeeNumber">
+                                Employee Number
+                                <span class="required">*</span>
+                            </label>
+
+                            <input
+                                class="input"
+                                type="text"
+                                id="employeeNumber"
+                                placeholder="Enter employee number"
+                                required
+                            >
+
+                        </div>
+
+
+                        <!-- NATIONAL ID -->
+                        <div class="form-group">
+
+                            <label class="label" for="nationalId">
+                                National ID
+                                <span class="required">*</span>
+                            </label>
+
+                            <input
+                                class="input"
+                                type="text"
+                                id="nationalId"
+                                inputmode="numeric"
+                                maxlength="10"
+                                placeholder="Enter 10-digit National ID"
+                                required
+                            >
+
+                        </div>
+
+
+                        <!-- EMAIL -->
+                        <div class="form-group">
+
+                            <label class="label" for="email">
+                                Official Email
+                                <span class="required">*</span>
+                            </label>
+
+                            <input
+                                class="input"
+                                type="email"
+                                id="email"
+                                placeholder="name@hospital.sa"
+                                required
+                            >
+
+                        </div>
+
+
+                        <!-- JOB TITLE -->
+                        <div class="form-group full-width">
+
+                            <label class="label" for="jobTitle">
+                                Job Title
+                                <span class="required">*</span>
+                            </label>
+
+                            <select
+                                class="input select-input"
+                                id="jobTitle"
+                                required
+                            >
+
+                                <option value="" selected disabled>
+                                    Select your job title
+                                </option>
+
+                                <option>Lab Technician</option>
+
+                                <option>MLSO</option>
+
+                                <option>SMLSO</option>
+
+                                <option>CMLSO</option>
+
+                                <option>LIS Coordinator</option>
+
+                                <option>Head of Quality</option>
+
+                                <option>Supervisor</option>
+
+                                <option>Section Head</option>
+
+                                <option>Laboratory Manager</option>
+
+                            </select>
+
+                        </div>
+
+
+                        <!-- PASSWORD -->
+                        <div class="form-group">
+
+                            <label class="label" for="password">
+                                Password
+                                <span class="required">*</span>
+                            </label>
+
+                            <div class="password-wrapper">
+
+                                <input
+                                    class="input password-input"
+                                    type="password"
+                                    id="password"
+                                    placeholder="Create password"
+                                    minlength="8"
+                                    required
+                                >
+
+                                <button
+                                    type="button"
+                                    class="show-password"
+                                    id="showPassword"
+                                >
+                                    Show
+                                </button>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- CONFIRM PASSWORD -->
+                        <div class="form-group">
+
+                            <label class="label" for="confirmPassword">
+                                Confirm Password
+                                <span class="required">*</span>
+                            </label>
+
+                            <div class="password-wrapper">
+
+                                <input
+                                    class="input password-input"
+                                    type="password"
+                                    id="confirmPassword"
+                                    placeholder="Confirm password"
+                                    minlength="8"
+                                    required
+                                >
+
+                                <button
+                                    type="button"
+                                    class="show-password"
+                                    id="showConfirmPassword"
+                                >
+                                    Show
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- PASSWORD INFO -->
+                    <div class="password-requirements">
+
+                        <strong>Password requirements</strong>
+
+                        <p>
+                            Use at least 8 characters. For better security,
+                            include uppercase and lowercase letters, numbers,
+                            and a special character.
+                        </p>
+
+                    </div>
+
+
+                    <!-- REGISTER BUTTON -->
+                    <button
+                        type="submit"
+                        class="btn btn-primary register-submit"
+                    >
+                        Create Account
+                    </button>
+
+
+                    <div class="back-login">
+
+                        <span>Already have an account?</span>
+
+                        <a href="index.html">
+                            Sign In
+                        </a>
+
+                    </div>
+
+                </form>
+
+            </section>
+
+        </div>
+
+    </main>
+
+
+    <!-- FOOTER -->
+    <footer>
+
+        <div class="container footer-content">
+
+            <p>
+                © King Fahd Armed Forces Hospital
+            </p>
+
+            <p>
+                Information System Validation
+            </p>
+
+        </div>
+
+    </footer>
+
+
+    <script>
+
+        // =========================
+        // SHOW / HIDE PASSWORD
+        // =========================
+
+        function setupPasswordToggle(inputId, buttonId) {
+
+            const input =
+                document.getElementById(inputId);
+
+            const button =
+                document.getElementById(buttonId);
+
+            button.addEventListener("click", function () {
+
+                if (input.type === "password") {
+
+                    input.type = "text";
+                    button.textContent = "Hide";
+
+                } else {
+
+                    input.type = "password";
+                    button.textContent = "Show";
+
+                }
+
+            });
+
+        }
+
+
+        setupPasswordToggle(
+            "password",
+            "showPassword"
+        );
+
+        setupPasswordToggle(
+            "confirmPassword",
+            "showConfirmPassword"
+        );
+
+
+        // =========================
+        // NATIONAL ID
+        // Numbers only
+        // =========================
+
+        const nationalId =
+            document.getElementById("nationalId");
+
+        nationalId.addEventListener("input", function () {
+
+            this.value =
+                this.value.replace(/\D/g, "");
+
+        });
+
+
+        // =========================
+        // REGISTER VALIDATION
+        // =========================
+
+        const registerForm =
+            document.getElementById("registerForm");
+
+
+        registerForm.addEventListener(
+            "submit",
+            function (event) {
+
+                event.preventDefault();
+
+
+                const password =
+                    document.getElementById("password").value;
+
+                const confirmPassword =
+                    document.getElementById("confirmPassword").value;
+
+
+                // National ID check
+
+                if (nationalId.value.length !== 10) {
+
+                    alert(
+                        "National ID must contain exactly 10 digits."
+                    );
+
+                    nationalId.focus();
+
+                    return;
+                }
+
+
+                // Password length
+
+                if (password.length < 8) {
+
+                    alert(
+                        "Password must contain at least 8 characters."
+                    );
+
+                    return;
+                }
+
+
+                // Password match
+
+                if (password !== confirmPassword) {
+
+                    alert(
+                        "Passwords do not match."
+                    );
+
+                    document
+                        .getElementById("confirmPassword")
+                        .focus();
+
+                    return;
+                }
+
+
+                alert(
+                    "Account created successfully."
+                );
+
+
+                // Later we will connect this
+                // to the backend/database.
+
+            }
+        );
+
+    </script>
+
+</body>
+
+</html>
