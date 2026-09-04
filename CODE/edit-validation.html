@@ -1,0 +1,1442 @@
+<!-- =====================================================
+     created by abrar alharbi 
+===================================================== -->
+
+<!DOCTYPE html>
+
+<html dir="ltr" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>IS Validation | Edit Validation</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&amp;family=Tajawal:wght@300;400;500;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="style.css" rel="stylesheet"/>
+
+
+</head>
+<body class="dashboard-body">
+<!-- =====================================================
+     NAVBAR
+===================================================== -->
+<header class="dashboard-navbar">
+<div class="container dashboard-nav-inner">
+<div class="dashboard-brand">
+<div class="dashboard-logo">
+                KFAFH
+            </div>
+<div class="dashboard-brand-text">
+<strong>
+                    IS Validation
+                </strong>
+<small>
+                    Medical Laboratory
+                </small>
+</div>
+</div>
+<nav class="dashboard-navigation">
+<a class="dashboard-nav-link" href="home.html">
+                Home
+            </a>
+
+            
+<a class="dashboard-nav-link " href="Dashboard.html">
+                Dashboard 
+            </a>
+
+
+</nav>
+<div class="dashboard-user">
+<div class="dashboard-user-info">
+<strong id="navbarUserName">
+                    User
+                </strong>
+<small id="navbarJobTitle">
+                    Laboratory Staff
+                </small>
+</div>
+<div class="dashboard-avatar" id="userAvatar">
+                U
+            </div>
+<button class="logout-button" id="logoutButton" type="button">
+                Logout
+            </button>
+</div>
+</div>
+</header>
+<!-- =====================================================
+     MAIN +  PAGE HEADING
+===================================================== -->
+<main class="create-page">
+<div class="container">
+
+<div class="create-page-heading">
+
+<!-- EXPIRY TYPE -->
+<div class="expiry-type-control">
+<label class="expiry-type-label" for="expiryType">Expiry Type</label>
+<select class="input select-input" id="expiryType" name="expiryType" required=""disabled>
+<option disabled="" value="">Select expiry type</option>
+<option  selected="" value="Expires">Expires 2 years </option>
+</select>
+</div>
+</div>
+<!-- FIXED APPROVAL / PROCESSING SIDEBAR -->
+
+<form id="validationForm">
+<div class="validation-workspace-layout">
+
+<div class="validation-workspace-content" id="expiresForm">
+
+<!-- =================================================
+                 GENERAL INFORMATION
+ ================================================== -->
+<section class="validation-section">
+<div class="validation-section-header">
+<div class="validation-section-icon">
+                        01
+                    </div>
+<div>
+<h2>
+                            General Information
+                        </h2>
+<p>
+                            Information shared by all validation forms.
+                        </p>
+</div>
+</div>
+<div class="validation-section-body">
+<div class="validation-form-grid">
+<!-- DEPARTMENT -->
+<div class="form-group">
+<label class="label" for="department">
+                                Department
+
+                                <span class="required">
+                                    *
+                                </span>
+</label>
+<select class="input select-input" id="department" required="">
+<option disabled="" selected="" value="">
+                                    Clinical Chemistry
+                                                            </option>
+<option>Hematology</option>
+
+<option>
+                                    Microbiology
+                                </option>
+<option>
+                                    Immunology
+                                </option>
+<option>
+                                    Blood Bank
+                                </option>
+<option>
+                                    Molecular Biology
+                                </option>
+<option>
+                                    POCT
+                                </option>
+<option>
+                                    Parasitology
+                                </option>
+<option>
+                                    ED-STAT-LAB
+                                </option>
+<option>
+                                    Mycobacteriology
+                                </option>
+<option>
+                                    Tissue Typing
+                                </option>
+<option>
+                                    Histology
+                                </option>
+<option>
+                                    Reference Lab
+                                </option>
+</select>
+</div>
+<!-- DATE -->
+<div class="form-group">
+<label class="label" for="validationDate">
+                                Date
+
+                                <span class="required">
+                                    *
+                                </span>
+</label>
+<input class="input" id="validationDate" required="" type="date" value="2026-08-04"/>
+</div>
+<!-- MACHINE -->
+<div class="form-group">
+<label class="label" for="machineName">
+                                Machine Name
+
+                                <span class="required">
+                                    *
+                                </span>
+</label>
+<input class="input" id="machineName" placeholder="Enter machine name" required="" type="text"value="Cobas 8000 Analyzer"/>
+</div>
+<!-- SERIAL NUMBER -->
+<div class="form-group">
+<label class="label" for="serialNumber">
+                                Serial No
+
+                                <span class="required">
+                                    *
+                                </span>
+</label>
+<input class="input" id="serialNumber" placeholder="Enter serial number" required="" type="text"value="CB8000-458921"/>
+</div>
+<!-- REASON -->
+<div class="form-group validation-full-width">
+<label class="label" for="reasonValidation">
+                                Reason for Validation
+
+                                <span class="required">
+                                    *
+                                </span>
+</label>
+<select class="input select-input" id="reasonValidation" required="">
+<option disabled=""  value="">
+                                    Select reason for validation
+                                </option>
+<option  selected="" >
+                                    Algorithm / Rule Modification
+                                </option>
+<option>
+                                    Data Restoration
+                                </option>
+<option>
+                                    Hardware Maintenance
+                                </option>
+<option>
+                                    Instrument Software Updates
+                                </option>
+<option>
+                                    Interface
+                                </option>
+<option>
+                                    Middleware Update
+                                </option>
+<option>
+                                    New Instrument
+                                </option>
+<option>
+                                    New LIS
+                                </option>
+<option>
+                                    New LIS Module
+                                </option>
+<option>
+                                    New Role
+                                </option>
+<option>
+                                    Periodic Validation
+                                </option>
+<option>
+                                    Power Outage
+                                </option>
+<option>
+                                    Revalidation
+                                </option>
+<option>
+                                    Server Crash
+                                </option>
+<option>
+                                    System Recovery / Downtime
+                                </option>
+</select>
+</div>
+</div>
+</div>
+</section>
+<!-- =================================================
+                 VALIDATION TYPE
+            ================================================== -->
+<section class="validation-section">
+<div class="validation-section-header">
+<div class="validation-section-icon">
+                        02
+                    </div>
+<div>
+<h2>
+                            Validation Type
+                        </h2>
+<p>
+                            Select the validation form you want to complete.
+                        </p>
+</div>
+</div>
+<div class="validation-section-body">
+<!-- TYPE SELECT -->
+<div class="validation-type-selector">
+<label class="label" for="validationType">
+                            Select Validation Type
+
+                            <span class="required">
+                                *
+                            </span>
+</label>
+<select class="input select-input" id="validationType" required=""disabled>
+<option disabled=""  value="">
+                                Choose validation type
+                            </option>
+<option   selected="" value="withCalculation">
+                              validation of results transmission integration  With Calculation
+                            </option>
+
+</select>
+</div>
+<!-- =================================================
+                         DYNAMIC CONTENT
+ ================================================== -->
+<div class="validation-dynamic-content" id="validationDynamicContent">
+<!-- EMPTY STATE -->
+<div class="validation-empty-state" id="validationEmptyState">
+<div class="empty-state-icon">
+                                +
+                            </div>
+<h3>
+                                Select a Validation Type
+                            </h3>
+<p>
+                                Select one of the four validation types.
+                                The required section will appear here.
+                            </p>
+</div>
+<!-- =================================================
+                             WITH CALCULATION
+ ================================================== -->
+<div class="validation-type-content" id="withCalculationFields">
+<div class="dynamic-title">
+<h3>
+                                    With Calculation
+                                </h3>
+<p>
+                                    Add calculation validation rows.
+                                </p>
+</div>
+<!-- INTERFACE / GENERAL TYPE INFORMATION -->
+<div class="validation-form-grid">
+<div class="form-group">
+<label class="label" for="interfaceType">
+                                        Type of Interface
+                                        <span class="required">*</span>
+</label>
+<input class="input" id="interfaceType" name="interfaceType" placeholder="Enter interface type" type="text"value="Abrar "/>
+</div>
+<div class="form-group">
+<label class="label" for="dataInterfaceThrough">
+                                        Data Interface Through
+                                        <span class="required">*</span>
+</label>
+<input class="input" id="dataInterfaceThrough" name="dataInterfaceThrough" placeholder="Enter data interface method" type="text"value="Abrar "/>
+</div>
+<div class="form-group">
+<label class="label" for="dataFlow">
+                                        Data Flow
+                                        <span class="required">*</span>
+</label>
+<input class="input" id="dataFlow" name="dataFlow" placeholder="Enter data flow" type="text"value="Abrar "/>
+</div>
+<div class="form-group">
+<label class="label" for="viewingTechnology">
+                                        Viewing Technology
+                                        <span class="required">*</span>
+</label>
+<input class="input" id="viewingTechnology" name="viewingTechnology" placeholder="Enter viewing technology" type="text"value="Abrar "/>
+</div>
+<div class="form-group">
+<label class="label" for="identificationTransmission">
+                                        Identification Transmission
+                                        <span class="required">*</span>
+</label>
+<input class="input" id="identificationTransmission" name="identificationTransmission" placeholder="Enter identification transmission" type="text"value="Abrar "/>
+</div>
+</div>
+<div class="validation-table-header">
+<div>
+<strong>
+                                        Validation Rows
+                                    </strong>
+<p>
+                                        Add each test as a separate row.
+                                    </p>
+</div>
+<button class="btn btn-secondary" id="addCalculationRowButton" type="button">
+                                    + Add Row
+                                </button>
+</div>
+<div class="table-wrapper">
+<table class="validation-table">
+<thead>
+<tr>
+<th>#</th>
+<th>Accession Number</th>
+<th>Test Name</th>
+<th>Formula / Calculation Definition</th>
+<th>Machine Result + Unit</th>
+<th>Manual Calculation</th>
+<th>Result in LIS + Unit</th>
+<th>Evaluation</th>
+<th>Tested By</th>
+<th>Remark</th>
+<th>Evidence</th>
+<th>Actions</th>
+</tr>
+</thead>
+<tbody  id="calculationTableBody">
+
+<tr>
+
+<td>1</td>
+
+<td>Abrar</td>
+
+<td>Abrar</td>
+
+<td>Abrar</td>
+
+<td>Abrar</td>
+
+<td>Abrar</td>
+
+<td>Abrar</td>
+
+<td>Abrar</td>
+
+<td>Abrar</td>
+
+<td>
+
+<span class="status-approved">
+
+Abrar
+
+</span>
+
+</td>
+
+<td>Abrar </td>
+
+
+<td class="validation-action-cell">
+
+<button
+    type="button"
+    class="row-edit-button"
+    onclick="editCalculationRow(0)">
+    Edit
+</button>
+
+<button
+    type="button"
+    class="row-delete-button"
+    onclick="deleteCalculationRow(0)">
+    Delete
+</button>
+
+</td>
+
+</tr>
+
+</tbody>
+</table>
+</div>
+<!-- EMPTY ROW MESSAGE -->
+<div class="rows-empty-message" id="calculationEmptyMessage">
+<strong>
+                                </strong>
+<span>
+                                
+                                </span>
+</div>
+</div>
+
+</section>
+<!-- =================================================
+                 CORRECTIVE ACTION / LIMITATIONS
+================================================== -->
+<section class="validation-section">
+<div class="validation-section-header">
+<div class="validation-section-icon">
+                        03
+                    </div>
+<div>
+<h2>
+                            Additional Information
+                        </h2>
+<p>
+                            Corrective action and validation limitations.
+                        </p>
+</div>
+</div>
+<div class="validation-section-body">
+<div class="form-group">
+<label class="label" for="correctiveAction">
+                            Action and Corrective Action for
+                            Not Accepted Result
+                        </label>
+<input class="input" id="correctiveAction" placeholder="Enter corrective action if required..." type="text" value="Abrar "/>
+</div>
+<div class="form-group">
+<label class="label" for="limitations">
+                            Limitations
+                        </label>
+<input class="input" id="limitations" placeholder="Enter any validation limitations..." type="text"value="Abrar "/>
+</div>
+</div>
+</section>
+<!-- =================================================
+                 FORM ACTIONS
+ ================================================== -->
+<div class="validation-form-actions">
+<a class="validation-cancel-button" href="Dashboard.html">
+                    Cancel
+                </a>
+
+                <button
+    type="button"
+    class="validation-draft-button validation-submit-button"
+    onclick="window.location.href='dashboard.html'">
+                    Save as Draft
+</button>
+<button
+    type="button"
+    class="btn btn-primary validation-submit-button"
+    onclick="window.location.href='dashboard.html'">
+    Update Validation
+</button>
+</div>
+</div>
+
+</main>
+<!-- =====================================================
+     WITH CALCULATION MODAL
+===================================================== -->
+<div class="row-modal" id="calculationModal" style="display:none;">
+<div class="row-modal-box">
+<!-- MODAL HEADER -->
+<div class="row-modal-header">
+<div>
+<span class="modal-small-label">
+                    WITH CALCULATION
+                </span>
+<h2 id="calculationModalTitle">
+                    Add Validation Row
+                </h2>
+</div>
+<button class="modal-close" id="closeCalculationModal" type="button">
+                ×
+            </button>
+</div>
+<!-- MODAL BODY -->
+<div class="row-modal-body">
+<div class="modal-form-grid">
+<!-- ACCESSION -->
+<div class="form-group">
+<label class="label" for="rowAccessionNumber">
+                        Accession Number
+
+                        <span class="required">
+                            *
+                        </span>
+</label>
+<input class="input" id="rowAccessionNumber" placeholder="Enter accession number" type="text"/>
+</div>
+<!-- TEST NAME -->
+<div class="form-group">
+<label class="label" for="rowTestName">
+                        Test Name
+
+                        <span class="required">
+                            *
+                        </span>
+</label>
+<input class="input" id="rowTestName" placeholder="Enter test name" type="text"/>
+</div>
+<!-- FORMULA -->
+<div class="form-group modal-full-width">
+<label class="label" for="rowFormula">
+                        Formula / Calculation Definition
+                    </label>
+<input class="input" id="rowFormula" placeholder="Enter formula or calculation definition" type="text"/>
+</div>
+<!-- MACHINE RESULT -->
+<div class="form-group">
+<label class="label" for="rowMachineResult">
+                        Machine Result + Unit
+
+                        <span class="required">
+                            *
+                        </span>
+</label>
+<input class="input" id="rowMachineResult" placeholder="Example: 40 U/L" type="text"/>
+</div>
+<!-- MANUAL CALCULATION -->
+<div class="form-group">
+<label class="label" for="rowManualCalculation">
+                        Manual Calculation
+                    </label>
+<input class="input" id="rowManualCalculation" placeholder="Enter manual calculation" type="text"/>
+</div>
+<!-- LIS RESULT -->
+<div class="form-group">
+<label class="label" for="rowLisResult">
+                        Result in LIS System + Unit
+
+                        <span class="required">
+                            *
+                        </span>
+</label>
+<input class="input" id="rowLisResult" placeholder="Enter LIS result and unit" type="text"/>
+</div>
+<!-- EVALUATION -->
+<div class="form-group">
+<label class="label" for="rowEvaluation">
+                        Evaluation
+
+                        <span class="required">
+                            *
+                        </span>
+</label>
+<select class="input select-input" id="rowEvaluation">
+<option selected="" value="">
+                            Select evaluation
+                        </option>
+<option value="Met">
+                            Met
+                        </option>
+<option value="Not Met">
+                            Not Met
+                        </option>
+</select>
+</div>
+<!-- TESTED BY -->
+<div class="form-group">
+<label class="label" for="rowTestedBy">
+                        Tested By
+                    </label>
+<input class="input" id="rowTestedBy" placeholder="Enter evaluator name" type="text"/>
+</div>
+<!-- REMARK -->
+<div class="form-group modal-full-width">
+<label class="label" for="rowRemark">
+                        Remark
+                    </label>
+<input class="input" id="rowRemark" placeholder="Enter any remarks" type="text"/>
+</div>
+<!-- EVIDENCE -->
+<div class="form-group modal-full-width">
+<label class="label" for="rowEvidence">
+                        Evidence
+                    </label>
+<input accept=".pdf,.png,.jpg,.jpeg" class="input" id="rowEvidence" type="file"/>
+<small class="field-help">
+                        PDF, PNG, JPG or JPEG.
+                    </small>
+</div>
+</div>
+</div>
+<!-- MODAL FOOTER -->
+<div class="row-modal-footer">
+<button class="modal-cancel" id="cancelCalculationModal" type="button">
+                Cancel
+            </button>
+<button class="modal-save" id="saveCalculationRow" type="button">
+                Save Row
+            </button>
+</div>
+</div>
+</div>
+
+</footer>
+
+<!-- =====================================================
+     JAVASCRIPT
+===================================================== -->
+<script>
+
+
+
+/* =====================================================
+   LOGOUT
+===================================================== */
+
+document.getElementById(
+    "logoutButton"
+).addEventListener(
+    "click",
+    function () {
+
+        localStorage.removeItem(
+            "loggedInUserName"
+        );
+
+        localStorage.removeItem(
+            "loggedInUserJobTitle"
+        );
+
+        window.location.href =
+            "index.html";
+
+    }
+);
+
+
+/* =====================================================
+   VALIDATION TYPE
+===================================================== */
+
+const validationType =
+    document.getElementById(
+        "validationType"
+    );
+
+const emptyState =
+    document.getElementById(
+        "validationEmptyState"
+    );
+
+const typeContents =
+    document.querySelectorAll(
+        ".validation-type-content"
+    );
+
+function hideAllValidationTypes() {
+
+    typeContents.forEach(function (section) {
+
+        section.classList.remove("show");
+
+    });
+
+}
+
+validationType.addEventListener(
+    "change",
+    function () {
+
+        hideAllValidationTypes();
+
+        emptyState.style.display = "none";
+
+        const selectedSection =
+            document.getElementById(
+                this.value + "Fields"
+            );
+
+        if (selectedSection) {
+
+            selectedSection.classList.add(
+                "show"
+            );
+
+        }
+
+        document.getElementById(
+            "stepGeneral"
+        ).classList.add(
+            "completed"
+        );
+
+        document.getElementById(
+            "stepType"
+        ).classList.add(
+            "active"
+        );
+
+    }
+);
+
+/* =====================================================
+   DEFAULT EDIT PAGE (WITH CALCULATION)
+===================================================== */
+
+window.addEventListener("DOMContentLoaded", function () {
+
+    validationType.value = "withCalculation";
+
+    validationType.dispatchEvent(
+        new Event("change")
+    );
+
+    renderCalculationRows();
+
+});
+
+/* =====================================================
+   WITH CALCULATION ROWS
+===================================================== */
+let calculationRows = [
+
+{
+    accessionNumber:"Abrar",
+    testName:"Abrar",
+    formula:"Abrar",
+    machineResult:"Abrar",
+    manualCalculation:"Abrar",
+    lisResult:"Abrar",
+    evaluation:"Met",
+    testedBy:"Abrar",
+    remark:"Abrar",
+    evidence:"Abrar"
+}
+
+];
+
+
+let editingCalculationIndex = null;
+
+
+
+/* ELEMENTS */
+
+const calculationModal =
+    document.getElementById(
+        "calculationModal"
+    );
+
+
+const calculationTableBody =
+    document.getElementById(
+        "calculationTableBody"
+    );
+
+
+const calculationEmptyMessage =
+    document.getElementById(
+        "calculationEmptyMessage"
+    );
+
+
+const modalTitle =
+    document.getElementById(
+        "calculationModalTitle"
+    );
+
+
+
+/* =====================================================
+   OPEN MODAL
+===================================================== */
+
+document.getElementById(
+    "addCalculationRowButton"
+).addEventListener(
+    "click",
+    function () {
+
+        editingCalculationIndex =
+            null;
+
+        clearCalculationModal();
+
+        modalTitle.textContent =
+            "Add Validation Row";
+
+        calculationModal.classList.add("active");
+        calculationModal.classList.add("show");
+        calculationModal.style.display = "flex";
+
+        document.body.style.overflow = "hidden";
+
+    }
+);
+
+
+
+/* =====================================================
+   CLOSE MODAL
+===================================================== */
+
+function closeCalculationModal() {
+
+    calculationModal.classList.remove("active");
+    calculationModal.classList.remove("show");
+    calculationModal.style.display = "none";
+
+    document.body.style.overflow = "";
+
+}
+
+
+document.getElementById(
+    "closeCalculationModal"
+).addEventListener(
+    "click",
+    closeCalculationModal
+);
+
+
+document.getElementById(
+    "cancelCalculationModal"
+).addEventListener(
+    "click",
+    closeCalculationModal
+);
+
+/* CLICK OUTSIDE MODAL */
+
+calculationModal.addEventListener(
+    "click",
+    function (event) {
+
+        if (
+            event.target ===
+            calculationModal
+        ) {
+
+            closeCalculationModal();
+
+        }
+
+    }
+);
+
+/* =====================================================
+   CLEAR MODAL
+===================================================== */
+
+function clearCalculationModal() {
+
+    document.getElementById(
+        "rowAccessionNumber"
+    ).value = "";
+
+
+    document.getElementById(
+        "rowTestName"
+    ).value = "";
+
+
+    document.getElementById(
+        "rowFormula"
+    ).value = "";
+
+
+    document.getElementById(
+        "rowMachineResult"
+    ).value = "";
+
+
+    document.getElementById(
+        "rowManualCalculation"
+    ).value = "";
+
+
+    document.getElementById(
+        "rowLisResult"
+    ).value = "";
+
+
+    document.getElementById(
+        "rowEvaluation"
+    ).value = "";
+
+
+    document.getElementById(
+        "rowTestedBy"
+    ).value = "";
+
+
+    document.getElementById(
+        "rowRemark"
+    ).value = "";
+
+
+    document.getElementById(
+        "rowEvidence"
+    ).value = "";
+
+}
+
+/* =====================================================
+   SAVE ROW
+===================================================== */
+
+document.getElementById(
+    "saveCalculationRow"
+).addEventListener(
+    "click",
+    function () {
+
+
+        const accessionNumber =
+            document.getElementById(
+                "rowAccessionNumber"
+            ).value.trim();
+
+
+       const testName = 
+            document.getElementById(
+                "rowTestName"
+            ).value.trim();
+
+
+        const formula =
+            document.getElementById(
+                "rowFormula"
+            ).value.trim();
+
+
+        const machineResult =
+            document.getElementById(
+                "rowMachineResult"
+            ).value.trim();
+
+
+        const manualCalculation =
+            document.getElementById(
+                "rowManualCalculation"
+            ).value.trim();
+
+
+        const lisResult =
+            document.getElementById(
+                "rowLisResult"
+            ).value.trim();
+
+
+        const evaluation =
+            document.getElementById(
+                "rowEvaluation"
+            ).value;
+
+
+        const testedBy =
+            document.getElementById(
+                "rowTestedBy"
+            ).value.trim();
+
+
+        const remark =
+            document.getElementById(
+                "rowRemark"
+            ).value.trim();
+
+
+        const evidenceInput =
+            document.getElementById(
+                "rowEvidence"
+            );
+
+
+        const evidenceName =
+            evidenceInput.files.length > 0
+                ? evidenceInput.files[0].name
+                : "";
+
+
+        /* REQUIRED FIELDS */
+
+        if (!accessionNumber) {
+
+            alert(
+                "Please enter the Accession Number."
+            );
+
+            return;
+
+        }
+
+
+        if (!testName) {
+
+            alert(
+                "Please enter the Test Name."
+            );
+
+            return;
+
+        }
+
+
+        if (!machineResult) {
+
+            alert(
+                "Please enter the Machine Result."
+            );
+
+            return;
+
+        }
+
+
+        if (!lisResult) {
+
+            alert(
+                "Please enter the Result in LIS System."
+            );
+
+            return;
+
+        }
+
+
+        if (!evaluation) {
+
+            alert(
+                "Please select the Evaluation."
+            );
+
+            return;
+
+        }
+
+
+
+        const rowData = {
+
+            accessionNumber:
+                accessionNumber,
+
+            testName:
+                testName,
+
+            formula:
+                formula,
+
+            machineResult:
+                machineResult,
+
+            manualCalculation:
+                manualCalculation,
+
+            lisResult:
+                lisResult,
+
+            evaluation:
+                evaluation,
+
+            testedBy:
+                testedBy,
+
+            remark:
+                remark,
+
+            evidence:
+                evidenceName
+
+        };
+
+        /* ADD NEW */
+
+        if (
+            editingCalculationIndex ===
+            null
+        ) {
+
+            calculationRows.push(
+                rowData
+            );
+
+        }
+
+        /* EDIT EXISTING */
+
+        else {
+
+            calculationRows[
+                editingCalculationIndex
+            ] = rowData;
+
+        }
+
+
+        renderCalculationRows();
+
+        closeCalculationModal();
+
+    }
+);
+
+
+/* =====================================================
+   RENDER TABLE
+===================================================== */
+
+function renderCalculationRows() {
+
+    calculationTableBody.innerHTML =
+        "";
+
+
+    if (
+        calculationRows.length === 0
+    ) {
+
+        calculationEmptyMessage.style.display =
+            "flex";
+
+        return;
+
+    }
+
+
+    calculationEmptyMessage.style.display =
+        "none";
+
+
+    calculationRows.forEach(
+        function (row, index) {
+
+
+            const tableRow =
+                document.createElement(
+                    "tr"
+                );
+
+
+            tableRow.innerHTML = `
+
+                <td>
+                    ${index + 1}
+                </td>
+
+                <td>
+                    ${escapeHtml(
+                        row.accessionNumber
+                    )}
+                </td>
+
+                <td>
+                    ${escapeHtml(
+                        row.testName
+                    )}
+                </td>
+
+                <td>
+                    ${escapeHtml(
+                        row.formula || "-"
+                    )}
+                </td>
+
+                <td>
+                    ${escapeHtml(
+                        row.machineResult
+                    )}
+                </td>
+
+                <td>
+                    ${escapeHtml(
+                        row.manualCalculation || "-"
+                    )}
+                </td>
+
+                <td>
+                    ${escapeHtml(
+                        row.lisResult
+                    )}
+                </td>
+
+                <td>
+
+                    <span class="
+                        evaluation-badge
+                        ${
+                            row.evaluation === "Met"
+                            ? "evaluation-met"
+                            : "evaluation-not-met"
+                        }
+                    ">
+
+                        ${escapeHtml(
+                            row.evaluation
+                        )}
+
+                    </span>
+
+                </td>
+
+                <td>
+                    ${escapeHtml(row.testedBy || "-")}
+                </td>
+
+                <td>
+                    ${escapeHtml(row.remark || "-")}
+                </td>
+
+                <td>
+                    ${escapeHtml(row.evidence || "No attachment")}
+                </td>
+
+                <td>
+
+                    <div class="row-action-buttons">
+
+                        <button
+                            type="button"
+                            class="row-edit-button"
+                            onclick="
+                                editCalculationRow(
+                                    ${index}
+                                )
+                            "
+                        >
+                            Edit
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="row-delete-button"
+                            onclick="
+                                deleteCalculationRow(
+                                    ${index}
+                                )
+                            "
+                        >
+                            Delete
+                        </button>
+
+                    </div>
+
+                </td>
+
+            `;
+
+
+            calculationTableBody.appendChild(
+                tableRow
+            );
+
+        }
+    );
+
+}
+
+/* =====================================================
+   EDIT ROW
+===================================================== */
+
+function editCalculationRow(index) {
+
+    const row =
+        calculationRows[index];
+
+
+    editingCalculationIndex =
+        index;
+
+
+    document.getElementById(
+        "rowAccessionNumber"
+    ).value =
+        row.accessionNumber;
+
+
+    document.getElementById(
+        "rowTestName"
+    ).value =
+        row.testName;
+
+
+    document.getElementById(
+        "rowFormula"
+    ).value =
+        row.formula;
+
+
+    document.getElementById(
+        "rowMachineResult"
+    ).value =
+        row.machineResult;
+
+
+    document.getElementById(
+        "rowManualCalculation"
+    ).value =
+        row.manualCalculation;
+
+
+    document.getElementById(
+        "rowLisResult"
+    ).value =
+        row.lisResult;
+
+
+    document.getElementById(
+        "rowEvaluation"
+    ).value =
+        row.evaluation;
+
+
+    document.getElementById(
+        "rowTestedBy"
+    ).value =
+        row.testedBy;
+
+
+    document.getElementById(
+        "rowRemark"
+    ).value =
+        row.remark;
+
+
+    modalTitle.textContent =
+        "Edit Validation Row";
+
+
+    calculationModal.classList.add("active");
+    calculationModal.classList.add("show");
+    calculationModal.style.display = "flex";
+
+    document.body.style.overflow = "hidden";
+
+}
+
+/* =====================================================
+   DELETE ROW
+===================================================== */
+
+function deleteCalculationRow(index) {
+
+    const confirmed =
+        confirm(
+            "Are you sure you want to delete this row?"
+        );
+
+
+    if (!confirmed) {
+
+        return;
+
+    }
+
+
+    calculationRows.splice(
+        index,
+        1
+    );
+
+
+    renderCalculationRows();
+
+}
+
+/* =====================================================
+   ESCAPE HTML
+===================================================== */
+
+function escapeHtml(value) {
+
+    const div =
+        document.createElement(
+            "div"
+        );
+
+    div.textContent =
+        value || "";
+
+    return div.innerHTML;
+
+}
+
+</script>
+</body>
+</html>

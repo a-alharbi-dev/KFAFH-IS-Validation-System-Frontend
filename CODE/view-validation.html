@@ -1,0 +1,987 @@
+<!-- =====================================================
+     created by abrar alharbi 
+===================================================== -->
+<!DOCTYPE html>
+
+<html dir="ltr" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>IS Validation | View Validation</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&amp;family=Tajawal:wght@300;400;500;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="style.css" rel="stylesheet"/>
+
+
+
+</head>
+<body class="dashboard-body">
+<!-- =====================================================
+     NAVBAR
+===================================================== -->
+<header class="dashboard-navbar">
+<div class="container dashboard-nav-inner">
+<div class="dashboard-brand">
+<div class="dashboard-logo">
+                KFAFH
+            </div>
+<div class="dashboard-brand-text">
+<strong>
+                    IS Validation
+                </strong>
+<small>
+                    Medical Laboratory
+                </small>
+</div>
+</div>
+<nav class="dashboard-navigation">
+<a class="dashboard-nav-link" href="home.html">
+                Home
+            </a>
+
+            
+<a class="dashboard-nav-link " href="Dashboard.html">
+                Dashboard 
+            </a>
+
+
+</nav>
+<div class="dashboard-user">
+<div class="dashboard-user-info">
+<strong id="navbarUserName">
+                    User
+                </strong>
+<small id="navbarJobTitle">
+                    Laboratory Staff
+                </small>
+</div>
+<div class="dashboard-avatar" id="userAvatar">
+                U
+            </div>
+<button class="logout-button" id="logoutButton" type="button">
+                Logout
+            </button>
+</div>
+</div>
+</header>
+<!-- =====================================================
+     MAIN +PAGE HEADING
+
+===================================================== -->
+<main class="create-page">
+<div class="container">
+
+<div class="create-page-heading">
+
+<!-- EXPIRY TYPE -->
+<div class="expiry-type-control">
+<label class="expiry-type-label" for="expiryType">Expiry Type</label>
+<select class="input select-input" id="expiryType" name="expiryType" required="" disabled>
+<option disabled="" value="">Select expiry type</option>
+<option  selected="" value="Expires">Expires 2 years </option>
+<option  value="No Expires">No Expiry</option>
+</select>
+</div>
+</div>
+
+<!-- FIXED APPROVAL / PROCESSING SIDEBAR -->
+<form id="validationForm">
+
+<div class="validation-workspace-layout">
+
+    <!-- =========================
+         LEFT SIDEBAR
+    ========================== -->
+
+    <aside class="review-sidebar">
+
+        <div class="review-sidebar-header">
+            <h3>Approval Workflow</h3>
+            <p>
+                This validation must be reviewed in sequence.
+            </p>
+        </div>
+
+        <!-- Reviewer 1 -->
+
+        <div class="review-step">
+
+            <div class="review-top">
+
+                <div class="review-number active">
+                    1
+                </div>
+
+                <div class="review-info">
+
+                    <strong>Validated Result By</strong>
+
+                    <small>Laboratory Staff</small>
+
+                </div>
+
+                <span class="review-status pending">
+                    Pending
+                </span>
+
+            </div>
+
+            <textarea >
+I confirm that all validation steps have been completed successfully.
+            </textarea>
+
+            <div class="review-actions">
+
+                <button
+                    type="button"
+                    class="approve-btn">
+                    Approve
+                </button>
+
+                <button type="button" class="return-btn">
+    Return
+</button>
+
+
+            </div>
+
+        </div>
+
+        <!-- Reviewer 2 -->
+
+        <div class="review-step">
+
+            <div class="review-top">
+
+                <div class="review-number">
+                    2
+                </div>
+
+                <div class="review-info">
+
+                    <strong>CMLSO</strong>
+
+                    <small>Supervisor</small>
+
+                </div>
+
+                <span class="review-status waiting">
+                    Waiting
+                </span>
+
+            </div>
+
+            <textarea >
+Waiting for previous approval.
+            </textarea>
+
+            <div class="review-actions">
+
+                <button
+                    class="approve-btn"
+                    disabled>
+                    Approve
+                </button>
+
+<button type="button" class="return-btn">
+    Return
+</button>
+
+            </div>
+
+        </div>
+
+        <!-- Reviewer 3 -->
+
+        <div class="review-step">
+
+            <div class="review-top">
+
+                <div class="review-number">
+                    3
+                </div>
+
+                <div class="review-info">
+
+                    <strong>LIS Coordinator</strong>
+
+                    <small>Coordinator</small>
+
+                </div>
+
+                <span class="review-status waiting">
+                    Waiting
+                </span>
+
+            </div>
+
+            <textarea >
+Waiting for previous approval.
+            </textarea>
+
+            <div class="lis-confirmation">
+
+    <label>
+
+        <input type="checkbox" id="lisVerified">
+
+        I verified the interface configuration.
+
+    </label>
+
+</div>
+
+            <div class="review-actions">
+
+                <button
+                    class="approve-btn"
+                    disabled>
+                    Approve
+                </button>
+<button type="button" class="return-btn">
+    Return
+</button>
+
+            </div>
+
+        </div>
+
+        <!-- Reviewer 4 -->
+
+        <div class="review-step">
+
+            <div class="review-top">
+
+                <div class="review-number">
+                    4
+                </div>
+
+                <div class="review-info">
+
+                    <strong>Head of Quality</strong>
+
+                    <small>Quality Department</small>
+
+                </div>
+
+                <span class="review-status waiting">
+                    Waiting
+                </span>
+
+            </div>
+
+            <textarea >
+Waiting for previous approval.
+            </textarea>
+
+            <div class="review-actions">
+
+                <button
+                    class="approve-btn"
+                    disabled>
+                    Approve
+                </button>
+<button type="button" class="return-btn">
+    Return
+</button>
+
+            </div>
+
+        </div>
+
+        <!-- Reviewer 5 -->
+
+        <div class="review-step">
+
+            <div class="review-top">
+
+                <div class="review-number">
+                    5
+                </div>
+
+                <div class="review-info">
+
+                    <strong>Chief Technologist</strong>
+
+                    <small>Laboratory Director</small>
+
+                </div>
+
+                <span class="review-status waiting">
+                    Waiting
+                </span>
+
+            </div>
+
+            <textarea >
+Waiting for previous approval.
+            </textarea>
+
+            <div class="review-actions">
+
+                <button
+                    class="approve-btn"
+                    disabled>
+                    Approve
+                </button>
+<button type="button" class="return-btn">
+    Return
+</button>
+
+            </div>
+
+        </div>
+
+    </aside>
+
+    <!-- =========================
+         RIGHT CONTENT
+    ========================== -->
+
+    <div class="validation-workspace-content" id="expiresForm">
+<!-- =================================================
+                 GENERAL INFORMATION
+ ================================================== -->
+<section class="validation-section">
+<div class="validation-section-header">
+<div class="validation-section-icon">
+                        01
+                    </div>
+<div>
+<h2>
+                            General Information
+                        </h2>
+<p>
+                            Information shared by all validation forms.
+                        </p>
+</div>
+</div>
+<div class="validation-section-body">
+<div class="validation-form-grid">
+<!-- DEPARTMENT -->
+<div class="form-group">
+<label class="label" for="department">
+                                Department
+
+                                <span class="required">
+                                    *
+                                </span>
+</label>
+<select class="input select-input" id="department" required="" disabled>
+<option disabled="" selected="" value="">
+                                    Clinical Chemistry
+                                                            </option>
+<option>Hematology</option>
+
+<option>
+                                    Microbiology
+                                </option>
+<option>
+                                    Immunology
+                                </option>
+<option>
+                                    Blood Bank
+                                </option>
+<option>
+                                    Molecular Biology
+                                </option>
+<option>
+                                    POCT
+                                </option>
+<option>
+                                    Parasitology
+                                </option>
+<option>
+                                    ED-STAT-LAB
+                                </option>
+<option>
+                                    Mycobacteriology
+                                </option>
+<option>
+                                    Tissue Typing
+                                </option>
+<option>
+                                    Histology
+                                </option>
+<option>
+                                    Reference Lab
+                                </option>
+</select>
+</div>
+<!-- DATE -->
+<div class="form-group">
+<label class="label" for="validationDate">
+                                Date
+
+                                <span class="required">
+                                    *
+                                </span>
+</label>
+<input class="input" id="validationDate" required="" type="date" value="2026-08-04"readonly/>
+</div>
+<!-- MACHINE -->
+<div class="form-group">
+<label class="label" for="machineName">
+                                Machine Name
+
+                                <span class="required">
+                                    *
+                                </span>
+</label>
+<input class="input" id="machineName" placeholder="Enter machine name" required="" type="text"value="Cobas 8000 Analyzer"readonly/>
+</div>
+<!-- SERIAL NUMBER -->
+<div class="form-group">
+<label class="label" for="serialNumber">
+                                Serial No
+
+                                <span class="required">
+                                    *
+                                </span>
+</label>
+<input class="input" id="serialNumber" placeholder="Enter serial number" required="" type="text"value="CB8000-458921"readonly/>
+</div>
+<!-- REASON -->
+<div class="form-group validation-full-width">
+<label class="label" for="reasonValidation">
+                                Reason for Validation
+
+                                <span class="required">
+                                    *
+                                </span>
+</label>
+<select class="input select-input" id="reasonValidation" required="" disabled>
+<option disabled=""  value="">
+                                    Select reason for validation
+                                </option>
+<option  selected="" >
+                                    Algorithm / Rule Modification
+                              
+</select>
+</div>
+</div>
+</div>
+</section>
+<!-- =================================================
+                 VALIDATION TYPE
+ ================================================== -->
+<section class="validation-section">
+<div class="validation-section-header">
+<div class="validation-section-icon">
+                        02
+                    </div>
+<div>
+<h2>
+                            Validation Type
+                        </h2>
+<p>
+                            Select the validation form you want to complete.
+                        </p>
+</div>
+</div>
+<div class="validation-section-body">
+<!-- TYPE SELECT -->
+<div class="validation-type-selector">
+<label class="label" for="validationType">
+                            Select Validation Type
+
+                            <span class="required">
+                                *
+                            </span>
+</label>
+<select class="input select-input" id="validationType" required="" disabled>
+<option disabled=""  value="">
+                                Choose validation type
+                            </option>
+<option   selected="" value="withCalculation">
+                              validation of results transmission integration  With Calculation
+                            </option>
+</select>
+</div>
+<!-- =================================================
+                         DYNAMIC CONTENT
+================================================== -->
+<div class="validation-dynamic-content" id="validationDynamicContent">
+<!-- EMPTY STATE -->
+<div class="validation-empty-state" id="validationEmptyState">
+<div class="empty-state-icon">
+                                +
+                            </div>
+<h3>
+                                Select a Validation Type
+                            </h3>
+<p>
+                                Select one of the four validation types.
+                                The required section will appear here.
+                            </p>
+</div>
+<!-- =================================================
+                             WITH CALCULATION
+================================================== -->
+<div class="validation-type-content" id="withCalculationFields">
+<div class="dynamic-title">
+<h3>
+                                    With Calculation
+                                </h3>
+<p>
+                                    Add calculation validation rows.
+                                </p>
+</div>
+<!-- INTERFACE / GENERAL TYPE INFORMATION -->
+<div class="validation-form-grid">
+<div class="form-group">
+<label class="label" for="interfaceType">
+                                        Type of Interface
+                                        <span class="required">*</span>
+</label>
+<input class="input" id="interfaceType" name="interfaceType" placeholder="Enter interface type" type="text"value="Abrar "readonly/>
+</div>
+<div class="form-group">
+<label class="label" for="dataInterfaceThrough">
+                                        Data Interface Through
+                                        <span class="required">*</span>
+</label>
+<input class="input" id="dataInterfaceThrough" name="dataInterfaceThrough" placeholder="Enter data interface method" type="text"value="Abrar "readonly/>
+</div>
+<div class="form-group">
+<label class="label" for="dataFlow">
+                                        Data Flow
+                                        <span class="required">*</span>
+</label>
+<input class="input" id="dataFlow" name="dataFlow" placeholder="Enter data flow" type="text"value="Abrar "readonly/>
+</div>
+<div class="form-group">
+<label class="label" for="viewingTechnology">
+                                        Viewing Technology
+                                        <span class="required">*</span>
+</label>
+<input class="input" id="viewingTechnology" name="viewingTechnology" placeholder="Enter viewing technology" type="text"value="Abrar "readonly/>
+</div>
+<div class="form-group">
+<label class="label" for="identificationTransmission">
+                                        Identification Transmission
+                                        <span class="required">*</span>
+</label>
+<input class="input" id="identificationTransmission" name="identificationTransmission" placeholder="Enter identification transmission" type="text"value="Abrar "readonly/>
+</div>
+</div>
+<div class="validation-table-header">
+<div>
+<strong>
+                                        Validation Rows
+                                    </strong>
+<p>
+                                        Add each test as a separate row.
+                                    </p>
+</div>
+
+</div>
+<div class="table-wrapper">
+<table class="validation-table">
+<thead>
+<tr>
+<th>#</th>
+<th>Accession Number</th>
+<th>Test Name</th>
+<th>Formula / Calculation Definition</th>
+<th>Machine Result + Unit</th>
+<th>Manual Calculation</th>
+<th>Result in LIS + Unit</th>
+<th>Evaluation</th>
+<th>Tested By</th>
+<th>Remark</th>
+<th>Evidence</th>
+<th>Actions</th>
+</tr>
+</thead>
+<tbody>
+
+<tr>
+
+<td>1</td>
+
+<td>Abrar</td>
+
+<td>Abrar</td>
+
+<td>Abrar</td>
+
+<td>Abrar</td>
+
+<td>Abrar</td>
+
+<td>Abrar</td>
+
+<td>Abrar</td>
+
+<td>Abrar</td>
+
+<td>
+
+<span class="status-approved">
+
+Abrar
+
+</span>
+
+</td>
+
+<td>Abrar </td>
+
+
+<td class="validation-action-cell"
+>
+
+    <button 
+    
+        type="button"
+        class="row-edit-button"
+        onclick="editWithoutCalculationRow({index})">
+        Edit
+    </button>
+
+    <button
+        type="button"
+        class="row-delete-button"
+        onclick="deleteWithoutCalculationRow({index})">
+        Delete
+    </button>
+
+</td>
+
+</tr>
+
+</tbody>
+</table>
+</div>
+<!-- EMPTY ROW MESSAGE -->
+<div class="rows-empty-message" id="calculationEmptyMessage">
+<strong>
+                                </strong>
+<span>
+                                
+                                </span>
+</div>
+</div>
+
+</section>
+
+<!-- =================================================
+                 CORRECTIVE ACTION / LIMITATIONS
+ ================================================== -->
+<section class="validation-section">
+<div class="validation-section-header">
+<div class="validation-section-icon">
+                        03
+                    </div>
+<div>
+<h2>
+                            Additional Information
+                        </h2>
+<p>
+                            Corrective action and validation limitations.
+                        </p>
+</div>
+</div>
+<div class="validation-section-body">
+<div class="form-group">
+<label class="label" for="correctiveAction">
+                            Action and Corrective Action for
+                            Not Accepted Result
+                        </label>
+<input class="input" id="correctiveAction" placeholder="Enter corrective action if required..." type="text" value="Abrar "readonly/>
+</div>
+<div class="form-group">
+<label class="label" for="limitations">
+                            Limitations
+                        </label>
+<input class="input" id="limitations" placeholder="Enter any validation limitations..." type="text"value="Abrar "readonly/>
+</div>
+</div>
+</section>
+<!-- =================================================
+                 FORM ACTIONS
+ ================================================== -->
+<div class="validation-form-actions">
+<a class="validation-cancel-button" href="Dashboard.html">
+                    back
+                </a>
+
+</div>
+
+<!-- END RIGHT CONTENT -->
+
+</div>
+
+<!-- END FLEX LAYOUT -->
+
+</div>
+
+</form>
+
+</main>
+
+
+</footer>
+
+
+<!-- =====================================================
+     JAVASCRIPT
+===================================================== -->
+
+<script>
+
+/* =====================================================
+   LOGOUT
+===================================================== */
+
+document.getElementById(
+    "logoutButton"
+).addEventListener(
+    "click",
+    function () {
+
+        localStorage.removeItem(
+            "loggedInUserName"
+        );
+
+        localStorage.removeItem(
+            "loggedInUserJobTitle"
+        );
+
+        window.location.href =
+            "index.html";
+
+    }
+);
+
+
+/* =====================================================
+   VALIDATION TYPE
+===================================================== */
+
+const validationType =
+    document.getElementById(
+        "validationType"
+    );
+
+const emptyState =
+    document.getElementById(
+        "validationEmptyState"
+    );
+
+const typeContents =
+    document.querySelectorAll(
+        ".validation-type-content"
+    );
+
+function hideAllValidationTypes() {
+
+    typeContents.forEach(function (section) {
+
+        section.classList.remove("show");
+
+    });
+
+}
+
+validationType.addEventListener(
+    "change",
+    function () {
+
+        hideAllValidationTypes();
+
+        emptyState.style.display = "none";
+
+        const selectedSection =
+            document.getElementById(
+                this.value + "Fields"
+            );
+
+        if (selectedSection) {
+
+            selectedSection.classList.add(
+                "show"
+            );
+
+        }
+
+        document.getElementById(
+            "stepGeneral"
+        ).classList.add(
+            "completed"
+        );
+
+        document.getElementById(
+            "stepType"
+        ).classList.add(
+            "active"
+        );
+
+    }
+);
+
+/* =====================================================
+   DEFAULT EDIT PAGE (WITHOUT CALCULATION)
+===================================================== */
+
+window.addEventListener("DOMContentLoaded", function () {
+
+    /* Select Without Calculation automatically */
+
+    validationType.value = "withCalculation";
+
+    /* Trigger the change event */
+
+    validationType.dispatchEvent(
+        new Event("change")
+    );
+
+});
+
+/* =====================================================
+   WITH CALCULATION ROWS
+===================================================== */
+
+let calculationRows = [];
+
+let editingCalculationIndex = null;
+
+
+
+/* ELEMENTS */
+
+const calculationModal =
+    document.getElementById(
+        "calculationModal"
+    );
+
+
+const calculationTableBody =
+    document.getElementById(
+        "calculationTableBody"
+    );
+
+
+const calculationEmptyMessage =
+    document.getElementById(
+        "calculationEmptyMessage"
+    );
+
+
+const modalTitle =
+    document.getElementById(
+        "calculationModalTitle"
+    );
+    /* =====================================================
+   APPROVAL SIDEBAR
+===================================================== */
+
+const reviewSteps = document.querySelectorAll(".review-step");
+
+let currentReviewer = 0;
+
+/* First reviewer is active */
+
+reviewSteps.forEach((step, i) => {
+
+    const approve = step.querySelector(".approve-btn");
+    const ret = step.querySelector(".return-btn");
+
+    if (i === 0) {
+
+        approve.disabled = false;
+        ret.disabled = false;
+
+    } else {
+
+        approve.disabled = true;
+        ret.disabled = true;
+
+    }
+
+});
+
+
+reviewSteps.forEach((step, index) => {
+
+    const approve = step.querySelector(".approve-btn");
+    const ret = step.querySelector(".return-btn");
+
+    const status = step.querySelector(".review-status");
+    const number = step.querySelector(".review-number");
+
+    /* ==========================
+       APPROVE
+    ========================== */
+
+    approve.onclick = function () {
+
+        status.innerHTML = "Approved";
+        status.className = "review-status approved";
+
+        number.classList.add("approved");
+
+        approve.disabled = true;
+        ret.disabled = true;
+
+        currentReviewer = index + 1;
+
+        if (currentReviewer < reviewSteps.length) {
+
+            const next = reviewSteps[currentReviewer];
+
+            next.querySelector(".approve-btn").disabled = false;
+            next.querySelector(".return-btn").disabled = false;
+
+            next.querySelector(".review-status").innerHTML = "Pending";
+            next.querySelector(".review-status").className = "review-status pending";
+
+            next.querySelector(".review-number").classList.add("active");
+
+        }
+
+    };
+
+
+    /* ==========================
+       RETURN
+    ========================== */
+
+    ret.onclick = function () {
+
+        if (index === 0) return;
+
+        /* Current reviewer */
+
+        status.innerHTML = "Waiting";
+        status.className = "review-status waiting";
+
+        approve.disabled = true;
+        ret.disabled = true;
+
+        number.classList.remove("active");
+
+        /* Previous reviewer */
+
+        currentReviewer = index - 1;
+
+        const previous = reviewSteps[currentReviewer];
+
+        previous.querySelector(".approve-btn").disabled = false;
+        previous.querySelector(".return-btn").disabled = false;
+
+        previous.querySelector(".review-status").innerHTML = "Returned";
+        previous.querySelector(".review-status").className = "review-status returned";
+
+        previous.querySelector(".review-number").classList.add("active");
+
+    };
+
+}); 
+</script>
+
+
+</body>
+</html>
